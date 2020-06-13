@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 const MainPage = (props) => {
   const {productionDate, movieName, genre} = props;
   const {movieNames} = props;
+  const {btnClickHandler} = props;
 
   const createFilmCards = movieNames.map((name, index) => {
     return (
@@ -51,7 +52,7 @@ const MainPage = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title">{movieName}</h2>
+              <h2 className="movie-card__title" onClick={btnClickHandler}>{movieName}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
                 <span className="movie-card__year">{productionDate}</span>
@@ -148,6 +149,10 @@ MainPage.propTypes = {
 
 MainPage.propTypes = {
   movieNames: PropTypes.array.isRequired
+};
+
+MainPage.propTypes = {
+  btnClickHandler: PropTypes.func.isRequired
 };
 
 export default MainPage;

@@ -8,7 +8,7 @@ const filmData = {
   genre: `Drama`
 };
 
-const MOVIE_NAMES = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`];
+const MOVIE_NAMES = [`Fantastic Beasts`]; // , `Bohemian Rhapsody`, `Macbeth`
 
 ReactDom.render(
     <App productionDate={filmData.productionDate} movieName={filmData.movieName} genre={filmData.genre} movieNames={MOVIE_NAMES}/>,
