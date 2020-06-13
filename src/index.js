@@ -11,6 +11,6 @@ const filmData = {
 const MOVIE_NAMES = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`];
 
 ReactDom.render(
-    <App productionDate={filmData.productionDate} movieName={filmData.movieName} genre={filmData.genre} MOVIE_NAMES={MOVIE_NAMES}/>,
+    <App productionDate={filmData.productionDate} movieName={filmData.movieName} genre={filmData.genre} movieNames={MOVIE_NAMES}/>,
     document.querySelector(`#root`)
 );

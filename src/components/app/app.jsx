@@ -4,10 +4,10 @@ import MainPage from "../main-page/main-page.jsx";
 
 const App = (props) => {
   const {productionDate, movieName, genre} = props;
-  const {MOVIE_NAMES} = props;
+  const {movieNames} = props;
 
   return (
-    <MainPage productionDate={productionDate} movieName={movieName} genre={genre} MOVIE_NAMES={MOVIE_NAMES}/>
+    <MainPage productionDate={productionDate} movieName={movieName} genre={genre} movieNames={movieNames}/>
   );
 };
 
@@ -18,7 +18,7 @@ App.propTypes = {
 };
 
 App.propTypes = {
-  MOVIE_NAMES: PropTypes.array.isRequired
+  movieNames: PropTypes.array.isRequired
 };
 
 export default App;

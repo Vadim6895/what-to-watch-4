@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 
 const MainPage = (props) => {
   const {productionDate, movieName, genre} = props;
-  const {MOVIE_NAMES} = props;
+  const {movieNames} = props;
 
-  const createFilmCards = MOVIE_NAMES.map((name, index) => {
+  const createFilmCards = movieNames.map((name, index) => {
     return (
       <article key={name + index.toString()} className="small-movie-card catalog__movies-card">
         <div className="small-movie-card__image">
@@ -147,7 +147,7 @@ MainPage.propTypes = {
 };
 
 MainPage.propTypes = {
-  MOVIE_NAMES: PropTypes.array.isRequired
+  movieNames: PropTypes.array.isRequired
 };
 
 export default MainPage;
