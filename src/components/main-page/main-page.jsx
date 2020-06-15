@@ -1,13 +1,16 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+import createFilmCards from "../film-card/film-card.jsx";
 
 const MainPage = (props) => {
   const {productionDate, movieName, genre} = props;
-  const {movieNames} = props;
-  const {btnClickHandler} = props;
+  // const {movieNames} = props;
+  // const {btnClickHandler} = props;
 
-  const createFilmCards = movieNames.map((name, index) => {
+  /* const createFilmCards = movieNames.map((name, index) => {
+    return new FilmCard(name);
+  });*/
+  /* const createFilmCards = movieNames.map((name, index) => {
     return (
       <article key={name + index.toString()} className="small-movie-card catalog__movies-card">
         <div className="small-movie-card__image">
@@ -18,7 +21,7 @@ const MainPage = (props) => {
         </h3>
       </article>
     );
-  });
+  });*/
 
   return (
     <React.Fragment>
@@ -52,7 +55,7 @@ const MainPage = (props) => {
             </div>
 
             <div className="movie-card__desc">
-              <h2 className="movie-card__title" onClick={btnClickHandler}>{movieName}</h2>
+              <h2 className="movie-card__title">{movieName}</h2>
               <p className="movie-card__meta">
                 <span className="movie-card__genre">{genre}</span>
                 <span className="movie-card__year">{productionDate}</span>
@@ -115,7 +118,7 @@ const MainPage = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-            {createFilmCards}
+            {createFilmCards(props)};
           </div>
 
           <div className="catalog__more">

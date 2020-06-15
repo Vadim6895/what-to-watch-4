@@ -80,7 +80,6 @@ Array [
         >
           <h2
             className="movie-card__title"
-            onClick={[Function]}
           >
             The Grand Budapest Hotel
           </h2>
@@ -277,6 +276,7 @@ Array [
             <a
               className="small-movie-card__link"
               href="movie-page.html"
+              onClick={[Function]}
             >
               Fantastic Beasts
             </a>
@@ -301,6 +301,7 @@ Array [
             <a
               className="small-movie-card__link"
               href="movie-page.html"
+              onClick={[Function]}
             >
               Bohemian Rhapsody
             </a>
@@ -325,11 +326,13 @@ Array [
             <a
               className="small-movie-card__link"
               href="movie-page.html"
+              onClick={[Function]}
             >
               Macbeth
             </a>
           </h3>
         </article>
+        ;
       </div>
       <div
         className="catalog__more"

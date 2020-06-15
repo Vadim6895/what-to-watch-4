@@ -20,8 +20,9 @@ it(`Should welcome button be pressed`, () => {
       />
   );
 
-  const btnHandler = mainPage.find(`.movie-card__title`);
+  const btnHandler = mainPage.find(`.small-movie-card__link`);
 
-  btnHandler.props().onClick();
-  expect(btnClickHandler.mock.calls.length).toBe(1);
+  // btnHandler.props().onClick();
+  btnHandler.forEach((item) => item.props().onClick());
+  expect(btnClickHandler.mock.calls.length).toBe(3);
 });
