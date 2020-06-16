@@ -5,24 +5,18 @@ import MainPage from "../main-page/main-page.jsx";
 const btnClickHandler = () => {};
 
 const App = (props) => {
-  const {productionDate, movieName, genre} = props;
-  const {movieNames} = props;
+  const {filmCards} = props;
 
   return (
-    <MainPage productionDate={productionDate} movieName={movieName} genre={genre} movieNames={movieNames}
+    // <MainPage productionDate={productionDate} movieName={movieName} genre={genre} movieNames={movieNames}
+    <MainPage filmCards={filmCards}
       btnClickHandler={btnClickHandler}
     />
   );
 };
 
 App.propTypes = {
-  productionDate: PropTypes.string.isRequired,
-  movieName: PropTypes.string.isRequired,
-  genre: PropTypes.string.isRequired
-};
-
-App.propTypes = {
-  movieNames: PropTypes.array.isRequired
+  filmCards: PropTypes.array.isRequired
 };
 
 export default App;
