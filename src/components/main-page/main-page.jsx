@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilmCard from "../film-card/film-card.jsx";
-
+import FilmList from "../film-list/film-list.jsx";
 const MainPage = (props) => {
   const {btnClickHandler} = props;
   const {filmCards} = props;
@@ -18,18 +18,18 @@ const MainPage = (props) => {
       </article>
     );
   });*/
+  // {createFilmCards(filmCards, btnClickHandler)}
 
-  const createFilmCards = (cards, btnHandler) => {
-    const names = cards.map((item) => item.movieName);
-    const cardsArr = names.map((name, index) => {
+  /* const createFilmCards = (cards, btnHandler) => {
+    const cardsArr = cards.map((name, index) => {
       return (
-        <FilmCard name={name} btnHandler={btnHandler}
+        <FilmCard name={name.movieName} btnHandler={btnHandler}
           key={name + index.toString()}
         />
       );
     });
     return cardsArr;
-  };
+  };*/
 
   return (
     <React.Fragment>
@@ -126,7 +126,8 @@ const MainPage = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-            {createFilmCards(filmCards, btnClickHandler)}
+
+            <FilmList filmCards={filmCards} btnHandler={btnClickHandler}/>
           </div>
 
           <div className="catalog__more">

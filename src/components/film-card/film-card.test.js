@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
+import FilmCard from "./film-card.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -9,9 +9,14 @@ const filmCards = [{
   id: 0
 }];
 
-it(`Render App`, () => {
+it(`Should FilmCard render correctly`, () => {
   const tree = renderer
-  .create(<App filmCards={filmCards}
+  .create(<FilmCard
+    name={filmCards[0].movieName}
+    id={filmCards[0].id}
+    onMouseEnter={() => {}}
+    filmCards={filmCards}
+    btnHandler={() => {}}
   />)
   .toJSON();
 

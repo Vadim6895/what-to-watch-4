@@ -9,18 +9,19 @@ const MOVIE_NAMES = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`];
 const PRODUCTION_DATE = [`1984`, `1999`, `2001`, `2003`, `2010`];
 const GENRES = [`Drama`, `Vestern`, `Comedy`, `Fantasy`, `Animation`];
 
-const createFilmCard = () => {
+const createFilmCard = (id) => {
   const filmCard = {
     movieName: getArrayRandElement(MOVIE_NAMES),
     productionDate: getArrayRandElement(PRODUCTION_DATE),
-    genre: getArrayRandElement(GENRES)
+    genre: getArrayRandElement(GENRES),
+    id
   };
   return filmCard;
 };
 
 let filmCardsMock = [];
 for (let i = 0; i < CARDS_COUNT; i++) {
-  filmCardsMock.push(createFilmCard());
+  filmCardsMock.push(createFilmCard(i));
 }
 
 export {filmCardsMock};

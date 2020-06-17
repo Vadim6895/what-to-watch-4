@@ -8,7 +8,6 @@ const App = (props) => {
   const {filmCards} = props;
 
   return (
-    // <MainPage productionDate={productionDate} movieName={movieName} genre={genre} movieNames={movieNames}
     <MainPage filmCards={filmCards}
       btnClickHandler={btnClickHandler}
     />
