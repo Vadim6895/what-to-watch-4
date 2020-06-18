@@ -15,7 +15,6 @@ it(`Should FilmCard render correctly`, () => {
     name={filmCards[0].movieName}
     id={filmCards[0].id}
     onMouseEnter={() => {}}
-    filmCards={filmCards}
     btnHandler={() => {}}
   />)
   .toJSON();

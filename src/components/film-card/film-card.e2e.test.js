@@ -24,7 +24,6 @@ it(`Should welcome button be pressed`, () => {
         name={filmCards[0].movieName}
         id={filmCards[0].id}
         onMouseEnter={onEnter}
-        filmCards={filmCards}
         btnHandler={btnClickHandler}
       />
   );
@@ -38,5 +37,6 @@ it(`Should welcome button be pressed`, () => {
 
   const onMouseEnt = filmCard.find(`.small-movie-card`);
   onMouseEnt.props().onMouseEnter();
-  expect(onEnter.mock.calls.length).toBe(1);
+  // expect(onEnter.mock.calls.length).toBe(1);
+  expect(onEnter).toHaveBeenCalledWith(filmCards[0].id);
 });
