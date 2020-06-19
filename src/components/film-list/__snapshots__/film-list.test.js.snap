@@ -20,7 +20,7 @@ exports[`Should FilmList render correctly 1`] = `
   >
     <a
       className="small-movie-card__link"
-      href="movie-page.html"
+      href="#"
       onClick={[Function]}
     >
       The Grand Budapest Hotel

@@ -8,12 +8,14 @@ const getArrayRandElement = (arr) => {
 const MOVIE_NAMES = [`Fantastic Beasts`, `Bohemian Rhapsody`, `Macbeth`];
 const PRODUCTION_DATE = [`1984`, `1999`, `2001`, `2003`, `2010`];
 const GENRES = [`Drama`, `Vestern`, `Comedy`, `Fantasy`, `Animation`];
+const MOVIE_POSTERS = [`img/fantastic-beasts-the-crimes-of-grindelwald.jpg`, `img/bohemian-rhapsody.jpg`, `img/macbeth.jpg`];
 
 const createFilmCard = (id) => {
   const filmCard = {
     movieName: getArrayRandElement(MOVIE_NAMES),
     productionDate: getArrayRandElement(PRODUCTION_DATE),
     genre: getArrayRandElement(GENRES),
+    poster: getArrayRandElement(MOVIE_POSTERS),
     id
   };
   return filmCard;

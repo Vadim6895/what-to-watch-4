@@ -12,11 +12,17 @@ class FilmList extends PureComponent {
   }
 
   render() {
-    const {filmCards, btnHandler} = this.props;
+    const {filmCards, btnHandler, getIdCard} = this.props;
+
     const cardsArr = filmCards.map((card, index) => {
       return (
-        <FilmCard name={card.movieName} btnHandler={btnHandler}
-          key={card.movieName + index.toString()} id={card.id} onMouseEnter={
+        <FilmCard name={card.movieName}
+          btnHandler={btnHandler}
+          getIdCard={getIdCard}
+          poster={card.poster}
+          key={card.movieName + index.toString()}
+          id={card.id}
+          onMouseEnter={
             (id) => {
               this.setState({activeFilm: id});
             }
@@ -30,6 +36,7 @@ class FilmList extends PureComponent {
 
 FilmList.propTypes = {
   filmCards: PropTypes.array.isRequired,
-  btnHandler: PropTypes.func.isRequired
+  btnHandler: PropTypes.func.isRequired,
+  getIdCard: PropTypes.func.isRequired,
 };
 export default FilmList;

@@ -5,6 +5,7 @@ import FilmList from "../film-list/film-list.jsx";
 const MainPage = (props) => {
   const {btnClickHandler} = props;
   const {filmCards} = props;
+  const {getIdCard} = props;
 
   /* const createFilmCards = movieNames.map((name, index) => {
     return (
@@ -127,7 +128,7 @@ const MainPage = (props) => {
 
           <div className="catalog__movies-list">
 
-            <FilmList filmCards={filmCards} btnHandler={btnClickHandler}/>
+            <FilmList filmCards={filmCards} btnHandler={btnClickHandler} getIdCard={getIdCard}/>
           </div>
 
           <div className="catalog__more">
@@ -156,7 +157,8 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
-  btnClickHandler: PropTypes.func.isRequired
+  btnClickHandler: PropTypes.func.isRequired,
+  getIdCard: PropTypes.func.isRequired
 };
 
 FilmCard.propTypes = {

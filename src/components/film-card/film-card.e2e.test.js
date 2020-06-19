@@ -11,6 +11,7 @@ const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
   productionDate: `1984`,
   genre: `Drama`,
+  poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   id: 0
 }];
 
@@ -18,6 +19,7 @@ const filmCards = [{
 it(`Should welcome button be pressed`, () => {
   const btnClickHandler = jest.fn();
   const onEnter = jest.fn();
+  const getId = jest.fn();
 
   const filmCard = shallow(
       <FilmCard
@@ -25,6 +27,8 @@ it(`Should welcome button be pressed`, () => {
         id={filmCards[0].id}
         onMouseEnter={onEnter}
         btnHandler={btnClickHandler}
+        poster={filmCards[0].poster}
+        getIdCard={getId}
       />
   );
 
@@ -35,8 +39,11 @@ it(`Should welcome button be pressed`, () => {
   expect(btnClickHandler.mock.calls.length).toBe(1);
 
 
-  const onMouseEnt = filmCard.find(`.small-movie-card`);
-  onMouseEnt.props().onMouseEnter();
+  const smallCard = filmCard.find(`.small-movie-card`);
+  smallCard.props().onMouseEnter();
   // expect(onEnter.mock.calls.length).toBe(1);
   expect(onEnter).toHaveBeenCalledWith(filmCards[0].id);
+
+  btnHandler.props().onClick();
+  expect(getId).toHaveBeenCalledWith(filmCards[0].id);
 });

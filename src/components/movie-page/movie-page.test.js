@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import FilmCard from "./film-card.jsx";
+import MoviePage from "./movie-page.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -10,15 +10,11 @@ const filmCards = [{
   id: 0
 }];
 
-it(`Should FilmCard render correctly`, () => {
+it(`Should MoviePage render correctly`, () => {
   const tree = renderer
-  .create(<FilmCard
-    name={filmCards[0].movieName}
+  .create(<MoviePage
+    filmCards={filmCards}
     id={filmCards[0].id}
-    onMouseEnter={() => {}}
-    btnHandler={() => {}}
-    poster={filmCards[0].poster}
-    getIdCard={() => {}}
   />)
   .toJSON();
 
