@@ -26,12 +26,13 @@ class App extends PureComponent {
           getIdCard={(id) => {
             this.setState({
               selectedFilmId: id,
+              step: 1,
             });
           }}
           btnClickHandler={() => {
-            this.setState({
-              step: 1,
-            });
+            // this.setState({
+            // step: 1,
+            // });
           }}
         />
       );
@@ -46,7 +47,6 @@ class App extends PureComponent {
   }
 
   render() {
-    // const {filmCards} = this.props;
     return (
       <BrowserRouter>
         <Switch>
