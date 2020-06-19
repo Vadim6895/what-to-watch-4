@@ -2,8 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const MoviePage = (props) => {
-  const {filmCards, id} = props;
-  const activeCard = filmCards.find((filmCard) => filmCard === filmCards[id]);
+  const {activeCard} = props;
 
   return (
     <React.Fragment>
@@ -163,8 +162,7 @@ const MoviePage = (props) => {
 };
 
 MoviePage.propTypes = {
-  filmCards: PropTypes.array.isRequired,
-  id: PropTypes.number.isRequired,
+  activeCard: PropTypes.object.isRequired,
 };
 
 export default MoviePage;

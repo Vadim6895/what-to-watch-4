@@ -6,7 +6,7 @@ const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
   productionDate: `1984`,
   genre: `Drama`,
-  poster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  moviePoster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   id: 0
 }];
 
@@ -15,10 +15,8 @@ it(`Should FilmCard render correctly`, () => {
   .create(<FilmCard
     name={filmCards[0].movieName}
     id={filmCards[0].id}
-    onMouseEnter={() => {}}
-    btnHandler={() => {}}
-    poster={filmCards[0].poster}
-    getIdCard={() => {}}
+    moviePoster={filmCards[0].moviePoster}
+    onFilmClick={() => {}}
   />)
   .toJSON();
 

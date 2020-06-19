@@ -2,26 +2,22 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const FilmCard = (props) => {
-  const {name, btnHandler, onMouseEnter, poster, id, getIdCard} = props;
-
+  const {name, moviePoster, id, onFilmClick} = props;
   const updateActiveCard = () => {
-    getIdCard(id);
+    onFilmClick(id);
   };
 
-  const getId = () => {
+  /* const getId = () => {
     onMouseEnter(id);
-  };
+  };*/
 
   return (
-    <article className="small-movie-card catalog__movies-card" onMouseEnter={getId} onClick={() => updateActiveCard()} >
+    <article className="small-movie-card catalog__movies-card" onClick={() => updateActiveCard()} >
       <div className="small-movie-card__image">
-        <img src={poster} alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
+        <img src={moviePoster} alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
       </div>
       <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="#" onClick={() => {
-          btnHandler();
-          // updateActiveCard();
-        }}>{name}</a>
+        <a className="small-movie-card__link" href="#">{name}</a>
       </h3>
     </article>
   );
@@ -29,11 +25,9 @@ const FilmCard = (props) => {
 
 FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
-  btnHandler: PropTypes.func.isRequired,
-  onMouseEnter: PropTypes.func.isRequired,
+  moviePoster: PropTypes.string.isRequired,
+  onFilmClick: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
-  poster: PropTypes.string.isRequired,
-  getIdCard: PropTypes.func.isRequired,
 };
 
 export default FilmCard;

@@ -1,36 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FilmCard from "../film-card/film-card.jsx";
 import FilmList from "../film-list/film-list.jsx";
 const MainPage = (props) => {
-  const {btnClickHandler} = props;
-  const {filmCards} = props;
-  const {getIdCard} = props;
-
-  /* const createFilmCards = movieNames.map((name, index) => {
-    return (
-      <article key={name + index.toString()} className="small-movie-card catalog__movies-card">
-        <div className="small-movie-card__image">
-          <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-        </div>
-        <h3 className="small-movie-card__title">
-          <a className="small-movie-card__link" href="movie-page.html">{name}</a>
-        </h3>
-      </article>
-    );
-  });*/
-  // {createFilmCards(filmCards, btnClickHandler)}
-
-  /* const createFilmCards = (cards, btnHandler) => {
-    const cardsArr = cards.map((name, index) => {
-      return (
-        <FilmCard name={name.movieName} btnHandler={btnHandler}
-          key={name + index.toString()}
-        />
-      );
-    });
-    return cardsArr;
-  };*/
+  const {filmCards, onFilmClick} = props;
 
   return (
     <React.Fragment>
@@ -128,7 +100,7 @@ const MainPage = (props) => {
 
           <div className="catalog__movies-list">
 
-            <FilmList filmCards={filmCards} btnHandler={btnClickHandler} getIdCard={getIdCard}/>
+            <FilmList filmCards={filmCards} onFilmClick={onFilmClick}/>
           </div>
 
           <div className="catalog__more">
@@ -157,12 +129,7 @@ const MainPage = (props) => {
 
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
-  btnClickHandler: PropTypes.func.isRequired,
-  getIdCard: PropTypes.func.isRequired
-};
-
-FilmCard.propTypes = {
-  btnHandler: PropTypes.func.isRequired
+  onFilmClick: PropTypes.func.isRequired
 };
 
 export default MainPage;

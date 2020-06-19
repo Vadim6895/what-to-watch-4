@@ -259,7 +259,7 @@ Array [
       >
         <article
           className="small-movie-card catalog__movies-card"
-          onMouseEnter={[Function]}
+          onClick={[Function]}
         >
           <div
             className="small-movie-card__image"
@@ -277,7 +277,6 @@ Array [
             <a
               className="small-movie-card__link"
               href="#"
-              onClick={[Function]}
             >
               The Grand Budapest Hotel
             </a>

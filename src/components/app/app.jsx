@@ -19,27 +19,23 @@ class App extends PureComponent {
   _renderMainScreen() {
     const {filmCards} = this.props;
     const {step} = this.state;
+    const activeCard = filmCards.find((filmCard) => filmCard.id === this.state.selectedFilmId);
 
     if (step === -1) {
       return (
         <MainPage filmCards={filmCards}
-          getIdCard={(id) => {
+          onFilmClick={(id) => {
             this.setState({
               selectedFilmId: id,
               step: 1,
             });
-          }}
-          btnClickHandler={() => {
-            // this.setState({
-            // step: 1,
-            // });
           }}
         />
       );
     }
     if (step === 1) {
       return (
-        <MoviePage filmCards={filmCards} id={this.state.selectedFilmId}/>
+        <MoviePage activeCard={activeCard}/>
       );
     }
 

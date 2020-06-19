@@ -13,8 +13,7 @@ const filmCards = [{
 it(`Should MoviePage render correctly`, () => {
   const tree = renderer
   .create(<MoviePage
-    filmCards={filmCards}
-    id={filmCards[0].id}
+    activeCard={filmCards[0]}
   />)
   .toJSON();
 

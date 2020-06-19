@@ -15,7 +15,7 @@ const createFilmCard = (id) => {
     movieName: getArrayRandElement(MOVIE_NAMES),
     productionDate: getArrayRandElement(PRODUCTION_DATE),
     genre: getArrayRandElement(GENRES),
-    poster: getArrayRandElement(MOVIE_POSTERS),
+    moviePoster: getArrayRandElement(MOVIE_POSTERS),
     id
   };
   return filmCard;
