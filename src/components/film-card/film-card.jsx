@@ -1,21 +1,42 @@
 import React from "react";
 import PropTypes from "prop-types";
+import VideoPlayer from "../video-player/video-player.jsx";
 
 const FilmCard = (props) => {
   const {name, moviePoster, id, onFilmClick} = props;
+
   const updateActiveCard = () => {
     onFilmClick(id);
   };
-
-  /* const getId = () => {
+  // ----------------------------------
+  const {onMouseEnter} = props;
+  const {src} = props;
+  console.log(src);
+  const getId = () => {
     onMouseEnter(id);
-  };*/
+    console.log(id);
+  };
+  // ------------------------
 
-  return (
+  /* return (
     <article className="small-movie-card catalog__movies-card" onClick={() => updateActiveCard()} >
       <div className="small-movie-card__image">
         <img src={moviePoster} alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
       </div>
+      <h3 className="small-movie-card__title">
+        <a className="small-movie-card__link" href="#">{name}</a>
+      </h3>
+    </article>
+  );
+};*/
+  // <div className="small-movie-card__image">
+  // </div>
+  // onClick={() => updateActiveCard()}
+  return (
+    <article className="small-movie-card catalog__movies-card">
+
+      <VideoPlayer src={src} moviePoster={moviePoster} onMouseEnter={onMouseEnter}/>
+
       <h3 className="small-movie-card__title">
         <a className="small-movie-card__link" href="#">{name}</a>
       </h3>

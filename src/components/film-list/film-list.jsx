@@ -21,6 +21,11 @@ class FilmList extends PureComponent {
           moviePoster={filmCard.moviePoster}
           key={filmCard.movieName + index.toString()}
           id={filmCard.id}
+          onMouseEnter={(id) => {
+            this.setState({activeFilm: id});
+          }
+          }
+          src={filmCard.src}
         />
       );
     });
