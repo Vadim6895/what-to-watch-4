@@ -7,6 +7,7 @@ const filmCards = [{
   productionDate: `1984`,
   genre: `Drama`,
   moviePoster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   id: 0
 }];
 

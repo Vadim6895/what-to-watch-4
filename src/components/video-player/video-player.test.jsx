@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import App from "./app.jsx";
+import VideoPlayer from "./video-player.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -11,9 +11,14 @@ const filmCards = [{
   id: 0
 }];
 
-it(`Render App`, () => {
+it(`Should VideoPlayer render correctly`, () => {
   const tree = renderer
-  .create(<App filmCards={filmCards}
+  .create(<VideoPlayer
+    src={filmCards[0].src}
+    moviePoster={filmCards[0].moviePoster}
+    onMouseEnter={() => {}}
+    onMouseLeave={() => {}}
+    isPlaying={false}
   />)
   .toJSON();
 

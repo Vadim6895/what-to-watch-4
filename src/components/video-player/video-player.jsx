@@ -1,39 +1,28 @@
 import React, {PureComponent, createRef} from "react";
-// import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 
 export default class VideoPlayer extends PureComponent {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isLoading: false,
-      isPlaying: false,
-    };
-
     this._videoRef = createRef();
+    this.timerId = null;
   }
-
-  componentDidMount() {
-    // const video = this._videoRef.current;
-
-    /* video.onplay = () => {
-      this.setState({
-        isPlaying: true,
-      });
-    };*/
-  }
-
 
   render() {
-    const {isLoading, isPlaying} = this.state;
+    const {moviePoster, onMouseEnter, onMouseLeave} = this.props;
 
-    const {src, moviePoster, onMouseEnter, oN} = this.props;
-    const get = () => {
-      oN();
-    };
     return (
-      <video width="280" height="175" poster={moviePoster} onMouseEnter={() => this.setState({isPlaying: true})} controls="controls" ref={this._videoRef}>
-        <source src={src} />
+      <video width="280" height="175" className="small-movie-player"
+        poster={moviePoster}
+        onMouseEnter={() => {
+          this.timerId = setTimeout(onMouseEnter, 1000);
+        }}
+        onMouseLeave={() => {
+          clearTimeout(this.timerId);
+          onMouseLeave();
+        }}
+        muted ref={this._videoRef}>
       </video>
     );
   }
@@ -41,20 +30,31 @@ export default class VideoPlayer extends PureComponent {
   componentWillUnmount() {
     const video = this._videoRef.current;
 
-    video.onplay = null;
-    video.onpause = null;
+    video.autoplay = false;
     video.src = ``;
+    this._videoRef = ``;
+    this.timerId = ``;
+
   }
 
   componentDidUpdate() {
     const video = this._videoRef.current;
-    console.log(video);
-    if (this.state.isPlaying) {
-      video.volume = 0.0;
-      video.play();
+    const {src} = this.props;
+
+    if (this.props.isPlaying) {
+      video.src = src;
+      video.autoplay = true; // это решило проблему с промисом который был возвращен .play()
     } else {
-      video.pause();
+      video.autoplay = false;
+      video.src = ``;
     }
   }
-
 }
+
+VideoPlayer.propTypes = {
+  src: PropTypes.string.isRequired,
+  moviePoster: PropTypes.string.isRequired,
+  onMouseEnter: PropTypes.func.isRequired,
+  onMouseLeave: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool.isRequired,
+};

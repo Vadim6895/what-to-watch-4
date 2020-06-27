@@ -21,15 +21,23 @@ class FilmList extends PureComponent {
           moviePoster={filmCard.moviePoster}
           key={filmCard.movieName + index.toString()}
           id={filmCard.id}
-          onMouseEnter={(id) => {
-            this.setState({activeFilm: id});
-          }
-          }
+          onMouseEnter={() => {
+            this.setState({activeFilm: filmCard.id});
+          }}
+          onMouseLeave={() => {
+            this.setState({activeFilm: -1});
+          }}
+          isPlaying={this.state.activeFilm === filmCard.id}
+
           src={filmCard.src}
         />
       );
     });
     return cardsArr;
+  }
+
+  componentWillUnmount() {
+    this.setState({activeFilm: false});
   }
 }
 
@@ -38,11 +46,3 @@ FilmList.propTypes = {
   onFilmClick: PropTypes.func.isRequired,
 };
 export default FilmList;
-
-/*
-onMouseEnter={
-  (id) => {
-    this.setState({activeFilm: id});
-  }
-}
-*/

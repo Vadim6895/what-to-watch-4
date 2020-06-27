@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should VideoPlayer render correctly 1`] = `
+<video
+  className="small-movie-player"
+  height="175"
+  muted={true}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+  width="280"
+/>
+`;
