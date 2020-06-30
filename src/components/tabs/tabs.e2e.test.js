@@ -1,6 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import FilmCard from "./film-card.jsx";
+import Enzyme, {shallow} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import Tabs from "./tabs.jsx";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -23,18 +28,20 @@ const filmCards = [{
   }]
 }];
 
-it(`Should FilmCard render correctly`, () => {
-  const tree = renderer
-  .create(<FilmCard
-    name={filmCards[0].movieName}
-    id={filmCards[0].id}
-    moviePoster={filmCards[0].moviePoster}
-    onFilmClick={() => {}}
-    src={filmCards[0].src}
-    key={filmCards[0].movieName}
-    renderPlayer={() => {}}
-  />)
-  .toJSON();
 
-  expect(tree).toMatchSnapshot();
+it(`Click tabs it correctly`, () => {
+  const mainNavLink = jest.fn();
+
+  const tabs = shallow(
+      <Tabs
+        activeCard={filmCards[0]}
+      />
+  );
+
+  const mainNavHandler = tabs.find(`.main-nav__item`);
+
+  mainNavHandler.forEach((item) => item.props().onClick());
+  mainNavLink.props().onClick();
+  expect(mainNavLink.mock.calls.length).toBe(1);
+
 });

@@ -105,6 +105,8 @@ const MoviePage = (props) => {
 
 MoviePage.propTypes = {
   activeCard: PropTypes.object.isRequired,
+  relatedMovies: PropTypes.array.isRequired,
+  onFilmClick: PropTypes.func.isRequired,
 };
 
 export default MoviePage;

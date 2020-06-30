@@ -8,26 +8,6 @@ const FilmCard = (props) => {
     onFilmClick(id);
   };
 
-  /* return (
-    <article className="small-movie-card catalog__movies-card" onClick={() => updateActiveCard()} >
-      <div className="small-movie-card__image">
-        <img src={moviePoster} alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-      </div>
-      <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="#">{name}</a>
-      </h3>
-    </article>
-  );
-};*/
-  // <div className="small-movie-card__image">
-  // </div>
-
-  /* <VideoPlayer src={src}
-    moviePoster={moviePoster}
-    onMouseEnter={onMouseEnter}
-    onMouseLeave={onMouseLeave}
-    isPlaying={isPlaying}/>*/
-
   return (
     <article className="small-movie-card catalog__movies-card" onClick={() => updateActiveCard()}>
       {renderPlayer(id, src, moviePoster)}
@@ -45,9 +25,6 @@ FilmCard.propTypes = {
   id: PropTypes.number.isRequired,
   src: PropTypes.string.isRequired,
   renderPlayer: PropTypes.func.isRequired,
-  // onMouseEnter: PropTypes.func.isRequired,
-  // onMouseLeave: PropTypes.func.isRequired,
-  // isPlaying: PropTypes.bool.isRequired,
 };
 
 export default FilmCard;

@@ -6,9 +6,6 @@ class FilmList extends PureComponent {
   constructor(props) {
     super(props);
 
-    /* this.state = {
-      activeFilm: -1
-    };*/
   }
 
   render() {
@@ -25,16 +22,6 @@ class FilmList extends PureComponent {
           id={filmCard.id}
           src={filmCard.src}
           renderPlayer={renderPlayer}
-          // onMouseEnter={onMouseEnter}
-          // onMouseLeave={onMouseLeave}
-          // isPlaying={isPlaying}
-          /* onMouseEnter={() => {
-            this.setState({activeFilm: filmCard.id});
-          }}
-          onMouseLeave={() => {
-            this.setState({activeFilm: -1});
-          }}
-          isPlaying={this.state.activeFilm === filmCard.id}*/
         />
       );
     });

@@ -12,7 +12,6 @@ const withActivePlayer = (Component) => {
     }
 
     render() {
-      // const {filmCard} = this.props;
       return <Component
         {...this.props}
         renderPlayer={(id, src, moviePoster) => {

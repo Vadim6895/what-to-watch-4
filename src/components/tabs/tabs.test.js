@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import FilmCard from "./film-card.jsx";
+import Tabs from "./tabs.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -23,16 +23,10 @@ const filmCards = [{
   }]
 }];
 
-it(`Should FilmCard render correctly`, () => {
+it(`Should Tabs render correctly`, () => {
   const tree = renderer
-  .create(<FilmCard
-    name={filmCards[0].movieName}
-    id={filmCards[0].id}
-    moviePoster={filmCards[0].moviePoster}
-    onFilmClick={() => {}}
-    src={filmCards[0].src}
-    key={filmCards[0].movieName}
-    renderPlayer={() => {}}
+  .create(<Tabs
+    activeCard={filmCards[0]}
   />)
   .toJSON();
 

@@ -57,25 +57,6 @@ class Tabs extends PureComponent {
     );
   }
 
-  _createMainNav() { // немогу понять как можно передавать activeLink ? что бы скрутить mainNav
-    const activeLink = `movie-nav__item--active`;
-    return (
-      <nav className="movie-nav movie-card__nav">
-        <ul className="movie-nav__list">
-          <li className="movie-nav__item" onClick={this._changeState.bind(this, 0)}>
-            <a href="#" className="movie-nav__link">Overview</a>
-          </li>
-          <li className="movie-nav__item" onClick={this._changeState.bind(this, 1)}>
-            <a href="#" className="movie-nav__link">Details</a>
-          </li>
-          <li className="movie-nav__item" onClick={this._changeState.bind(this, 2)}>
-            <a href="#" className="movie-nav__link">Reviews</a>
-          </li>
-        </ul>
-      </nav>
-    );
-  }
-
   _renderTabs() {
     const {activeCard} = this.props;
     const {step} = this.state;
@@ -200,5 +181,9 @@ class Tabs extends PureComponent {
     return this._renderTabs();
   }
 }
+
+Tabs.propTypes = {
+  activeCard: PropTypes.object.isRequired,
+};
 
 export default Tabs;
