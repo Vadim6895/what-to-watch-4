@@ -1,6 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilmList from "../film-list/film-list.jsx";
+
+import withActivePlayer from "../../hocks/with-video-player.jsx";
+const FilmListWrapped = withActivePlayer(FilmList);
+
 const MainPage = (props) => {
   const {filmCards, onFilmClick} = props;
 
@@ -99,8 +103,7 @@ const MainPage = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-
-            <FilmList filmCards={filmCards} onFilmClick={onFilmClick}/>
+            <FilmListWrapped filmCards={filmCards} onFilmClick={onFilmClick}/>
           </div>
 
           <div className="catalog__more">

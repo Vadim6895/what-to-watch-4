@@ -34,6 +34,7 @@ export default class VideoPlayer extends PureComponent {
     video.src = ``;
     this._videoRef = ``;
     this.timerId = ``;
+    clearTimeout(this.timerId);
 
   }
 
@@ -43,7 +44,7 @@ export default class VideoPlayer extends PureComponent {
 
     if (this.props.isPlaying) {
       video.src = src;
-      video.autoplay = true; // это решило проблему с промисом который был возвращен .play()
+      video.autoplay = true;
     } else {
       video.autoplay = false;
       video.src = ``;

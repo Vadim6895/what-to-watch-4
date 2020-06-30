@@ -16,7 +16,7 @@ const filmCards = [{
   id: 0
 }];
 
-
+jest.useFakeTimers();
 it(`Should video player on onMouseEnter`, () => {
   const mouseEnterFunc = jest.fn();
   const onMouseLeaveFunc = jest.fn();
@@ -34,7 +34,8 @@ it(`Should video player on onMouseEnter`, () => {
 
   const smallMoviePlayerHandler = videoPlayer.find(`.small-movie-player`);
   smallMoviePlayerHandler.props().onMouseEnter();
-  expect(mouseEnterFunc.mock.calls.length).toBe(0);
+  jest.runAllTimers();
+  expect(mouseEnterFunc.mock.calls.length).toBe(1);
 
   smallMoviePlayerHandler.props().onMouseLeave();
   expect(onMouseLeaveFunc.mock.calls.length).toBe(1);

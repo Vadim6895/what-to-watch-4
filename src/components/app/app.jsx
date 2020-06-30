@@ -5,6 +5,7 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
+import {getRelatedMovies} from "../../utils.js";
 
 class App extends PureComponent {
   constructor(props) {
@@ -27,15 +28,24 @@ class App extends PureComponent {
           onFilmClick={(id) => {
             this.setState({
               selectedFilmId: id,
-              step: 1,
+              step: id,
             });
           }}
         />
       );
     }
-    if (step === 1) {
+    if (step !== -1) {
+      let relatedMovies = getRelatedMovies(activeCard, filmCards);
       return (
-        <MoviePage activeCard={activeCard}/>
+        <MoviePage activeCard={activeCard}
+          onFilmClick={(id) => {
+            this.setState({
+              selectedFilmId: id,
+              step: id,
+            });
+          }}
+          relatedMovies={relatedMovies}
+        />
       );
     }
 
