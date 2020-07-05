@@ -33,8 +33,8 @@ export default class VideoPlayer extends PureComponent {
     video.autoplay = false;
     video.src = ``;
     this._videoRef = ``;
-    this.timerId = ``;
     clearTimeout(this.timerId);
+    this.timerId = ``;
 
   }
 

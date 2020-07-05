@@ -1,6 +1,6 @@
 import React from "react";
 import renderer from "react-test-renderer";
-import MoviePage from "./movie-page.jsx";
+import GenresList from "./genres-list.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -23,13 +23,12 @@ const filmCards = [{
   }]
 }];
 
-it(`Should MoviePage render correctly`, () => {
+it(`Should GenreList render correctly`, () => {
   const tree = renderer
-  .create(<MoviePage
-    activeCard={filmCards[0]}
-    onFilmClick={() => {}}
-    relatedMovies={[]}
-    activeGenreCards={[]}
+  .create(<GenresList
+    filmCards={filmCards}
+    onGenreClick={() => {}}
+    activeGenre={filmCards[0].genre}
   />)
   .toJSON();
 

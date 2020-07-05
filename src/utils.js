@@ -59,3 +59,19 @@ export const getRelatedMovies = (activeFilmCard, filmCardsArr) => {
 
   return relatedMovies;
 };
+// --------------module 5
+export const extend = (a, b) => {
+  return Object.assign({}, a, b);
+};
+
+export const getGenresOfCards = (filmCards) => {
+  let genres = [];
+  filmCards.forEach((filmCard) => genres.push(filmCard.genre));
+  let uniqueGenres = genres.filter((item, index) => genres.indexOf(item) === index);
+  return uniqueGenres;
+};
+
+export const getCardsOnGenre = (genre, filmCards) => {
+  let genreCards = filmCards.filter((filmCard) => filmCard.genre === genre);
+  return genreCards;
+};

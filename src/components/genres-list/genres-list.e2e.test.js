@@ -1,6 +1,11 @@
 import React from "react";
-import renderer from "react-test-renderer";
-import MoviePage from "./movie-page.jsx";
+import Enzyme, {shallow} from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import GenresList from "./genres-list.jsx";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -23,15 +28,18 @@ const filmCards = [{
   }]
 }];
 
-it(`Should MoviePage render correctly`, () => {
-  const tree = renderer
-  .create(<MoviePage
-    activeCard={filmCards[0]}
-    onFilmClick={() => {}}
-    relatedMovies={[]}
-    activeGenreCards={[]}
-  />)
-  .toJSON();
+it(`Should welcome button be pressed`, () => {
+  const genreClick = jest.fn();
 
-  expect(tree).toMatchSnapshot();
+  const genresList = shallow(
+      <GenresList
+        filmCards={filmCards}
+        onGenreClick={genreClick}
+        activeGenre={filmCards[0].genre}
+      />
+  );
+
+  const genreButtonHandler = genresList.find(`.catalog__genres-item`);
+  genreButtonHandler.forEach((item) => item.props().onClick());
+  expect(genreClick).toHaveBeenCalledWith(`All genres`);
 });

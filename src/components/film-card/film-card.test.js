@@ -10,7 +10,7 @@ const filmCards = [{
   src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   id: 0,
   director: `Anthony Mann`,
-  actors: `Anthony Mann`,
+  actors: [`Anthony Mann`],
   rating: 9,
   ratingsQuantity: 250,
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,

@@ -15,7 +15,7 @@ const filmCards = [{
   src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   id: 0,
   director: `Anthony Mann`,
-  actors: `Anthony Mann`,
+  actors: [`Anthony Mann`],
   rating: 9,
   ratingsQuantity: 250,
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
@@ -30,7 +30,7 @@ const filmCards = [{
 
 
 it(`Click tabs it correctly`, () => {
-  const mainNavLink = jest.fn();
+  // const mainNavLink = jest.fn();
 
   const tabs = shallow(
       <Tabs
@@ -38,10 +38,11 @@ it(`Click tabs it correctly`, () => {
       />
   );
 
-  const mainNavHandler = tabs.find(`.main-nav__item`);
+  const mainNavHandler = tabs.find(`.movie-nav__item`);
 
-  mainNavHandler.forEach((item) => item.props().onClick());
-  mainNavLink.props().onClick();
-  expect(mainNavLink.mock.calls.length).toBe(1);
-
+  mainNavHandler.forEach((item) => item.simulate(`click`));
+  // mainNavHandler.simulate(`click`);
+  // tabs.update();
+  // expect(mainNavLink.mock.calls.length).toBe(1);
+  expect(mainNavHandler.mock.calls.length).toBe(1);
 });

@@ -11,6 +11,7 @@ const FilmListWrapped = withActivePlayer(FilmList);
 const MoviePage = (props) => {
   const {activeCard} = props;
   const {relatedMovies, onFilmClick} = props;
+  const {activeGenreCards} = props;
 
   return (
     <React.Fragment>
@@ -81,7 +82,7 @@ const MoviePage = (props) => {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__movies-list">
-            <FilmListWrapped filmCards={relatedMovies} onFilmClick={onFilmClick}/>
+            <FilmListWrapped filmCards={relatedMovies} onFilmClick={onFilmClick} activeGenreCards={activeGenreCards}/>
           </div>
         </section>
 
@@ -107,6 +108,7 @@ MoviePage.propTypes = {
   activeCard: PropTypes.object.isRequired,
   relatedMovies: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
+  activeGenreCards: PropTypes.array.isRequired,
 };
 
 export default MoviePage;

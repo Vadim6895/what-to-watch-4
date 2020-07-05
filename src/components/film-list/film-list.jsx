@@ -5,15 +5,19 @@ import PropTypes from "prop-types";
 class FilmList extends PureComponent {
   constructor(props) {
     super(props);
-
   }
 
   render() {
     const {filmCards, onFilmClick} = this.props;
-    // const {onMouseEnter, onMouseLeave, isPlaying, renderPlayer} = this.props;
     const {renderPlayer} = this.props;
+    const {activeGenreCards} = this.props;
 
-    const cardsArr = filmCards.map((filmCard, index) => {
+    let actualCards = filmCards;
+    if (activeGenreCards.length) {
+      actualCards = activeGenreCards;
+    }
+
+    const cardsArr = actualCards.map((filmCard, index) => {
       return (
         <FilmCard name={filmCard.movieName}
           onFilmClick={onFilmClick}
@@ -33,5 +37,6 @@ FilmList.propTypes = {
   filmCards: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   renderPlayer: PropTypes.func.isRequired,
+  activeGenreCards: PropTypes.array.isRequired,
 };
 export default FilmList;
