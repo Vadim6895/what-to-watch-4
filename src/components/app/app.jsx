@@ -20,7 +20,7 @@ class App extends PureComponent {
   }
   _renderMainScreen() {
     const {filmCards} = this.props;
-    const {onFilmClick, selectedFilmId} = this.props; // step
+    const {onFilmClick, selectedFilmId} = this.props;
 
     const {activeGenre, onGenreClick} = this.props;
 

@@ -1,4 +1,4 @@
-const CARDS_COUNT = 8;
+const CARDS_COUNT = 50;
 
 const getArrayRandElement = (arr) => {
   let rand = Math.floor(Math.random() * arr.length);

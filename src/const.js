@@ -21,3 +21,5 @@ export const GenresMap = {
   FANTASY: `Fantasy`,
   ANIMATION: `Animation`,
 };
+
+export const CARDS_COUNT = 8;

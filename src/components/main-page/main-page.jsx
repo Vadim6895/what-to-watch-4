@@ -7,6 +7,7 @@ const FilmListWrapped = withActivePlayer(FilmList);
 
 import GenresList from "../genres-list/genres-list.jsx";
 
+
 const MainPage = (props) => {
   const {filmCards, onFilmClick} = props;
   const {onGenreClick, activeGenreCards, activeGenre} = props;
@@ -76,10 +77,11 @@ const MainPage = (props) => {
 
           <div className="catalog__movies-list">
             <FilmListWrapped filmCards={filmCards} onFilmClick={onFilmClick} activeGenreCards={activeGenreCards}/>
+
           </div>
 
           <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
+
           </div>
         </section>
 
@@ -100,7 +102,9 @@ const MainPage = (props) => {
     </React.Fragment>
   );
 };
-
+/* <div className="catalog__more">
+  <button className="catalog__button" type="button">Show more</button>
+</div>*/
 
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
