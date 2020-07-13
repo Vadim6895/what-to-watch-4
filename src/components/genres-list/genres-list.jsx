@@ -2,36 +2,29 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
 import {getGenresOfCards} from "../../utils.js";
+import {GenresLinkMap, GenresMap} from "../../const.js";
 
 class GenresList extends PureComponent {
   constructor(props) {
     super(props);
-
-    /* this.state = {
-      activeGenre: `All genres`
-    };*/
   }
 
-  /* _changeStateGenre(evt) {
-    this.setState({activeGenre: evt});
-  }*/
+  /* _getActiveLink(genre) {
+    const {activeItem} = this.props;
 
-  _getActiveLink(genreCard) {
-    const {activeGenre} = this.props; // this.state
-
-    let activeLink = `catalog__genres-item`;
-    if (genreCard === activeGenre) {
-      activeLink = `catalog__genres-item catalog__genres-item--active`;
+    let activeLink = GenresLinkMap.LINK;
+    if (genre === activeItem) {
+      activeLink = GenresLinkMap.ACTIVE_LINK;
     }
     return activeLink;
-  }
+  }*/
 
-  _createGenreItem(genre, key) {
-    const {onGenreClick} = this.props;
+  _createGenreItem(genre, key, activeItem) {
+    const {onItemClick} = this.props;
 
     return (
-      <li className={this._getActiveLink(genre)} key={key} onClick={(e) => {
-        onGenreClick(e.target.textContent);
+      <li className={genre === activeItem ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK} key={key} onClick={(evt) => {
+        onItemClick(evt.target.textContent);
       }}>
         <a href="#" className="catalog__genres-link">{genre}</a>
       </li>
@@ -41,19 +34,19 @@ class GenresList extends PureComponent {
   _createGenresList() {
     const {filmCards} = this.props;
     const genres = getGenresOfCards(filmCards);
-
-    const {onGenreClick} = this.props;
+    const {onItemClick, activeItem} = this.props;
 
     return (
       <React.Fragment>
         <ul className="catalog__genres-list">
-          <li className={this._getActiveLink(`All genres`)} onClick={(e) => {
-            onGenreClick(e.target.textContent);
-          }}>
+          <li className={activeItem === `` || activeItem === GenresMap.ALL_GENRES ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK}
+            onClick={(evt) => {
+              onItemClick(evt.target.textContent);
+            }}>
             <a href="#" className="catalog__genres-link">All genres</a>
           </li>
           {genres.map((genre, index) => {
-            return this._createGenreItem(genre, index + new Date());
+            return this._createGenreItem(genre, index + new Date(), activeItem);
           })}
         </ul>
       </React.Fragment>
@@ -67,8 +60,9 @@ class GenresList extends PureComponent {
 
 GenresList.propTypes = {
   filmCards: PropTypes.array.isRequired,
-  onGenreClick: PropTypes.func.isRequired,
-  activeGenre: PropTypes.string.isRequired,
+  onItemClick: PropTypes.func.isRequired,
+  activeItem: PropTypes.string.isRequired,
+  // activeGenre: PropTypes.string.isRequired,
 };
 
 export default GenresList;

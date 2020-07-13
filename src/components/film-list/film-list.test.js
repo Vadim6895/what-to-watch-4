@@ -26,10 +26,12 @@ const filmCards = [{
 it(`Should FilmList render correctly`, () => {
   const tree = renderer
   .create(<FilmList
-    filmCards={filmCards}
     onFilmClick={() => {}}
     renderPlayer={() => {}}
-    activeGenreCards={[]}
+    actualCardsCount={8}
+    actualCards={filmCards.slice(0, 8)}
+    newCards={filmCards.slice(0, 8)}
+    onClick={() => {}}
   />)
   .toJSON();
 

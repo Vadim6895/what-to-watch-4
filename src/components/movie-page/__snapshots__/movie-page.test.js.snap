@@ -259,7 +259,32 @@ Array [
       </h2>
       <div
         className="catalog__movies-list"
-      />
+      >
+        <article
+          className="small-movie-card catalog__movies-card"
+          onClick={[Function]}
+        >
+          <video
+            className="small-movie-player"
+            height="175"
+            muted={true}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            poster="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+            width="280"
+          />
+          <h3
+            className="small-movie-card__title"
+          >
+            <a
+              className="small-movie-card__link"
+              href="#"
+            >
+              The Grand Budapest Hotel
+            </a>
+          </h3>
+        </article>
+      </div>
     </section>
     <footer
       className="page-footer"

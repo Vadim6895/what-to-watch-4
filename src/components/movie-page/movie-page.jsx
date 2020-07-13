@@ -7,11 +7,17 @@ import FilmList from "../film-list/film-list.jsx";
 import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
 // ----------------------------------------
+// import withTabs from "../../hocks/with-tabs.jsx";
+import withActiveItem from "../../hocks/with-active-item.jsx";
+const TabsWrapped = withActiveItem(Tabs);
+// ----------------------------------------
+import withFilmList from "../../hocks/with-film-list.jsx";
+const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
 const MoviePage = (props) => {
   const {activeCard} = props;
   const {relatedMovies, onFilmClick} = props;
-  const {activeGenreCards} = props;
+  // const {activeGenreCards} = props;
 
   return (
     <React.Fragment>
@@ -72,7 +78,8 @@ const MoviePage = (props) => {
               <img src={activeCard.moviePoster} alt={activeCard.movieName} width="218" height="327" />
             </div>
 
-            <Tabs activeCard={activeCard}/>
+
+            <TabsWrapped activeCard={activeCard}/>
           </div>
         </div>
       </section>
@@ -82,7 +89,7 @@ const MoviePage = (props) => {
           <h2 className="catalog__title">More like this</h2>
 
           <div className="catalog__movies-list">
-            <FilmListWrapped filmCards={relatedMovies} onFilmClick={onFilmClick} activeGenreCards={activeGenreCards}/>
+            <FilmListSecondWrapped filmCards={relatedMovies} onFilmClick={onFilmClick} activeGenreCards={[]}/>
           </div>
         </section>
 
@@ -103,12 +110,12 @@ const MoviePage = (props) => {
     </React.Fragment>
   );
 };
-
+//             <Tabs activeCard={activeCard}/>
 MoviePage.propTypes = {
   activeCard: PropTypes.object.isRequired,
   relatedMovies: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  activeGenreCards: PropTypes.array.isRequired,
+  // activeGenreCards: PropTypes.array.isRequired,
 };
 
 export default MoviePage;

@@ -26,11 +26,8 @@ const filmCards = [{
 it(`Render App`, () => {
   const tree = renderer
   .create(<App filmCards={filmCards}
-    // step={-1}
     onFilmClick={() => {}}
     selectedFilmId={-1}
-    activeGenre={`All genres`}
-    onGenreClick={() => {}}
   />)
   .toJSON();
 

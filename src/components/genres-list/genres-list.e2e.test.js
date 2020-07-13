@@ -29,17 +29,17 @@ const filmCards = [{
 }];
 
 it(`Should welcome button be pressed`, () => {
-  const genreClick = jest.fn();
+  const itemClick = jest.fn();
 
   const genresList = shallow(
       <GenresList
         filmCards={filmCards}
-        onGenreClick={genreClick}
-        activeGenre={filmCards[0].genre}
+        onItemClick={itemClick}
+        activeItem={``}
       />
   );
 
   const genreButtonHandler = genresList.find(`.catalog__genres-item`);
   genreButtonHandler.forEach((item) => item.props().onClick());
-  expect(genreClick).toHaveBeenCalledWith(`All genres`);
+  expect(itemClick).toHaveBeenCalledWith(`All genres`);
 });

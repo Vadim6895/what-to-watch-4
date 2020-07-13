@@ -27,6 +27,8 @@ it(`Should Tabs render correctly`, () => {
   const tree = renderer
   .create(<Tabs
     activeCard={filmCards[0]}
+    activeItem={``}
+    onItemClick={() => {}}
   />)
   .toJSON();
 

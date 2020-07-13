@@ -72,6 +72,9 @@ export const getGenresOfCards = (filmCards) => {
 };
 
 export const getCardsOnGenre = (genre, filmCards) => {
-  let genreCards = filmCards.filter((filmCard) => filmCard.genre === genre);
-  return genreCards;
+  if (genre) {
+    let genreCards = filmCards.filter((filmCard) => filmCard.genre === genre);
+    return genreCards;
+  }
+  return filmCards;
 };

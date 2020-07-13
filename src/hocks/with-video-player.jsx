@@ -9,6 +9,7 @@ const withActivePlayer = (Component) => {
       this.state = {
         activeFilm: -1,
       };
+
     }
 
     render() {
@@ -31,7 +32,6 @@ const withActivePlayer = (Component) => {
         }}
       />;
     }
-
   }
   return WithActivePlayer;
 };

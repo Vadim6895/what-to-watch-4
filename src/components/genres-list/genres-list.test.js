@@ -27,8 +27,8 @@ it(`Should GenreList render correctly`, () => {
   const tree = renderer
   .create(<GenresList
     filmCards={filmCards}
-    onGenreClick={() => {}}
-    activeGenre={filmCards[0].genre}
+    onItemClick={() => {}}
+    activeItem={``}
   />)
   .toJSON();
 

@@ -3,16 +3,10 @@ import FilmCard from "../film-card/film-card.jsx";
 import PropTypes from "prop-types";
 
 import ShowMore from "../show-more/show-more.jsx";
-import {CARDS_COUNT} from "../../const.js";
 
 class FilmList extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      step: 1,
-      genreCards: this.props.activeGenreCards,
-    };
   }
 
   _renderFilmList(actualCards, onFilmClick, renderPlayer) {
@@ -33,43 +27,16 @@ class FilmList extends PureComponent {
     );
   }
 
-  _changeState() {
-    this.setState({step: this.state.step + 1});
-  }
-
-  /* componentWillReceiveProps() {
-    console.log(`props wiil recive`);
-    this.setState({step: 1});
-  }*/
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.activeGenreCards !== prevState.genreCards) {
-      return {
-        step: 1,
-        genreCards: nextProps.activeGenreCards,
-      };
-    }
-    return null;
-  }
-
   render() {
-    const {filmCards, onFilmClick} = this.props;
+    const {onFilmClick} = this.props;
     const {renderPlayer} = this.props;
-    const {activeGenreCards} = this.props;
-
-    let actualCards = filmCards;
-    if (activeGenreCards.length) {
-      actualCards = activeGenreCards;
-    }
-
-    let actualCardsCount = CARDS_COUNT * this.state.step;
-    let newCards = actualCards.slice(0, actualCardsCount);
+    const {actualCardsCount, actualCards, newCards, onClick} = this.props;
 
     if (actualCardsCount < actualCards.length) {
       return (
         <React.Fragment>
           {this._renderFilmList(newCards, onFilmClick, renderPlayer)}
-          <ShowMore onShowMoreClick={this._changeState.bind(this)}/>
+          <ShowMore onShowMoreClick={onClick}/>
         </React.Fragment>
       );
     }
@@ -85,9 +52,12 @@ class FilmList extends PureComponent {
 }
 
 FilmList.propTypes = {
-  filmCards: PropTypes.array.isRequired,
+  // filmCards: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   renderPlayer: PropTypes.func.isRequired,
-  activeGenreCards: PropTypes.array.isRequired,
+  actualCardsCount: PropTypes.number.isRequired,
+  actualCards: PropTypes.array.isRequired,
+  newCards: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 export default FilmList;
