@@ -40,6 +40,6 @@ it(`Should welcome button be pressed`, () => {
   );
 
   const genreButtonHandler = genresList.find(`.catalog__genres-item`);
-  genreButtonHandler.forEach((item) => item.props().onClick());
+  genreButtonHandler.forEach((item) => item.props().onClick({target: {textContent: `All genres`}}));
   expect(itemClick).toHaveBeenCalledWith(`All genres`);
 });

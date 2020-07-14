@@ -19,12 +19,12 @@ class GenresList extends PureComponent {
     return activeLink;
   }*/
 
-  _createGenreItem(genre, key, activeItem) {
-    const {onItemClick} = this.props;
+  _createGenreItem(genre, key, activeGenre) {
+    const {onGenreClick} = this.props;
 
     return (
-      <li className={genre === activeItem ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK} key={key} onClick={(evt) => {
-        onItemClick(evt.target.textContent);
+      <li className={genre === activeGenre ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK} key={key} onClick={(evt) => {
+        onGenreClick(evt.target.textContent);
       }}>
         <a href="#" className="catalog__genres-link">{genre}</a>
       </li>
@@ -34,19 +34,19 @@ class GenresList extends PureComponent {
   _createGenresList() {
     const {filmCards} = this.props;
     const genres = getGenresOfCards(filmCards);
-    const {onItemClick, activeItem} = this.props;
+    const {onGenreClick, activeGenre} = this.props;
 
     return (
       <React.Fragment>
         <ul className="catalog__genres-list">
-          <li className={activeItem === `` || activeItem === GenresMap.ALL_GENRES ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK}
+          <li className={activeGenre === `` || activeGenre === GenresMap.ALL_GENRES ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK}
             onClick={(evt) => {
-              onItemClick(evt.target.textContent);
+              onGenreClick(evt.target.textContent);
             }}>
             <a href="#" className="catalog__genres-link">All genres</a>
           </li>
           {genres.map((genre, index) => {
-            return this._createGenreItem(genre, index + new Date(), activeItem);
+            return this._createGenreItem(genre, index + new Date(), activeGenre);
           })}
         </ul>
       </React.Fragment>
@@ -60,9 +60,8 @@ class GenresList extends PureComponent {
 
 GenresList.propTypes = {
   filmCards: PropTypes.array.isRequired,
-  onItemClick: PropTypes.func.isRequired,
-  activeItem: PropTypes.string.isRequired,
-  // activeGenre: PropTypes.string.isRequired,
+  onGenreClick: PropTypes.func.isRequired,
+  activeGenre: PropTypes.string.isRequired,
 };
 
 export default GenresList;

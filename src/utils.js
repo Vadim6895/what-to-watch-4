@@ -40,6 +40,22 @@ export const formatTimeLengthMovie = (value) => {
   return `${hours}h ${minutes}m`;
 };
 
+export const formatTimeLengthMovieInPlayer = (value) => {
+  let fixedValue = value.toFixed();
+  let seconds = 0;
+  let minutes = 0;
+  for (let i = 0; i < fixedValue; i++) {
+    if (fixedValue >= VALUE_HOUR) {
+      seconds++;
+      fixedValue -= VALUE_HOUR;
+    } else {
+      minutes = fixedValue;
+      break;
+    }
+  }
+  return `${seconds}:${minutes}`;
+};
+
 export const formatDate = (objDate) => {
   return `${objDate.toLocaleString(`en`, {month: `long`})} ${objDate.getMonth() + 1}, ${objDate.getFullYear()}`;
 };

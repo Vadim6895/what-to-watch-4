@@ -4,13 +4,17 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
-import withActiveItem from "../../hocks/with-active-item.jsx";
-const MainPageWrapped = withActiveItem(MainPage);
+// import withActiveItem from "../../hocks/with-active-item.jsx";
+// const MainPageWrapped = withActiveItem(MainPage);
 
-import {getRelatedMovies} from "../../utils.js";
+import {getRelatedMovies, getCardsOnGenre} from "../../utils.js";
 import {MORE_LIKE_THIS_COUNT} from "../../const.js";
-import {actionSelectedFilmCreator} from "../../reducer.js";
+import {actionSelectedFilmCreator, actionPlayerCreator, actionGenreCreator} from "../../reducer.js";
 import {connect} from "react-redux";
+
+import BigVideoPlayer from "../big-video-player/big-video-player.jsx";
+import withBigPlayer from "../../hocks/with-big-video-player.jsx";
+const BigVideoPlayerWrapped = withBigPlayer(BigVideoPlayer);
 
 class App extends PureComponent {
   constructor(props) {
@@ -21,24 +25,47 @@ class App extends PureComponent {
     const {filmCards} = this.props;
     const {onFilmClick, selectedFilmId} = this.props;
     const activeCard = filmCards.find((filmCard) => filmCard.id === selectedFilmId);
+    const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
 
-    if (selectedFilmId === -1) {
+    const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
+    if (selectedFilmId === 0 && !bigPlayerValue) {
       return (
-        <MainPageWrapped filmCards={filmCards}
+        <MainPage filmCards={filmCards}
           onFilmClick={(id) => {
             onFilmClick(id);
           }}
+          onPlayerClick={(value) =>{
+            onPlayerClick(value);
+          }}
+          onGenreClick={(genre) =>{
+            onGenreClick(genre);
+          }}
+          activeGenreCards={activeGenreCards}
+          activeGenre={activeGenre}
         />
       );
     }
-    if (selectedFilmId !== -1) {
+    if (selectedFilmId !== 0 && !bigPlayerValue) {
       let relatedMovies = getRelatedMovies(activeCard, filmCards).slice(0, MORE_LIKE_THIS_COUNT);
       return (
         <MoviePage activeCard={activeCard}
           onFilmClick={(id) => {
             onFilmClick(id);
           }}
+          onPlayerClick={(value) =>{
+            onPlayerClick(value);
+          }}
           relatedMovies={relatedMovies}
+        />
+      );
+    }
+    if (bigPlayerValue) {
+      return (
+        <BigVideoPlayerWrapped
+          activeCard={activeCard}
+          onPlayerClick={(value) =>{
+            onPlayerClick(value);
+          }}
         />
       );
     }
@@ -67,16 +94,30 @@ App.propTypes = {
   filmCards: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   selectedFilmId: PropTypes.number.isRequired,
+
+  bigPlayerValue: PropTypes.bool.isRequired,
+  onPlayerClick: PropTypes.func.isRequired,
+
+  // onGenreClick: PropTypes.func.isRequired,
+  // activeGenre: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedFilmId: state.selectedFilmId,
+  bigPlayerValue: state.bigPlayerValue,
+  activeGenre: state.activeGenre,
 });
 
 const mapDispatchToPtops = (dispatch) => ({
   onFilmClick(id) {
     dispatch(actionSelectedFilmCreator(id));
   },
+  onPlayerClick(value) {
+    dispatch(actionPlayerCreator(value));
+  },
+  onGenreClick(genre) {
+    dispatch(actionGenreCreator(genre));
+  }
 });
 
 export {App};

@@ -42,7 +42,7 @@ it(`Click tabs it correctly`, () => {
 
   const mainNavHandler = tabs.find(`.movie-nav__item`);
 
-  mainNavHandler.forEach((item) => item.simulate(`click`));
+  mainNavHandler.forEach((item) => item.simulate(`click`, {target: {textContent: `Review`}}));
   // mainNavHandler.simulate(`click`);
   // tabs.update();
   // expect(mainNavLink.mock.calls.length).toBe(1);

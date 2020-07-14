@@ -7,7 +7,6 @@ import FilmList from "../film-list/film-list.jsx";
 import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
 // ----------------------------------------
-// import withTabs from "../../hocks/with-tabs.jsx";
 import withActiveItem from "../../hocks/with-active-item.jsx";
 const TabsWrapped = withActiveItem(Tabs);
 // ----------------------------------------
@@ -18,6 +17,7 @@ const MoviePage = (props) => {
   const {activeCard} = props;
   const {relatedMovies, onFilmClick} = props;
   // const {activeGenreCards} = props;
+  const {onPlayerClick} = props;
 
   return (
     <React.Fragment>
@@ -54,7 +54,9 @@ const MoviePage = (props) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button">
+                <button className="btn btn--play movie-card__button" type="button" onClick={() => {
+                  onPlayerClick(true);
+                }}>
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
@@ -116,6 +118,7 @@ MoviePage.propTypes = {
   relatedMovies: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   // activeGenreCards: PropTypes.array.isRequired,
+  onPlayerClick: PropTypes.func.isRequired,
 };
 
 export default MoviePage;

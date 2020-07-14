@@ -10,7 +10,9 @@ import GenresList from "../genres-list/genres-list.jsx";
 import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
-import {getCardsOnGenre} from "../../utils.js";
+// import {getCardsOnGenre} from "../../utils.js";
+
+// import BigVideoPlayer from "../big-video-player/big-video-player.jsx";
 
 class MainPage extends PureComponent {
   constructor(props) {
@@ -19,9 +21,10 @@ class MainPage extends PureComponent {
 
   render() {
     const {filmCards, onFilmClick} = this.props;
-    const {activeItem, onItemClick} = this.props;
-    let activeGenreCards = getCardsOnGenre(activeItem, filmCards);
+    // const {activeItem, onItemClick} = this.props;
 
+    const {onPlayerClick, onGenreClick, activeGenreCards, activeGenre} = this.props;
+    console.log(activeGenre);
     return (
       <React.Fragment>
         <section className="movie-card">
@@ -59,9 +62,10 @@ class MainPage extends PureComponent {
                   <span className="movie-card__genre">{filmCards[0].genre}</span>
                   <span className="movie-card__year">{filmCards[0].productionDate}</span>
                 </p>
-
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button">
+                  <button className="btn btn--play movie-card__button" type="button" onClick={() => {
+                    onPlayerClick(true);
+                  }}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -83,7 +87,7 @@ class MainPage extends PureComponent {
           <section className="catalog">
             <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-            <GenresList filmCards={filmCards} onItemClick={onItemClick} activeItem={activeItem}/>
+            <GenresList filmCards={filmCards} onGenreClick={onGenreClick} activeGenre={activeGenre}/>
 
             <div className="catalog__movies-list">
               <FilmListSecondWrapped filmCards={filmCards} onFilmClick={onFilmClick} activeGenreCards={activeGenreCards}/>
@@ -120,9 +124,9 @@ class MainPage extends PureComponent {
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  activeItem: PropTypes.string.isRequired,
-  onItemClick: PropTypes.func.isRequired,
-
+  // activeItem: PropTypes.string.isRequired,
+  // onItemClick: PropTypes.func.isRequired,
+  onPlayerClick: PropTypes.func.isRequired,
   // onGenreClick: PropTypes.func.isRequired,
   // activeGenreCards: PropTypes.array.isRequired,
   // activeGenre: PropTypes.string.isRequired,
