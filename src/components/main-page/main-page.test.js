@@ -28,8 +28,10 @@ it(`Should MainPage render correctly`, () => {
   .create(<MainPage
     filmCards={filmCards}
     onFilmClick={() => {}}
-    activeItem={``}
-    onItemClick={() => {}}
+    onPlayerClick={() => {}}
+    onGenreClick={() => {}}
+    activeGenreCards={filmCards}
+    activeGenre={filmCards[0].genre}
   />)
   .toJSON();
 

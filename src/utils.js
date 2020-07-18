@@ -40,6 +40,14 @@ export const formatTimeLengthMovie = (value) => {
   return `${hours}h ${minutes}m`;
 };
 
+const prependZero = (value) => {
+  let newValue = value;
+  if (value < 10) {
+    newValue = `0` + value;
+  }
+  return newValue;
+};
+
 export const formatTimeLengthMovieInPlayer = (value) => {
   let fixedValue = value.toFixed();
   let seconds = 0;
@@ -53,7 +61,7 @@ export const formatTimeLengthMovieInPlayer = (value) => {
       break;
     }
   }
-  return `${seconds}:${minutes}`;
+  return `${prependZero(seconds)} : ${prependZero(minutes)}`;
 };
 
 export const formatDate = (objDate) => {

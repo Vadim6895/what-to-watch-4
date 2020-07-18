@@ -112,12 +112,11 @@ const MoviePage = (props) => {
     </React.Fragment>
   );
 };
-//             <Tabs activeCard={activeCard}/>
+
 MoviePage.propTypes = {
   activeCard: PropTypes.object.isRequired,
   relatedMovies: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  // activeGenreCards: PropTypes.array.isRequired,
   onPlayerClick: PropTypes.func.isRequired,
 };
 

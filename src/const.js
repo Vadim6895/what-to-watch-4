@@ -38,3 +38,9 @@ export const GenresLinkMap = {
 };
 export const MORE_LIKE_THIS_COUNT = 4;
 export const CARDS_COUNT = 8;
+export const HUNDRED_FOR_PERCENT = 100;
+
+export const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};

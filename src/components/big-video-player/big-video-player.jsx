@@ -1,13 +1,9 @@
-import React, {PureComponent, createRef} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {formatTimeLengthMovieInPlayer} from "../../utils.js";
 
 class BigVideoPlayer extends PureComponent {
   constructor(props) {
     super(props);
-
-    this._videoRef = createRef();
-    this._duration = `00 : 00`;
   }
 
   _renderButtonPlayer(play, onPlayClick) {
@@ -37,11 +33,11 @@ class BigVideoPlayer extends PureComponent {
   render() {
     const {onPlayerClick, activeCard} = this.props;
     const {onPlayClick, play} = this.props;
-    const {onFullscreenClick, progress} = this.props;
+    const {onFullscreenClick, progress, videoRef, currentTime} = this.props;
 
     return (
       <div className="player">
-        <video src={activeCard.src} className="player__video" poster="img/player-poster.jpg" ref={this._videoRef}></video>
+        <video src={activeCard.src} className="player__video" poster="img/player-poster.jpg" ref={videoRef}></video>
 
         <button type="button" className="player__exit" onClick={() => {
           onPlayerClick(false);
@@ -53,7 +49,7 @@ class BigVideoPlayer extends PureComponent {
               <progress className="player__progress" value={progress} max="100"></progress>
               <div className="player__toggler" style={{left: progress + `%`}}>Toggler</div>
             </div>
-            <div className="player__time-value">{this._duration}</div>
+            <div className="player__time-value">{currentTime}</div>
           </div>
 
           <div className="player__controls-row">
@@ -73,42 +69,6 @@ class BigVideoPlayer extends PureComponent {
       </div>
     );
   }
-  /* componentDidMount() {
-    const video = this._videoRef.current;
-    video.ontimeupdate = () => this.setState({
-      progress: Math.floor(video.currentTime),
-    });
-  }*/
-  componentDidMount() {
-    const video = this._videoRef.current;
-    const {changeProgress} = this.props;
-
-    video.ontimeupdate = () => {
-      changeProgress(Math.floor(video.currentTime));
-    };
-  }
-
-  componentDidUpdate(prevProps) {
-    const video = this._videoRef.current;
-
-    if (this.props.play) {
-      this._duration = formatTimeLengthMovieInPlayer(video.duration);
-      video.play();
-    }
-    if (!this.props.play) {
-      video.pause();
-    }
-
-    if (prevProps.fullscreen !== this.props.fullscreen) {
-      if (video.requestFullscreen) {
-        video.requestFullscreen();
-      } else if (video.mozRequestFullScreen) {
-        video.mozRequestFullScreen();
-      } else if (video.webkitRequestFullscreen) {
-        video.webkitRequestFullscreen();
-      }
-    }
-  }
 }
 
 BigVideoPlayer.propTypes = {
@@ -117,9 +77,10 @@ BigVideoPlayer.propTypes = {
   play: PropTypes.bool.isRequired,
   onPlayClick: PropTypes.func.isRequired,
   fullscreen: PropTypes.bool.isRequired,
-  changeProgress: PropTypes.func.isRequired,
   onFullscreenClick: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
+  currentTime: PropTypes.number.isRequired,
+  videoRef: PropTypes.object.isRequired,
 };
 
 export default BigVideoPlayer;

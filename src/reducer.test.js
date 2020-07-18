@@ -1,36 +1,59 @@
 import {reducer, ActionType, actionSelectedFilmCreator} from "./reducer.js";
-// import {ALL_GENRES, GenresMap} from "./const.js";
+import {AuthorizationStatus} from "./const.js";
+import {filmCardsMock} from "./mocks/films.js";
+
 
 it(`Reducer without additional parameters should return initial state`, () => {
   expect(reducer(void 0, {})).toEqual({
     selectedFilmId: -1,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   });
 });
 
 it(`Reducer should increment current selectedFilmId by a given value`, () => {
   expect(reducer({
     selectedFilmId: -1,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   }, {
     type: ActionType.STEP_ON_CARD,
     selectedFilmId: 1,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   })).toEqual({
     selectedFilmId: 1,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   });
 
   expect(reducer({
     selectedFilmId: -1,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   }, {
     type: ActionType.STEP_ON_CARD,
     selectedFilmId: 2,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   })).toEqual({
     selectedFilmId: 2,
-    // activeGenre: ALL_GENRES,
+    activeGenre: ``,
+    bigPlayerValue: false,
+    authorizationStatus: AuthorizationStatus.NO_AUTH,
+    filmCards: filmCardsMock,
   });
 });
 

@@ -22,7 +22,8 @@ export default class VideoPlayer extends PureComponent {
           clearTimeout(this.timerId);
           onMouseLeave();
         }}
-        muted ref={this._videoRef}>
+        muted
+        ref={this._videoRef}>
       </video>
     );
   }
@@ -35,7 +36,6 @@ export default class VideoPlayer extends PureComponent {
     this._videoRef = ``;
     clearTimeout(this.timerId);
     this.timerId = ``;
-
   }
 
   componentDidUpdate() {

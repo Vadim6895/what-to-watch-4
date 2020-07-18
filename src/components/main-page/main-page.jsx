@@ -24,7 +24,6 @@ class MainPage extends PureComponent {
     // const {activeItem, onItemClick} = this.props;
 
     const {onPlayerClick, onGenreClick, activeGenreCards, activeGenre} = this.props;
-    console.log(activeGenre);
     return (
       <React.Fragment>
         <section className="movie-card">
@@ -124,12 +123,10 @@ class MainPage extends PureComponent {
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  // activeItem: PropTypes.string.isRequired,
-  // onItemClick: PropTypes.func.isRequired,
   onPlayerClick: PropTypes.func.isRequired,
-  // onGenreClick: PropTypes.func.isRequired,
-  // activeGenreCards: PropTypes.array.isRequired,
-  // activeGenre: PropTypes.string.isRequired,
+  onGenreClick: PropTypes.func.isRequired,
+  activeGenreCards: PropTypes.array.isRequired,
+  activeGenre: PropTypes.string.isRequired,
 };
 
 export default MainPage;

@@ -28,6 +28,10 @@ it(`Render App`, () => {
   .create(<App filmCards={filmCards}
     onFilmClick={() => {}}
     selectedFilmId={-1}
+    bigPlayerValue={false}
+    onPlayerClick={() => {}}
+    onGenreClick={() => {}}
+    activeGenre={filmCards[0].genre}
   />)
   .toJSON();
 

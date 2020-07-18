@@ -28,7 +28,7 @@ class App extends PureComponent {
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
 
     const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
-    if (selectedFilmId === 0 && !bigPlayerValue) {
+    if (selectedFilmId === -1 && !bigPlayerValue) {
       return (
         <MainPage filmCards={filmCards}
           onFilmClick={(id) => {
@@ -45,7 +45,7 @@ class App extends PureComponent {
         />
       );
     }
-    if (selectedFilmId !== 0 && !bigPlayerValue) {
+    if (selectedFilmId !== -1 && !bigPlayerValue) {
       let relatedMovies = getRelatedMovies(activeCard, filmCards).slice(0, MORE_LIKE_THIS_COUNT);
       return (
         <MoviePage activeCard={activeCard}
@@ -98,14 +98,15 @@ App.propTypes = {
   bigPlayerValue: PropTypes.bool.isRequired,
   onPlayerClick: PropTypes.func.isRequired,
 
-  // onGenreClick: PropTypes.func.isRequired,
-  // activeGenre: PropTypes.string.isRequired,
+  onGenreClick: PropTypes.func.isRequired,
+  activeGenre: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   selectedFilmId: state.selectedFilmId,
   bigPlayerValue: state.bigPlayerValue,
   activeGenre: state.activeGenre,
+  filmCards: state.filmCards,
 });
 
 const mapDispatchToPtops = (dispatch) => ({

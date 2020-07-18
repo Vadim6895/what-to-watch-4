@@ -34,8 +34,8 @@ it(`Should welcome button be pressed`, () => {
   const genresList = shallow(
       <GenresList
         filmCards={filmCards}
-        onItemClick={itemClick}
-        activeItem={``}
+        onGenreClick={itemClick}
+        activeGenre={``}
       />
   );
 
