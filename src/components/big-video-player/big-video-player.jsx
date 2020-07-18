@@ -72,7 +72,7 @@ class BigVideoPlayer extends PureComponent {
     );
   }
 }
-
+// PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 BigVideoPlayer.propTypes = {
   onPlayerClick: PropTypes.func.isRequired,
   activeCard: PropTypes.object.isRequired,
@@ -81,7 +81,7 @@ BigVideoPlayer.propTypes = {
   fullscreen: PropTypes.bool.isRequired,
   onFullscreenClick: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
-  currentTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  currentTime: PropTypes.string.isRequired,
   videoRef: PropTypes.object.isRequired,
 };
 

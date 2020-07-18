@@ -14,7 +14,7 @@ const withBigPlayer = (Component) => {
         fullTime: 0,
       };
       this.ref = createRef();
-      this.currentTime = 0;
+      this.currentTime = `0`;
     }
 
     componentDidMount() {
