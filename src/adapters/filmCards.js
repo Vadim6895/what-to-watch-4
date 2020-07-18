@@ -14,12 +14,12 @@ const parseFilmCards = (filmCardsRAW) => {
       ratingsQuantity: filmCard.scores_count,
       description: filmCard.description,
       length: filmCard.run_time,
-      reviews: {
+      reviews: [{
         text: `asdasdasda`,
         rating: 10,
         name: `asdsadas`,
         date: new Date(109434763),
-      },
+      }],
     };
     return formatFilmCard;
   });

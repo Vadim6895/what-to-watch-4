@@ -9,7 +9,7 @@ import {reducer} from "./reducer.js";
 
 import {createAPI} from "./api.js";
 import thunk from "redux-thunk";
-import {actionRequireAuthorizationCreator, AuthorizationStatus} from "./reducer.js"; // Operation
+import {actionRequireAuthorizationCreator, AuthorizationStatus, Operation} from "./reducer.js";
 // window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
 
 

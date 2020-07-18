@@ -34,6 +34,8 @@ class BigVideoPlayer extends PureComponent {
     const {onPlayerClick, activeCard} = this.props;
     const {onPlayClick, play} = this.props;
     const {onFullscreenClick, progress, videoRef, currentTime} = this.props;
+    // console.log(currentTime);
+    // console.log(typeof currentTime);
 
     return (
       <div className="player">
@@ -79,7 +81,7 @@ BigVideoPlayer.propTypes = {
   fullscreen: PropTypes.bool.isRequired,
   onFullscreenClick: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,
-  currentTime: PropTypes.number.isRequired,
+  currentTime: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   videoRef: PropTypes.object.isRequired,
 };
 

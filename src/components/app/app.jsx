@@ -4,8 +4,6 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
-// import withActiveItem from "../../hocks/with-active-item.jsx";
-// const MainPageWrapped = withActiveItem(MainPage);
 
 import {getRelatedMovies, getCardsOnGenre} from "../../utils.js";
 import {MORE_LIKE_THIS_COUNT} from "../../const.js";

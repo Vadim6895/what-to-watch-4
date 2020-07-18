@@ -16,6 +16,7 @@ const withBigPlayer = (Component) => {
       this.ref = createRef();
       this.currentTime = 0;
     }
+
     componentDidMount() {
       const video = this.ref.current;
 
@@ -35,7 +36,7 @@ const withBigPlayer = (Component) => {
       });
 
       video.addEventListener(`loadedmetadata`, () => {
-        this.setState({length: video.duration});
+        this.setState({fullTime: video.duration});
       });
     }
 

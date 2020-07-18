@@ -2,7 +2,7 @@ import {extend} from "./utils.js";
 import {filmCardsMock} from "./mocks/films.js";
 import {parseFilmCards} from "./adapters/filmCards.js";
 import {AuthorizationStatus} from "./const.js";
-
+console.log(filmCardsMock);
 const initialState = {
   selectedFilmId: -1, // 1
   bigPlayerValue: false, // 1
@@ -63,6 +63,7 @@ const Operation = {
       return parseFilmCards(response.data);
     })
     .then((response) => {
+      console.log(response);
       dispatch(actionLoadFilmCardsCreator.loadFilmCards(response));
     });
   }
