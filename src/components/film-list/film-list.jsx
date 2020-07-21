@@ -14,10 +14,10 @@ class FilmList extends PureComponent {
       return (
         <FilmCard name={filmCard.movieName}
           onFilmClick={onFilmClick}
-          moviePoster={filmCard.moviePoster}
+          moviePreview={filmCard.moviePreview}
           key={filmCard.movieName + index.toString()}
           id={filmCard.id}
-          src={filmCard.src}
+          previewSrc={filmCard.previewSrc}
           renderPlayer={renderPlayer}
         />
       );
@@ -52,7 +52,6 @@ class FilmList extends PureComponent {
 }
 
 FilmList.propTypes = {
-  // filmCards: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   renderPlayer: PropTypes.func.isRequired,
   actualCardsCount: PropTypes.number.isRequired,

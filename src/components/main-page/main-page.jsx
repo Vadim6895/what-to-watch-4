@@ -4,15 +4,10 @@ import FilmList from "../film-list/film-list.jsx";
 
 import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
-
-import GenresList from "../genres-list/genres-list.jsx";
-// ----------------------------------------------------------
 import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
-// import {getCardsOnGenre} from "../../utils.js";
-
-// import BigVideoPlayer from "../big-video-player/big-video-player.jsx";
+import GenresList from "../genres-list/genres-list.jsx";
 
 class MainPage extends PureComponent {
   constructor(props) {
@@ -20,15 +15,14 @@ class MainPage extends PureComponent {
   }
 
   render() {
-    const {filmCards, onFilmClick} = this.props;
-    // const {activeItem, onItemClick} = this.props;
+    const {filmCards, onFilmClick, promoMovie} = this.props;
 
     const {onPlayerClick, onGenreClick, activeGenreCards, activeGenre} = this.props;
     return (
       <React.Fragment>
         <section className="movie-card">
           <div className="movie-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={promoMovie.backgroundImage} alt="The Grand Budapest Hotel" />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -52,14 +46,14 @@ class MainPage extends PureComponent {
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
-                <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+                <img src={promoMovie.moviePoster} alt="The Grand Budapest Hotel poster" width="218" height="327" />
               </div>
 
               <div className="movie-card__desc">
-                <h2 className="movie-card__title">{filmCards[0].movieName}</h2>
+                <h2 className="movie-card__title">{promoMovie.movieName}</h2>
                 <p className="movie-card__meta">
-                  <span className="movie-card__genre">{filmCards[0].genre}</span>
-                  <span className="movie-card__year">{filmCards[0].productionDate}</span>
+                  <span className="movie-card__genre">{promoMovie.genre}</span>
+                  <span className="movie-card__year">{promoMovie.productionDate}</span>
                 </p>
                 <div className="movie-card__buttons">
                   <button className="btn btn--play movie-card__button" type="button" onClick={() => {
@@ -115,13 +109,9 @@ class MainPage extends PureComponent {
   }
 }
 
-// <FilmListWrapped filmCards={filmCards} onFilmClick={onFilmClick} activeGenreCards={activeGenreCards}/>
-/* <div className="catalog__more">
-  <button className="catalog__button" type="button">Show more</button>
-</div>*/
-
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
+  promoMovie: PropTypes.object.isRequired,
   onFilmClick: PropTypes.func.isRequired,
   onPlayerClick: PropTypes.func.isRequired,
   onGenreClick: PropTypes.func.isRequired,

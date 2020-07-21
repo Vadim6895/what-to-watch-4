@@ -1,30 +1,27 @@
 
-const parseFilmCards = (filmCardsRAW) => {
-  const filmCards = filmCardsRAW.map((filmCard) => {
-    let formatFilmCard = {
-      id: filmCard.id,
-      movieName: filmCard.name,
-      productionDate: filmCard.released,
-      genre: filmCard.genre,
-      moviePoster: filmCard.preview_image,
-      src: filmCard.video_link,
-      director: filmCard.director,
-      actors: filmCard.starring,
-      rating: filmCard.rating,
-      ratingsQuantity: filmCard.scores_count,
-      description: filmCard.description,
-      length: filmCard.run_time,
-      reviews: [{
-        text: `asdasdasda`,
-        rating: 10,
-        name: `asdsadas`,
-        date: new Date(109434763),
-      }],
-    };
-    return formatFilmCard;
-  });
+const parseFilmCard = (filmCardRAW) => ({
+  id: filmCardRAW.id,
+  movieName: filmCardRAW.name,
+  productionDate: filmCardRAW.released,
+  genre: filmCardRAW.genre,
+  moviePoster: filmCardRAW.poster_image,
+  moviePreview: filmCardRAW.preview_image,
+  previewSrc: filmCardRAW.preview_video_link,
+  src: filmCardRAW.video_link,
+  director: filmCardRAW.director,
+  actors: filmCardRAW.starring,
+  rating: filmCardRAW.rating,
+  ratingsQuantity: filmCardRAW.scores_count,
+  description: filmCardRAW.description,
+  length: filmCardRAW.run_time,
+  backgroundColor: filmCardRAW.background_color,
+  backgroundImage: filmCardRAW.background_image,
+  isFavorite: filmCardRAW.is_favorite,
+  reviews: [],
+});
 
-  return filmCards;
+const parseFilmCards = (filmCardsRAW) => {
+  return filmCardsRAW.map(parseFilmCard);
 };
 
-export {parseFilmCards};
+export {parseFilmCard, parseFilmCards};

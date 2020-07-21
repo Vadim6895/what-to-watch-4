@@ -10,11 +10,11 @@ export default class VideoPlayer extends PureComponent {
   }
 
   render() {
-    const {moviePoster, onMouseEnter, onMouseLeave} = this.props;
+    const {moviePreview, onMouseEnter, onMouseLeave} = this.props;
 
     return (
       <video width="280" height="175" className="small-movie-player"
-        poster={moviePoster}
+        poster={moviePreview}
         onMouseEnter={() => {
           this.timerId = setTimeout(onMouseEnter, 1000);
         }}
@@ -40,10 +40,10 @@ export default class VideoPlayer extends PureComponent {
 
   componentDidUpdate() {
     const video = this._videoRef.current;
-    const {src} = this.props;
+    const {previewSrc} = this.props;
 
     if (this.props.isPlaying) {
-      video.src = src;
+      video.src = previewSrc;
       video.autoplay = true;
     } else {
       video.autoplay = false;
@@ -53,8 +53,8 @@ export default class VideoPlayer extends PureComponent {
 }
 
 VideoPlayer.propTypes = {
-  src: PropTypes.string.isRequired,
-  moviePoster: PropTypes.string.isRequired,
+  previewSrc: PropTypes.string.isRequired,
+  moviePreview: PropTypes.string.isRequired,
   onMouseEnter: PropTypes.func.isRequired,
   onMouseLeave: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool.isRequired,

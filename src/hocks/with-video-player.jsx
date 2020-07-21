@@ -14,11 +14,11 @@ const withActivePlayer = (Component) => {
     render() {
       return <Component
         {...this.props}
-        renderPlayer={(id, src, moviePoster) => {
+        renderPlayer={(id, previewSrc, moviePreview) => {
           return (
             <VideoPlayer
-              src={src}
-              moviePoster={moviePoster}
+              previewSrc={previewSrc}
+              moviePreview={moviePreview}
               onMouseEnter={() => {
                 this.setState({activeFilm: id});
               }}

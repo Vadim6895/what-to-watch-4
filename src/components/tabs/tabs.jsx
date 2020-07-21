@@ -15,7 +15,7 @@ class Tabs extends PureComponent {
           <p className="review__text">{review.text}</p>
 
           <footer className="review__details">
-            <cite className="review__author">{review.name}</cite>
+            <cite className="review__author">{review.name.name}</cite>
             <time className="review__date" dateTime="2015-11-18">{formatDate(review.date)}</time>
           </footer>
         </blockquote>
@@ -49,7 +49,7 @@ class Tabs extends PureComponent {
     );
   }
 
-  _renderTabs(activeItem, activeCard) {
+  _renderTabs(activeItem, activeCard, reviews) {
     if (activeItem === `` || activeItem === TabsMap.OVERVIEW) {
       return (
         <React.Fragment>
@@ -113,7 +113,7 @@ class Tabs extends PureComponent {
     if (activeItem === TabsMap.REVIEWS) {
       return (
         <React.Fragment>
-          {this._createReviewsList(activeCard.reviews)}
+          {this._createReviewsList(reviews)}
         </React.Fragment>
       );
     }
@@ -121,8 +121,9 @@ class Tabs extends PureComponent {
   }
 
   render() {
-    const {activeCard} = this.props;
+    const {activeCard, reviews} = this.props;
     const {activeItem, onItemClick} = this.props;
+
     return (
       <React.Fragment>
         <div className="movie-card__desc">
@@ -148,7 +149,7 @@ class Tabs extends PureComponent {
               </li>
             </ul>
           </nav>
-          {this._renderTabs(activeItem, activeCard)}
+          {this._renderTabs(activeItem, activeCard, reviews)}
 
         </div>
       </React.Fragment>
@@ -160,6 +161,7 @@ Tabs.propTypes = {
   activeCard: PropTypes.object.isRequired,
   activeItem: PropTypes.string.isRequired,
   onItemClick: PropTypes.func.isRequired,
+  reviews: PropTypes.array.isRequired,
 };
 
 export default Tabs;
