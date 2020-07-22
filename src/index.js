@@ -11,7 +11,7 @@ import {Provider} from "react-redux";
 // import thunk from "redux-thunk";
 // import {actionRequireAuthorizationCreator, AuthorizationStatus, Operation} from "./reducer.js";
 import {Operation as DataOperation} from "./reducer/data/data.js";
-// import {ActionCreator} from "./reducer/user/user.js";
+// import {Operation as UserOperation} from "./reducer/user/user.js";
 // import {AuthorizationStatus} from "./const.js";
 
 
@@ -19,6 +19,7 @@ import store from "./reducer/store.js";
 
 store.dispatch(DataOperation.loadFilmCards());
 store.dispatch(DataOperation.loadPromoMovie());
+// store.dispatch(UserOperation.checkAuth());
 
 ReactDom.render(
     <Provider store={store}>
@@ -26,5 +27,3 @@ ReactDom.render(
     </Provider>,
     document.querySelector(`#root`)
 );
-
-export default store;

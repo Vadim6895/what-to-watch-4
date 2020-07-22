@@ -5,16 +5,20 @@ import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
 // import {getRelatedMovies} from "../../utils.js";
-// import {MORE_LIKE_THIS_COUNT} from "../../const.js";
+import {AuthorizationStatus} from "../../const.js";
 
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
 import {getSelectedFilmId, getbigPlayerValue, getActiveGenre, getActiveCard, getCardsOnGenre, getRelatedMovies} from "../../reducer/step/selectors.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";
+import {Operation as UserOperation} from "../../reducer/user/user.js";
 
 import BigVideoPlayer from "../big-video-player/big-video-player.jsx";
 import withBigPlayer from "../../hocks/with-big-video-player.jsx";
 const BigVideoPlayerWrapped = withBigPlayer(BigVideoPlayer);
+
+import SignIn from "../sign-in/sign-in.jsx";
 
 class App extends PureComponent {
   constructor(props) {
@@ -22,60 +26,66 @@ class App extends PureComponent {
   }
 
   _renderMainScreen() {
-
     const {filmCards, promoMovie} = this.props;
     const {onFilmClick, selectedFilmId} = this.props;
     let activeCard = getActiveCard(filmCards, selectedFilmId);
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
-
     const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
-    if (selectedFilmId === -1 && !bigPlayerValue) {
-      return (
-        <MainPage filmCards={filmCards}
-          promoMovie={promoMovie}
-          onFilmClick={(id) => {
-            onFilmClick(id);
-          }}
-          onPlayerClick={(value) =>{
-            onPlayerClick(value);
-          }}
-          onGenreClick={(genre) =>{
-            onGenreClick(genre);
-          }}
-          activeGenreCards={activeGenreCards}
-          activeGenre={activeGenre}
-        />
-      );
-    }
-    if (selectedFilmId !== -1 && !bigPlayerValue) {
-      let relatedMovies = getRelatedMovies(activeCard, filmCards);
-      return (
-        <MoviePage activeCard={activeCard}
-          onFilmClick={(id) => {
-            onFilmClick(id);
-          }}
-          onPlayerClick={(value) =>{
-            onPlayerClick(value);
-          }}
-          relatedMovies={relatedMovies}
-        />
-      );
-    }
-    if (bigPlayerValue) {
-      if (selectedFilmId === -1) {
-        activeCard = promoMovie;
-      }
-      return (
-        <BigVideoPlayerWrapped
-          activeCard={activeCard}
-          onPlayerClick={(value) =>{
-            onPlayerClick(value);
-          }}
-        />
-      );
-    }
 
-    return null;
+    const {authorizationStatus, login} = this.props;
+
+    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      return <SignIn onSubmit={login}/>;
+    } else {
+
+      if (selectedFilmId === -1 && !bigPlayerValue) {
+        return (
+          <MainPage filmCards={filmCards}
+            promoMovie={promoMovie}
+            onFilmClick={(id) => {
+              onFilmClick(id);
+            }}
+            onPlayerClick={(value) =>{
+              onPlayerClick(value);
+            }}
+            onGenreClick={(genre) =>{
+              onGenreClick(genre);
+            }}
+            activeGenreCards={activeGenreCards}
+            activeGenre={activeGenre}
+          />
+        );
+      }
+      if (selectedFilmId !== -1 && !bigPlayerValue) {
+        let relatedMovies = getRelatedMovies(activeCard, filmCards);
+        return (
+          <MoviePage activeCard={activeCard}
+            onFilmClick={(id) => {
+              onFilmClick(id);
+            }}
+            onPlayerClick={(value) =>{
+              onPlayerClick(value);
+            }}
+            relatedMovies={relatedMovies}
+          />
+        );
+      }
+      if (bigPlayerValue) {
+        if (selectedFilmId === -1) {
+          activeCard = promoMovie;
+        }
+        return (
+          <BigVideoPlayerWrapped
+            activeCard={activeCard}
+            onPlayerClick={(value) =>{
+              onPlayerClick(value);
+            }}
+          />
+        );
+      }
+
+      return null;
+    }
   }
 
   render() {
@@ -106,6 +116,9 @@ App.propTypes = {
 
   onGenreClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
+
+  authorizationStatus: PropTypes.string.isRequired,
+  login: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -114,6 +127,7 @@ const mapStateToProps = (state) => ({
   activeGenre: getActiveGenre(state),
   filmCards: getFilmCards(state),
   promoMovie: getPromoMovie(state),
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToPtops = (dispatch) => ({
@@ -125,6 +139,9 @@ const mapDispatchToPtops = (dispatch) => ({
   },
   onGenreClick(genre) {
     dispatch(ActionCreator.activeGenre(genre));
+  },
+  login(userData) {
+    dispatch(UserOperation.login(userData));
   }
 });
 

@@ -10,7 +10,7 @@ const ActionType = {
 };
 
 const ActionCreator = {
-  requireAuthorization: () => {
+  requireAuthorization: (status) => {
     return {
       type: ActionType.REQUIRE_AUTHORIZATION,
       authorizationStatus: status,
@@ -27,5 +27,27 @@ const reducer = (state = initialState, action) => {
   }
   return state;
 };
+// ---------------------------------------
+const Operation = {
+  checkAuth: () => (dispatch, getState, api) => {
+    return api.get(`/login`)
+      .then(() => {
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      })
+      .catch((err) => {
+        throw err;
+      });
+  },
 
-export {reducer, ActionType, ActionCreator};
+  login: (authData) => (dispatch, getState, api) => {
+    return api.post(`/login`, {
+      email: authData.login,
+      password: authData.password,
+    })
+      .then(() => {
+        dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      });
+  },
+};
+
+export {reducer, ActionType, ActionCreator, Operation};

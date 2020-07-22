@@ -14,12 +14,13 @@ const TabsWrapped = withActiveItem(Tabs);
 import {connect} from "react-redux";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getReviews} from "../../reducer/data/selectors.js";
-import store from "../../index.js";
+import store from "../../reducer/store.js";
 
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
   }
+
   componentDidMount() {
     const {activeCard} = this.props;
 

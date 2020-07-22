@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 const FilmCard = (props) => {
   const {name, moviePreview, id, onFilmClick} = props;
   const {renderPlayer, previewSrc} = props;
-  const updateActiveCard = () => {
+  const _updateActiveCard = () => {
     onFilmClick(id);
   };
 
   return (
-    <article className="small-movie-card catalog__movies-card" onClick={() => updateActiveCard()}>
+    <article className="small-movie-card catalog__movies-card" onClick={() => _updateActiveCard()}>
       {renderPlayer(id, previewSrc, moviePreview)}
       <h3 className="small-movie-card__title">
         <a className="small-movie-card__link" href="#">{name}</a>
