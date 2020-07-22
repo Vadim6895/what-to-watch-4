@@ -4,12 +4,12 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 
-import {getRelatedMovies, getCardsOnGenre} from "../../utils.js";
-import {MORE_LIKE_THIS_COUNT} from "../../const.js";
+// import {getRelatedMovies} from "../../utils.js";
+// import {MORE_LIKE_THIS_COUNT} from "../../const.js";
 
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
-import {getSelectedFilmId, getbigPlayerValue, getActiveGenre} from "../../reducer/step/selectors.js";
+import {getSelectedFilmId, getbigPlayerValue, getActiveGenre, getActiveCard, getCardsOnGenre, getRelatedMovies} from "../../reducer/step/selectors.js";
 import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";
 
 import BigVideoPlayer from "../big-video-player/big-video-player.jsx";
@@ -25,7 +25,7 @@ class App extends PureComponent {
 
     const {filmCards, promoMovie} = this.props;
     const {onFilmClick, selectedFilmId} = this.props;
-    let activeCard = filmCards.find((filmCard) => filmCard.id === selectedFilmId);
+    let activeCard = getActiveCard(filmCards, selectedFilmId);
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
 
     const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
@@ -48,7 +48,7 @@ class App extends PureComponent {
       );
     }
     if (selectedFilmId !== -1 && !bigPlayerValue) {
-      let relatedMovies = getRelatedMovies(activeCard, filmCards).slice(0, MORE_LIKE_THIS_COUNT);
+      let relatedMovies = getRelatedMovies(activeCard, filmCards);
       return (
         <MoviePage activeCard={activeCard}
           onFilmClick={(id) => {

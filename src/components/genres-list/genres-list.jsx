@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 
-import {getGenresOfCards} from "../../utils.js";
+import {getGenresOfCards} from "../../reducer/step/selectors.js";
 import {GenresLinkMap, GenresMap} from "../../const.js";
 
 class GenresList extends PureComponent {

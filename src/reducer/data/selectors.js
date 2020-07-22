@@ -1,15 +1,14 @@
 import NameSpace from "../name-space.js";
 
-const NAME_SPACE = NameSpace.DATA;
 
 export const getFilmCards = (state) => {
-  return state[NAME_SPACE].filmCards;
+  return state[NameSpace.DATA].filmCards;
 };
 
 export const getPromoMovie = (state) => {
-  return state[NAME_SPACE].promoMovie;
+  return state[NameSpace.DATA].promoMovie;
 };
 
 export const getReviews = (state) => {
-  return state[NAME_SPACE].reviews;
+  return state[NameSpace.DATA].reviews;
 };

@@ -68,37 +68,6 @@ export const formatDate = (objDate) => {
   return `${objDate.toLocaleString(`en`, {month: `long`})} ${objDate.getMonth() + 1}, ${objDate.getFullYear()}`;
 };
 
-export const getRelatedMovies = (activeFilmCard, filmCardsArr) => {
-  let relatedMovies = [];
-  filmCardsArr.forEach((filmCard) => {
-    if (filmCard.genre === activeFilmCard.genre) {
-      relatedMovies.push(filmCard);
-    }
-  });
-  relatedMovies.forEach((filmCard, index) => {
-    if (filmCard.id === activeFilmCard.id) {
-      relatedMovies.splice(index, 1);
-    }
-  });
-
-  return relatedMovies;
-};
-// --------------module 5
 export const extend = (a, b) => {
   return Object.assign({}, a, b);
-};
-
-export const getGenresOfCards = (filmCards) => {
-  let genres = [];
-  filmCards.forEach((filmCard) => genres.push(filmCard.genre));
-  let uniqueGenres = genres.filter((item, index) => genres.indexOf(item) === index);
-  return uniqueGenres;
-};
-
-export const getCardsOnGenre = (genre, filmCards) => {
-  if (genre) {
-    let genreCards = filmCards.filter((filmCard) => filmCard.genre === genre);
-    return genreCards;
-  }
-  return filmCards;
 };
