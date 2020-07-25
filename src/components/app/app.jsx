@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
+import AddReview from "../add-review/add-review.jsx";
 
 // import {getRelatedMovies} from "../../utils.js";
 import {AuthorizationStatus} from "../../const.js";
@@ -27,10 +28,10 @@ class App extends PureComponent {
 
   _renderMainScreen() {
     const {filmCards, promoMovie} = this.props;
-    const {onFilmClick, selectedFilmId} = this.props;
-    let activeCard = getActiveCard(filmCards, selectedFilmId);
+    const {onFilmClick, selectedFilmId, activeCard, activeGenreCards} = this.props;
+    // let activeCard = getActiveCard(filmCards, selectedFilmId);
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
-    const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
+    // const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
 
     const {authorizationStatus, login} = this.props;
 
@@ -45,10 +46,10 @@ class App extends PureComponent {
             onFilmClick={(id) => {
               onFilmClick(id);
             }}
-            onPlayerClick={(value) =>{
+            onPlayerClick={(value) => {
               onPlayerClick(value);
             }}
-            onGenreClick={(genre) =>{
+            onGenreClick={(genre) => {
               onGenreClick(genre);
             }}
             activeGenreCards={activeGenreCards}
@@ -67,6 +68,7 @@ class App extends PureComponent {
               onPlayerClick(value);
             }}
             relatedMovies={relatedMovies}
+            authorizationStatus={authorizationStatus}
           />
         );
       }
@@ -89,13 +91,17 @@ class App extends PureComponent {
   }
 
   render() {
+    const {filmCards} = this.props;
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
             {this._renderMainScreen(this.props)}
           </Route>
-          <Route exact path="/?">
+          <Route exact path="/dev-review">
+            <AddReview
+              filmCard={filmCards[5]}
+            />
           </Route>
           <Route exact path="/*?*">
           </Route>
@@ -119,16 +125,38 @@ App.propTypes = {
 
   authorizationStatus: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
+
+  activeCard: PropTypes.object.isRequired,
+  activeGenreCards: PropTypes.array.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+/* const mapStateToProps = (state) => ({
   selectedFilmId: getSelectedFilmId(state),
   bigPlayerValue: getbigPlayerValue(state),
   activeGenre: getActiveGenre(state),
   filmCards: getFilmCards(state),
   promoMovie: getPromoMovie(state),
   authorizationStatus: getAuthorizationStatus(state),
-});
+});*/
+
+const mapStateToProps = (state) => {
+  const selectedFilmId = getSelectedFilmId(state);
+  const filmCards = getFilmCards(state);
+  const activeCard = getActiveCard(filmCards, selectedFilmId);
+
+  const activeGenre = getActiveGenre(state);
+  const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
+  return {
+    selectedFilmId,
+    bigPlayerValue: getbigPlayerValue(state),
+    activeGenre: getActiveGenre(state),
+    filmCards,
+    promoMovie: getPromoMovie(state),
+    authorizationStatus: getAuthorizationStatus(state),
+    activeCard,
+    activeGenreCards,
+  };
+};
 
 const mapDispatchToPtops = (dispatch) => ({
   onFilmClick(id) {

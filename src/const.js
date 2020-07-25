@@ -44,3 +44,6 @@ export const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
 };
+
+export const MIN_TEXT_LENGTH = 50;
+export const MAX_TEXT_LENGTH = 400;

@@ -4,20 +4,13 @@ import PropTypes from "prop-types";
 import {getGenresOfCards} from "../../reducer/step/selectors.js";
 import {GenresLinkMap, GenresMap} from "../../const.js";
 
+import {connect} from "react-redux";
+import {getFilmCards} from "../../reducer/data/selectors.js";
+
 class GenresList extends PureComponent {
   constructor(props) {
     super(props);
   }
-
-  /* _getActiveLink(genre) {
-    const {activeItem} = this.props;
-
-    let activeLink = GenresLinkMap.LINK;
-    if (genre === activeItem) {
-      activeLink = GenresLinkMap.ACTIVE_LINK;
-    }
-    return activeLink;
-  }*/
 
   _createGenreItem(genre, key, activeGenre) {
     const {onGenreClick} = this.props;
@@ -32,9 +25,7 @@ class GenresList extends PureComponent {
   }
 
   _createGenresList() {
-    const {filmCards} = this.props;
-    const genres = getGenresOfCards(filmCards);
-    const {onGenreClick, activeGenre} = this.props;
+    const {onGenreClick, activeGenre, genres} = this.props;
 
     return (
       <React.Fragment>
@@ -62,6 +53,24 @@ GenresList.propTypes = {
   filmCards: PropTypes.array.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   activeGenre: PropTypes.string.isRequired,
+
+  genres: PropTypes.array.isRequired,
 };
 
-export default GenresList;
+const mapStateToProps = (state) => {
+  const filmCards = getFilmCards(state);
+  const genres = getGenresOfCards(filmCards);
+
+  return {
+    filmCards,
+    genres,
+  };
+};
+
+/* mapDispatchToPtops = (dispatch) => ({
+
+});*/
+
+export {GenresList};
+// export default GenresList;
+export default connect(mapStateToProps)(GenresList);

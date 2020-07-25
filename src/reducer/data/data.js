@@ -14,6 +14,7 @@ const ActionType = {
   LOAD_FILM_CARDS: `LOAD_FILM_CARDS`,
   LOAD_PROMO_MOVIE: `LOAD_PROMO_MOVIE`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
+  UPLOAD_REVIEWS: `UPLOAD_REVIEWS`,
 };
 
 const ActionCreator = {
@@ -33,6 +34,12 @@ const ActionCreator = {
     return {
       type: ActionType.LOAD_PROMO_MOVIE,
       promoMovie,
+    };
+  },
+  uploadReview: (review) => {
+    return {
+      type: ActionType.UPLOAD_REVIEWS,
+      review,
     };
   }
 };
@@ -58,6 +65,18 @@ const Operation = {
   },
   loadReviews: (movie) => (dispatch, getState, api) => {
     return api.get(`/comments/${movie.id}`)
+    .then((response) => {
+      return parseReviews(response.data);
+    })
+    .then((response) => {
+      dispatch(ActionCreator.loadReviews(response));
+    });
+  },
+  uploadReview: (movie, review) => (dispatch, getState, api) => {
+    return api.post(`/comments/${movie.id}`, {
+      rating: review.rating,
+      text: review.text,
+    })
     .then((response) => {
       return parseReviews(response.data);
     })

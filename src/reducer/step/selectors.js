@@ -1,10 +1,14 @@
 import NameSpace from "../name-space.js";
 import {MORE_LIKE_THIS_COUNT} from "../../const.js";
+import {createSelector} from "reselect";
 
 // export let activeCard = filmCards.find((filmCard) => filmCard.id === selectedFilmId);
 export const getActiveCard = (filmCards, selectedFilmId) => {
-  let activeCard = filmCards.find((filmCard) => filmCard.id === selectedFilmId);
-  return activeCard;
+  if (selectedFilmId !== -1) {
+    let activeCard = filmCards.find((filmCard) => filmCard.id === selectedFilmId);
+    return activeCard;
+  }
+  return {};
 };
 
 export const getGenresOfCards = (filmCards) => {

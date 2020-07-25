@@ -36,7 +36,7 @@ class MoviePage extends PureComponent {
   }
 
   render() {
-    const {activeCard, reviews} = this.props;
+    const {activeCard, reviews, authorizationStatus} = this.props;
     const {relatedMovies, onFilmClick} = this.props;
     const {onPlayerClick} = this.props;
 
@@ -45,7 +45,7 @@ class MoviePage extends PureComponent {
         <section className="movie-card movie-card--full" style={{background: activeCard.backgroundColor}}>
           <div className="movie-card__hero">
             <div className="movie-card__bg">
-              <img src={activeCard.backgroundImage} alt="The Grand Budapest Hotel" />
+              <img src={activeCard.backgroundImage} alt={activeCard.movieName} />
             </div>
 
             <h1 className="visually-hidden">WTW</h1>
@@ -89,7 +89,7 @@ class MoviePage extends PureComponent {
                     </svg>
                     <span>My list</span>
                   </button>
-                  <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                  {authorizationStatus ? <a href="add-review.html" className="btn movie-card__button">Add review</a> : null}
                 </div>
               </div>
             </div>
@@ -139,6 +139,7 @@ MoviePage.propTypes = {
   onFilmClick: PropTypes.func.isRequired,
   onPlayerClick: PropTypes.func.isRequired,
   reviews: PropTypes.array.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
