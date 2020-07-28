@@ -1,6 +1,8 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
+import {Switch, Route, Router} from "react-router-dom";
+import history from "../../history.js";
+
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 import AddReview from "../add-review/add-review.jsx";
@@ -29,71 +31,66 @@ class App extends PureComponent {
   _renderMainScreen() {
     const {filmCards, promoMovie} = this.props;
     const {onFilmClick, selectedFilmId, activeCard, activeGenreCards} = this.props;
-    // let activeCard = getActiveCard(filmCards, selectedFilmId);
+
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
-    // const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
 
     const {authorizationStatus, login} = this.props;
 
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      return <SignIn onSubmit={login}/>;
-    } else {
-
-      if (selectedFilmId === -1 && !bigPlayerValue) {
-        return (
-          <MainPage filmCards={filmCards}
-            promoMovie={promoMovie}
-            onFilmClick={(id) => {
-              onFilmClick(id);
-            }}
-            onPlayerClick={(value) => {
-              onPlayerClick(value);
-            }}
-            onGenreClick={(genre) => {
-              onGenreClick(genre);
-            }}
-            activeGenreCards={activeGenreCards}
-            activeGenre={activeGenre}
-          />
-        );
-      }
-      if (selectedFilmId !== -1 && !bigPlayerValue) {
-        let relatedMovies = getRelatedMovies(activeCard, filmCards);
-        return (
-          <MoviePage activeCard={activeCard}
-            onFilmClick={(id) => {
-              onFilmClick(id);
-            }}
-            onPlayerClick={(value) =>{
-              onPlayerClick(value);
-            }}
-            relatedMovies={relatedMovies}
-            authorizationStatus={authorizationStatus}
-          />
-        );
-      }
-      if (bigPlayerValue) {
-        if (selectedFilmId === -1) {
-          activeCard = promoMovie;
-        }
-        return (
-          <BigVideoPlayerWrapped
-            activeCard={activeCard}
-            onPlayerClick={(value) =>{
-              onPlayerClick(value);
-            }}
-          />
-        );
-      }
-
-      return null;
+    if (selectedFilmId === -1 && !bigPlayerValue) {
+      return (
+        <MainPage filmCards={filmCards}
+          promoMovie={promoMovie}
+          onFilmClick={(id) => {
+            onFilmClick(id);
+          }}
+          onPlayerClick={(value) => {
+            onPlayerClick(value);
+          }}
+          onGenreClick={(genre) => {
+            onGenreClick(genre);
+          }}
+          activeGenreCards={activeGenreCards}
+          activeGenre={activeGenre}
+        />
+      );
     }
+    if (selectedFilmId !== -1 && !bigPlayerValue) {
+      let relatedMovies = getRelatedMovies(activeCard, filmCards);
+      return (
+        <MoviePage activeCard={activeCard}
+          onFilmClick={(id) => {
+            onFilmClick(id);
+          }}
+          onPlayerClick={(value) =>{
+            onPlayerClick(value);
+          }}
+          relatedMovies={relatedMovies}
+          authorizationStatus={authorizationStatus}
+        />
+      );
+    }
+    if (bigPlayerValue) {
+      if (selectedFilmId === -1) {
+        activeCard = promoMovie;
+      }
+      return (
+        <BigVideoPlayerWrapped
+          activeCard={activeCard}
+          onPlayerClick={(value) =>{
+            onPlayerClick(value);
+          }}
+        />
+      );
+    }
+
+    return null;
   }
 
   render() {
     const {filmCards} = this.props;
+    const {login} = this.props;
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
           <Route exact path="/">
             {this._renderMainScreen(this.props)}
@@ -103,10 +100,11 @@ class App extends PureComponent {
               filmCard={filmCards[5]}
             />
           </Route>
-          <Route exact path="/*?*">
+          <Route exact path="/login">
+            <SignIn onSubmit={login}/>;
           </Route>
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

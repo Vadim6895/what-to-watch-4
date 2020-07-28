@@ -75,7 +75,7 @@ const Operation = {
   uploadReview: (movie, review) => (dispatch, getState, api) => {
     return api.post(`/comments/${movie.id}`, {
       rating: review.rating,
-      text: review.text,
+      comment: review.text,
     })
     .then((response) => {
       return parseReviews(response.data);

@@ -2,15 +2,15 @@ import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import {MIN_TEXT_LENGTH, MAX_TEXT_LENGTH} from "../../const.js";
 
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import store from "../../reducer/store.js";
+
 class AddReview extends PureComponent {
   constructor(props) {
     super(props);
 
-    this._textAreaRef = createRef();
-    this._submitBtnRef = createRef();
-
     this._changeRatingValue = this._changeRatingValue.bind(this);
-
+    this.formRef = createRef();
     this.state = {
       isratingValue: 0,
       commentText: ``,
@@ -25,10 +25,22 @@ class AddReview extends PureComponent {
   }
 
   _changeText(evt) {
-    if (evt.target.value.length > MIN_TEXT_LENGTH &&
+    if (evt.target.value.length >= MIN_TEXT_LENGTH &&
     evt.target.value.length <= MAX_TEXT_LENGTH) {
       this.setState({commentText: evt.target.value});
+    } else {
+      this.setState({commentText: ``});
     }
+  }
+
+  _onSubmit(evt) {
+    evt.preventDefault();
+    const {filmCard} = this.props;
+    console.log(filmCard);
+    /* store.dispatch(DataOperation.uploadReview(filmCard, {ratings: `5`, text: `sdadsads asddsadsaads asdsadsd`}))
+    .catch((response) => {
+      console.log(response);
+    });*/
   }
 
   componentDidUpdate() {
@@ -79,22 +91,22 @@ class AddReview extends PureComponent {
         </div>
 
         <div className="add-review">
-          <form action="#" className="add-review__form">
+          <form action="#" className="add-review__form" onSubmit={(evt) => this._onSubmit(evt)} ref={this.formRef}>
             <div className="rating">
               <div className="rating__stars">
-                <input className="rating__input" id="star-1" type="radio" name="rating" value="1"readOnly onClick={() => this._changeRatingValue(1)}/>
+                <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onClick={() => this._changeRatingValue(1)}/>
                 <label className="rating__label" htmlFor="star-1">Rating 1</label>
 
-                <input className="rating__input" id="star-2" type="radio" name="rating" value="2" readOnly onClick={() => this._changeRatingValue(2)}/>
+                <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onClick={() => this._changeRatingValue(2)}/>
                 <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" checked readOnly onClick={() => this._changeRatingValue(3)}/>
+                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" checkeddefault="true" onClick={() => this._changeRatingValue(3)}/>
                 <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
-                <input className="rating__input" id="star-4" type="radio" name="rating" value="4" readOnly onClick={() => this._changeRatingValue(4)}/>
+                <input className="rating__input" id="star-4" type="radio" name="rating" value="4" onClick={() => this._changeRatingValue(4)}/>
                 <label className="rating__label" htmlFor="star-4">Rating 4</label>
 
-                <input className="rating__input" id="star-5" type="radio" name="rating" value="5" readOnly onClick={() => this._changeRatingValue(5)}/>
+                <input className="rating__input" id="star-5" type="radio" name="rating" value="5" onClick={() => this._changeRatingValue(5)}/>
                 <label className="rating__label" htmlFor="star-5">Rating 5</label>
               </div>
             </div>
@@ -102,7 +114,7 @@ class AddReview extends PureComponent {
             <div className="add-review__text">
               <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={(evt) => this._changeText(evt)}></textarea>
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit" disabled = {!this.state.isFormValid}>Post</button>
+                <button className="add-review__btn" type="submit" disabled = {!this.state.isFormValid} style={{opacity: !this.state.isFormValid ? `0.4` : `1`}}>Post</button>
               </div>
 
             </div>

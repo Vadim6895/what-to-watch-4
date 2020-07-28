@@ -14,12 +14,12 @@ import {Operation as DataOperation} from "./reducer/data/data.js";
 import {Operation as UserOperation} from "./reducer/user/user.js";
 // import {AuthorizationStatus} from "./const.js";
 
-
 import store from "./reducer/store.js";
+
+store.dispatch(UserOperation.checkAuth());
 const baseLoadOperations = [
   store.dispatch(DataOperation.loadFilmCards()),
   store.dispatch(DataOperation.loadPromoMovie()),
-  store.dispatch(UserOperation.checkAuth())
 ];
 
 const initializeApp = () => {
@@ -48,7 +48,20 @@ const loading = () => {
   );
 };
 
+const error = (err) => {
+  ReactDom.render(
+      <div style={{width: `100%`, height: `100vh`, background: `rgb(0, 0, 0)`}}>
+        <div style={{background: `rgb(0, 0, 0)`, margin: `0 auto`, width: `600px`, color: `white`, fontSize: `30px`, paddingTop: `20px`}}>Произошла ошибка при загрузке страницы</div>
+        <p style={{background: `rgb(0, 0, 0)`, margin: `0 auto`, width: `500px`, color: `white`, paddingTop: `50px`}}>Попробуйте позже...</p>
+        <p style={{background: `rgb(0, 0, 0)`, margin: `0 auto`, width: `500px`, color: `white`, paddingTop: `50px`}}>{err.toString()}</p>
+      </div>,
+      document.querySelector(`#root`)
+  );
+};
+
 loading();
 Promise.all(baseLoadOperations).then(() => {
   initializeApp();
+}).catch((err) => {
+  error(err);
 });
