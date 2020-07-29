@@ -6,6 +6,8 @@ import {Switch, Route, BrowserRouter} from "react-router-dom";
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 import AddReview from "../add-review/add-review.jsx";
+import withAddReview from "../../hocks/with-add-review.jsx";
+const AddReviewWrapped = withAddReview(AddReview);
 
 // import {AuthorizationStatus} from "../../const.js";
 
@@ -96,7 +98,7 @@ class App extends PureComponent {
             {this._renderMainScreen(this.props)}
           </Route>
           <Route exact path="/dev-review">
-            <AddReview
+            <AddReviewWrapped
               filmCard={filmCards[5]}
             />
           </Route>
