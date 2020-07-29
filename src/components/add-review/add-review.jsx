@@ -1,4 +1,4 @@
-import React, {PureComponent, createRef} from "react";
+import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {MIN_TEXT_LENGTH, MAX_TEXT_LENGTH} from "../../const.js";
 
@@ -9,46 +9,50 @@ class AddReview extends PureComponent {
   constructor(props) {
     super(props);
 
-    this._changeRatingValue = this._changeRatingValue.bind(this);
-    this.formRef = createRef();
     this.state = {
-      isratingValue: 0,
+      rating: 0,
       commentText: ``,
-      isFormValid: false,
+      isLoad: false,
+      showError: ``,
     };
   }
 
   _changeRatingValue(value) {
     this.setState({
-      isratingValue: value,
+      rating: value,
     });
   }
 
   _changeText(evt) {
-    if (evt.target.value.length >= MIN_TEXT_LENGTH &&
-    evt.target.value.length <= MAX_TEXT_LENGTH) {
-      this.setState({commentText: evt.target.value});
-    } else {
-      this.setState({commentText: ``});
-    }
+    this.setState({commentText: evt.target.value});
   }
 
   _onSubmit(evt) {
     evt.preventDefault();
     const {filmCard} = this.props;
-    console.log(filmCard);
-    /* store.dispatch(DataOperation.uploadReview(filmCard, {ratings: `5`, text: `sdadsads asddsadsaads asdsadsd`}))
+
+    store.dispatch(DataOperation.uploadReview(filmCard, {rating: this.state.rating, text: this.state.commentText}))
+    .then(() => {
+      this.setState({isLoad: true});
+    })
     .catch((response) => {
-      console.log(response);
-    });*/
+      this.setState({isLoad: false});
+      this.setState({showError: response.toString()});
+    });
   }
 
-  componentDidUpdate() {
-    this.setState({isFormValid: this.state.isratingValue === 0 || this.state.commentText === `` ? false : true});
+  _isFormValid(rating, commentText) {
+    if (rating > 0 && commentText.length >= MIN_TEXT_LENGTH && commentText.length <= MAX_TEXT_LENGTH) {
+      return true;
+    }
+    return false;
   }
 
   render() {
     const {filmCard} = this.props;
+    const {isLoad, showError} = this.state;
+    const formValid = this._isFormValid(this.state.rating, this.state.commentText);
+
     return (
       <section className="movie-card movie-card--full" style={{background: filmCard.backgroundColor}}>
         <div className="movie-card__header">
@@ -91,16 +95,18 @@ class AddReview extends PureComponent {
         </div>
 
         <div className="add-review">
-          <form action="#" className="add-review__form" onSubmit={(evt) => this._onSubmit(evt)} ref={this.formRef}>
+          <form action="#" className="add-review__form" onSubmit={(evt) => this._onSubmit(evt)} disabled={isLoad}>
             <div className="rating">
               <div className="rating__stars">
+                <input className="rating__input" id="star-0" type="radio" name="rating" value="0" defaultChecked="true" style={{display: `hidden`}}/>
+
                 <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onClick={() => this._changeRatingValue(1)}/>
                 <label className="rating__label" htmlFor="star-1">Rating 1</label>
 
                 <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onClick={() => this._changeRatingValue(2)}/>
                 <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" checkeddefault="true" onClick={() => this._changeRatingValue(3)}/>
+                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" onClick={() => this._changeRatingValue(3)}/>
                 <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
                 <input className="rating__input" id="star-4" type="radio" name="rating" value="4" onClick={() => this._changeRatingValue(4)}/>
@@ -114,10 +120,11 @@ class AddReview extends PureComponent {
             <div className="add-review__text">
               <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={(evt) => this._changeText(evt)}></textarea>
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit" disabled = {!this.state.isFormValid} style={{opacity: !this.state.isFormValid ? `0.4` : `1`}}>Post</button>
+                <button className="add-review__btn" type="submit" disabled = {!formValid} style={{opacity: !formValid ? `0.4` : `1`}}>Post</button>
               </div>
 
             </div>
+            <div>{showError ? showError : ``}</div>
           </form>
         </div>
       </section>

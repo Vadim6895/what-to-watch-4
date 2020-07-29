@@ -1,16 +1,16 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import Tabs from "../tabs/tabs.jsx";
-// ----------------------------------------
+
 import FilmList from "../film-list/film-list.jsx";
 import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
 import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
-// ----------------------------------------
+
 import withActiveItem from "../../hocks/with-active-item.jsx";
 const TabsWrapped = withActiveItem(Tabs);
-// ----------------------------------------
+
 import {connect} from "react-redux";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getReviews} from "../../reducer/data/selectors.js";

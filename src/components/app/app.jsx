@@ -1,14 +1,13 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {Switch, Route, Router} from "react-router-dom";
-import history from "../../history.js";
+import {Switch, Route, BrowserRouter} from "react-router-dom";
+// import history from "../../history.js";
 
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
 import AddReview from "../add-review/add-review.jsx";
 
-// import {getRelatedMovies} from "../../utils.js";
-import {AuthorizationStatus} from "../../const.js";
+// import {AuthorizationStatus} from "../../const.js";
 
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
@@ -34,7 +33,7 @@ class App extends PureComponent {
 
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
 
-    const {authorizationStatus, login} = this.props;
+    const {authorizationStatus} = this.props;
 
     if (selectedFilmId === -1 && !bigPlayerValue) {
       return (
@@ -55,7 +54,8 @@ class App extends PureComponent {
       );
     }
     if (selectedFilmId !== -1 && !bigPlayerValue) {
-      let relatedMovies = getRelatedMovies(activeCard, filmCards);
+      // let relatedMovies = getRelatedMovies(activeCard, filmCards);
+      const {relatedMovies} = this.props;
       return (
         <MoviePage activeCard={activeCard}
           onFilmClick={(id) => {
@@ -88,9 +88,9 @@ class App extends PureComponent {
 
   render() {
     const {filmCards} = this.props;
-    const {login} = this.props;
+    const {login} = this.props; // history={history}
     return (
-      <Router history={history}>
+      <BrowserRouter>
         <Switch>
           <Route exact path="/">
             {this._renderMainScreen(this.props)}
@@ -104,7 +104,7 @@ class App extends PureComponent {
             <SignIn onSubmit={login}/>;
           </Route>
         </Switch>
-      </Router>
+      </BrowserRouter>
     );
   }
 }
@@ -126,6 +126,7 @@ App.propTypes = {
 
   activeCard: PropTypes.object.isRequired,
   activeGenreCards: PropTypes.array.isRequired,
+  relatedMovies: PropTypes.array.isRequired,
 };
 
 /* const mapStateToProps = (state) => ({
@@ -140,10 +141,11 @@ App.propTypes = {
 const mapStateToProps = (state) => {
   const selectedFilmId = getSelectedFilmId(state);
   const filmCards = getFilmCards(state);
-  const activeCard = getActiveCard(filmCards, selectedFilmId);
+  const activeCard = getActiveCard(state);
 
-  const activeGenre = getActiveGenre(state);
-  const activeGenreCards = getCardsOnGenre(activeGenre, filmCards);
+  // const activeGenre = getActiveGenre(state);
+  const activeGenreCards = getCardsOnGenre(state);
+  const relatedMovies = getRelatedMovies(state);
   return {
     selectedFilmId,
     bigPlayerValue: getbigPlayerValue(state),
@@ -153,6 +155,7 @@ const mapStateToProps = (state) => {
     authorizationStatus: getAuthorizationStatus(state),
     activeCard,
     activeGenreCards,
+    relatedMovies,
   };
 };
 

@@ -59,7 +59,7 @@ GenresList.propTypes = {
 
 const mapStateToProps = (state) => {
   const filmCards = getFilmCards(state);
-  const genres = getGenresOfCards(filmCards);
+  const genres = getGenresOfCards(state);
 
   return {
     filmCards,

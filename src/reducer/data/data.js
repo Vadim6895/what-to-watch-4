@@ -79,9 +79,6 @@ const Operation = {
     })
     .then((response) => {
       return parseReviews(response.data);
-    })
-    .then((response) => {
-      dispatch(ActionCreator.loadReviews(response));
     });
   }
 };
