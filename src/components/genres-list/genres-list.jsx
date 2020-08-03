@@ -16,7 +16,10 @@ class GenresList extends PureComponent {
     const {onGenreClick} = this.props;
 
     return (
-      <li className={genre === activeGenre ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK} key={key} onClick={(evt) => {
+      <li className={genre === activeGenre ?
+        GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK}
+      key={key}
+      onClick={(evt) => {
         onGenreClick(evt.target.textContent);
       }}>
         <a href="#" className="catalog__genres-link">{genre}</a>
@@ -30,10 +33,11 @@ class GenresList extends PureComponent {
     return (
       <React.Fragment>
         <ul className="catalog__genres-list">
-          <li className={activeGenre === `` || activeGenre === GenresMap.ALL_GENRES ? GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK}
-            onClick={(evt) => {
-              onGenreClick(evt.target.textContent);
-            }}>
+          <li className={activeGenre === `` || activeGenre === GenresMap.ALL_GENRES ?
+            GenresLinkMap.ACTIVE_LINK : GenresLinkMap.LINK}
+          onClick={(evt) => {
+            onGenreClick(evt.target.textContent);
+          }}>
             <a href="#" className="catalog__genres-link">All genres</a>
           </li>
           {genres.map((genre, index) => {
@@ -67,10 +71,5 @@ const mapStateToProps = (state) => {
   };
 };
 
-/* mapDispatchToPtops = (dispatch) => ({
-
-});*/
-
 export {GenresList};
-// export default GenresList;
 export default connect(mapStateToProps)(GenresList);

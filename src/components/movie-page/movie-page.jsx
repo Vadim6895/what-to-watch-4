@@ -16,6 +16,8 @@ import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getReviews} from "../../reducer/data/selectors.js";
 import store from "../../reducer/store.js";
 
+import {Link} from "react-router-dom";
+
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
@@ -83,12 +85,19 @@ class MoviePage extends PureComponent {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                  </button>
+                  {activeCard.isFavorite ?
+                    <button className="btn btn--list movie-card__button" type="button">
+                      <svg viewBox="0 0 18 14" width="18" height="14">
+                        <use xlinkHref="#in-list"></use>
+                      </svg>
+                      <span>My list</span>
+                    </button> :
+                    <button className="btn btn--list movie-card__button" type="button">
+                      <svg viewBox="0 0 19 20" width="19" height="20">
+                        <use xlinkHref="#add"></use>
+                      </svg>
+                      <span>My list</span>
+                    </button>}
                   {authorizationStatus ? <a href="add-review.html" className="btn movie-card__button">Add review</a> : null}
                 </div>
               </div>
@@ -116,11 +125,11 @@ class MoviePage extends PureComponent {
 
           <footer className="page-footer">
             <div className="logo">
-              <a href="main.html" className="logo__link logo__link--light">
+              <Link to="/" className="logo__link logo__link--light">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
 
             <div className="copyright">

@@ -9,9 +9,10 @@ class BigVideoPlayer extends PureComponent {
   _renderButtonPlayer(play, onPlayClick) {
     if (!play) {
       return (
-        <button type="button" className="player__play" onClick={() => {
-          onPlayClick();
-        }}>
+        <button type="button" className="player__play"
+          onClick={() => {
+            onPlayClick();
+          }}>
           <svg viewBox="0 0 19 19" width="19" height="19">
             <use xlinkHref="#play-s"></use>
           </svg>
@@ -34,12 +35,11 @@ class BigVideoPlayer extends PureComponent {
     const {onPlayerClick, activeCard} = this.props;
     const {onPlayClick, play} = this.props;
     const {onFullscreenClick, progress, videoRef, currentTime} = this.props;
-    // console.log(currentTime);
-    // console.log(typeof currentTime);
 
     return (
       <div className="player">
-        <video src={activeCard.src} className="player__video" poster="img/player-poster.jpg" ref={videoRef}></video>
+        <video src={activeCard.src} className="player__video"
+          poster="img/player-poster.jpg" ref={videoRef}></video>
 
         <button type="button" className="player__exit" onClick={() => {
           onPlayerClick(false);
@@ -72,7 +72,7 @@ class BigVideoPlayer extends PureComponent {
     );
   }
 }
-// PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+
 BigVideoPlayer.propTypes = {
   onPlayerClick: PropTypes.func.isRequired,
   activeCard: PropTypes.object.isRequired,

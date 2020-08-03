@@ -4,6 +4,11 @@ exports[`Should MoviePage render correctly 1`] = `
 Array [
   <section
     className="movie-card movie-card--full"
+    style={
+      Object {
+        "background": "#ffffff",
+      }
+    }
   >
     <div
       className="movie-card__hero"
@@ -13,7 +18,7 @@ Array [
       >
         <img
           alt="The Grand Budapest Hotel"
-          src="img/bg-the-grand-budapest-hotel.jpg"
+          src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
         />
       </div>
       <h1
@@ -295,7 +300,8 @@ Array [
       >
         <a
           className="logo__link logo__link--light"
-          href="main.html"
+          href="/"
+          onClick={[Function]}
         >
           <span
             className="logo__letter logo__letter--1"

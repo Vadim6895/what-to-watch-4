@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {Switch, Route, BrowserRouter} from "react-router-dom";
-// import history from "../../history.js";
+import {Switch, Route, Router} from "react-router-dom";
+import history from "../../history.js";
 
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
@@ -9,11 +9,14 @@ import AddReview from "../add-review/add-review.jsx";
 import withAddReview from "../../hocks/with-add-review.jsx";
 const AddReviewWrapped = withAddReview(AddReview);
 
-// import {AuthorizationStatus} from "../../const.js";
+import Mylist from "../my-list/my-list.jsx";
+import PrivateRoute from "../private-route/private-route.jsx";
+import {AuthorizationStatus, AppRout} from "../../const.js";
 
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
-import {getSelectedFilmId, getbigPlayerValue, getActiveGenre, getActiveCard, getCardsOnGenre, getRelatedMovies} from "../../reducer/step/selectors.js";
+import {getSelectedFilmId, getbigPlayerValue, getActiveGenre,
+  getActiveCard, getCardsOnGenre, getRelatedMovies} from "../../reducer/step/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
@@ -23,6 +26,8 @@ import withBigPlayer from "../../hocks/with-big-video-player.jsx";
 const BigVideoPlayerWrapped = withBigPlayer(BigVideoPlayer);
 
 import SignIn from "../sign-in/sign-in.jsx";
+import withSignIn from "../../hocks/with-sign-in.jsx";
+const SignInWrapped = withSignIn(SignIn);
 
 class App extends PureComponent {
   constructor(props) {
@@ -32,10 +37,12 @@ class App extends PureComponent {
   _renderMainScreen() {
     const {filmCards, promoMovie} = this.props;
     const {onFilmClick, selectedFilmId, activeCard, activeGenreCards} = this.props;
-
     const {bigPlayerValue, onPlayerClick, onGenreClick, activeGenre} = this.props;
-
     const {authorizationStatus} = this.props;
+
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      history.push(AppRout.MAIN_PAGE);
+    }
 
     if (selectedFilmId === -1 && !bigPlayerValue) {
       return (
@@ -52,14 +59,14 @@ class App extends PureComponent {
           }}
           activeGenreCards={activeGenreCards}
           activeGenre={activeGenre}
+          authorizationStatus={authorizationStatus}
         />
       );
     }
     if (selectedFilmId !== -1 && !bigPlayerValue) {
-      // let relatedMovies = getRelatedMovies(activeCard, filmCards);
-      const {relatedMovies} = this.props;
-      return (
-        <MoviePage activeCard={activeCard}
+      // const {relatedMovies} = this.props;
+      // return (
+      /* <MoviePage activeCard={activeCard}
           onFilmClick={(id) => {
             onFilmClick(id);
           }}
@@ -68,8 +75,9 @@ class App extends PureComponent {
           }}
           relatedMovies={relatedMovies}
           authorizationStatus={authorizationStatus}
-        />
-      );
+        />*/
+      return history.push(`/movies/${selectedFilmId}`);
+      // );
     }
     if (bigPlayerValue) {
       if (selectedFilmId === -1) {
@@ -86,27 +94,53 @@ class App extends PureComponent {
     }
 
     return null;
+
   }
 
   render() {
-    const {filmCards} = this.props;
-    const {login} = this.props; // history={history}
+    const {filmCards, onFilmClick, login, authorizationStatus} = this.props;
+    const {activeCard, onPlayerClick, relatedMovies, selectedFilmId} = this.props;
     return (
-      <BrowserRouter>
+      <Router history={history}>
         <Switch>
-          <Route exact path="/">
+          <Route exact path={AppRout.MAIN_PAGE}>
             {this._renderMainScreen(this.props)}
           </Route>
-          <Route exact path="/dev-review">
+          <Route exact path={AppRout.DEV_REVIEW}>
             <AddReviewWrapped
-              filmCard={filmCards[5]}
+              filmCards={filmCards}
             />
           </Route>
-          <Route exact path="/login">
-            <SignIn onSubmit={login}/>;
+          <Route exact path={AppRout.LOGIN}>
+            <SignInWrapped onSubmit={login}/>;
           </Route>
+
+          <Route exact path={`/movies${selectedFilmId}`}>
+            <MoviePage
+              activeCard={activeCard}
+              onFilmClick={(id) => {
+                onFilmClick(id);
+              }}
+              onPlayerClick={(value) =>{
+                onPlayerClick(value);
+              }}
+              relatedMovies={relatedMovies}
+              authorizationStatus={authorizationStatus}
+            />;
+          </Route>
+
+          <PrivateRoute exact
+            path={AppRout.MY_LIST}
+            authorizationStatus={authorizationStatus}
+            render={() => {
+              return (
+                <Mylist onFilmClick={onFilmClick}/>
+              );
+            }}
+          />
+
         </Switch>
-      </BrowserRouter>
+      </Router>
     );
   }
 }
@@ -131,21 +165,11 @@ App.propTypes = {
   relatedMovies: PropTypes.array.isRequired,
 };
 
-/* const mapStateToProps = (state) => ({
-  selectedFilmId: getSelectedFilmId(state),
-  bigPlayerValue: getbigPlayerValue(state),
-  activeGenre: getActiveGenre(state),
-  filmCards: getFilmCards(state),
-  promoMovie: getPromoMovie(state),
-  authorizationStatus: getAuthorizationStatus(state),
-});*/
-
 const mapStateToProps = (state) => {
   const selectedFilmId = getSelectedFilmId(state);
   const filmCards = getFilmCards(state);
   const activeCard = getActiveCard(state);
 
-  // const activeGenre = getActiveGenre(state);
   const activeGenreCards = getCardsOnGenre(state);
   const relatedMovies = getRelatedMovies(state);
   return {

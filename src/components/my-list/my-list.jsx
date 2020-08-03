@@ -1,51 +1,95 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 
-const MyList = () => {
-  return (
-    <div className="user-page">
-      <header className="page-header user-page__head">
-        <div className="logo">
-          <a href="main.html" className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+import {Operation as UserOperation} from "../../reducer/user/user.js";
+import {getFavorites} from "../../reducer/user/selectors.js";
 
-        <h1 className="page-title user-page__title">My list</h1>
+import FilmList from "../film-list/film-list.jsx";
+import withActivePlayer from "../../hocks/with-video-player.jsx";
+const FilmListWrapped = withActivePlayer(FilmList);
+import withFilmList from "../../hocks/with-film-list.jsx";
+const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+// import store from "../../reducer/store.js";
+import {AppRout} from "../..//const.js";
+
+class MyList extends PureComponent {
+  constructor(props) {
+    super(props);
+  }
+
+  componentDidMount() {
+    const {loadFavorites} = this.props;
+    loadFavorites();
+  }
+
+  render() {
+    const {favorites, onFilmClick} = this.props;
+
+    return (
+      <div className="user-page">
+        <header className="page-header user-page__head">
+          <div className="logo">
+            <Link to={AppRout.MAIN_PAGE} className="logo__link">
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </Link>
           </div>
-        </div>
-      </header>
 
-      <section className="catalog">
-        <h2 className="catalog__title visually-hidden">Catalog</h2>
+          <h1 className="page-title user-page__title">My list</h1>
 
-        <div className="catalog__movies-list">
+          <div className="user-block">
+            <div className="user-block__avatar">
+              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            </div>
+          </div>
+        </header>
 
-        </div>
+        <section className="catalog">
+          <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      </section>
+          <div className="catalog__movies-list">
+            <FilmListSecondWrapped filmCards={favorites} onFilmClick={onFilmClick} activeGenreCards={[]}/>
+          </div>
 
-      <footer className="page-footer">
-        <div className="logo">
-          <a href="main.html" className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        </section>
 
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
-    </div>
-  );
+        <footer className="page-footer">
+          <div className="logo">
+            <Link to={AppRout.MAIN_PAGE} className="logo__link logo__link--light">
+              <span className="logo__letter logo__letter--1">W</span>
+              <span className="logo__letter logo__letter--2">T</span>
+              <span className="logo__letter logo__letter--3">W</span>
+            </Link>
+          </div>
+
+          <div className="copyright">
+            <p>© 2019 What to watch Ltd.</p>
+          </div>
+        </footer>
+      </div>
+    );
+  }
+}
+
+MyList.propTypes = {
+  favorites: PropTypes.array.isRequired,
+  onFilmClick: PropTypes.func.isRequired,
+  loadFavorites: PropTypes.func.isRequired,
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  favorites: getFavorites(state),
+});
+
+const mapDispatchToPtops = (dispatch) => ({
+  loadFavorites() {
+    dispatch(UserOperation.loadFavorites());
+  }
+});
+
+export {MyList};
+export default connect(mapStateToProps, mapDispatchToPtops)(MyList);

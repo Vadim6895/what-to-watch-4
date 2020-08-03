@@ -2,8 +2,6 @@ import {extend} from "../../utils.js";
 import {parseFilmCards, parseFilmCard} from "../../adapters/filmCards.js";
 import {parseReviews} from "../../adapters/reviews.js";
 
-// import {filmCardsMock} from "../../mocks/films.js";
-
 const initialState = {
   filmCards: [],
   promoMovie: {},
@@ -15,6 +13,7 @@ const ActionType = {
   LOAD_PROMO_MOVIE: `LOAD_PROMO_MOVIE`,
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   UPLOAD_REVIEWS: `UPLOAD_REVIEWS`,
+  CHANGE_FAVORITE_FILM: `CHANGE_FAVORITE_FILM`,
 };
 
 const ActionCreator = {
@@ -40,6 +39,12 @@ const ActionCreator = {
     return {
       type: ActionType.UPLOAD_REVIEWS,
       review,
+    };
+  },
+  changeFavoriteFilm: (isFavorite) => {
+    return {
+      type: ActionType.CHANGE_FAVORITE_FILM,
+      isFavorite,
     };
   }
 };
@@ -80,7 +85,7 @@ const Operation = {
     .then((response) => {
       return parseReviews(response.data);
     });
-  }
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -97,6 +102,13 @@ const reducer = (state = initialState, action) => {
       return extend(state, {
         reviews: action.reviews,
       });
+    case ActionType.CHANGE_FAVORITE_FILM:
+      const newPromoMovie = state.promoMovie;
+      newPromoMovie.isFavorite = action.isFavorite;
+      return extend(state, {
+        promoMovie: newPromoMovie,
+      });
+
   }
   return state;
 };

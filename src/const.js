@@ -47,3 +47,10 @@ export const AuthorizationStatus = {
 
 export const MIN_TEXT_LENGTH = 50;
 export const MAX_TEXT_LENGTH = 400;
+
+export const AppRout = {
+  MAIN_PAGE: `/`,
+  LOGIN: `/Login`,
+  DEV_REVIEW: `/dev-review`,
+  MY_LIST: `/Mylist`
+};

@@ -26,8 +26,8 @@ const filmCards = [{
 it(`Should VideoPlayer render correctly`, () => {
   const tree = renderer
   .create(<VideoPlayer
-    src={filmCards[0].src}
-    moviePoster={filmCards[0].moviePoster}
+    previewSrc={filmCards[0].src}
+    moviePreview={filmCards[0].moviePoster}
     onMouseEnter={() => {}}
     onMouseLeave={() => {}}
     isPlaying={false}

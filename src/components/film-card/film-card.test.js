@@ -7,6 +7,8 @@ const filmCards = [{
   productionDate: `1984`,
   genre: `Drama`,
   moviePoster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  moviePreview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  previewSrc: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   id: 0,
   director: `Anthony Mann`,
@@ -15,23 +17,26 @@ const filmCards = [{
   ratingsQuantity: 250,
   description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
   length: 120,
-  reviews: [{
-    text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
-    rating: 8,
-    name: `Anthony Mann`,
-    date: new Date(),
-  }]
+  backgroundColor: `#ffffff`,
+  backgroundImage: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  isFavorite: false,
+  reviews: [],
 }];
+/* const reviews = [{
+  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
+  rating: 8,
+  name: `Anthony Mann`,
+  date: new Date(),
+}];*/
 
 it(`Should FilmCard render correctly`, () => {
   const tree = renderer
   .create(<FilmCard
     name={filmCards[0].movieName}
     id={filmCards[0].id}
-    moviePoster={filmCards[0].moviePoster}
+    moviePreview={filmCards[0].moviePreview}
     onFilmClick={() => {}}
-    src={filmCards[0].src}
-    key={filmCards[0].movieName}
+    previewSrc={filmCards[0].previewSrc}
     renderPlayer={() => {}}
   />)
   .toJSON();

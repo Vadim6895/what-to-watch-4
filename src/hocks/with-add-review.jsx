@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 
 import {MIN_TEXT_LENGTH, MAX_TEXT_LENGTH} from "../const.js";
@@ -17,9 +17,10 @@ const withAddReview = (Component) => {
         isLoad: false,
         showError: ``,
       };
+      this.formRef = createRef();
     }
 
-    // -----------------------------------
+
     _changeRatingValue(value) {
       this.setState({
         rating: value,
@@ -32,12 +33,14 @@ const withAddReview = (Component) => {
 
     _onSubmit(evt) {
       evt.preventDefault();
-      const {filmCard} = this.props;
+      const {filmCards} = this.props;
+      const form = this.formRef.current;
 
-      store.dispatch(DataOperation.uploadReview(filmCard, {rating: this.state.rating, text: this.state.commentText}))
+      store.dispatch(DataOperation.uploadReview(filmCards[0], {rating: this.state.rating, text: this.state.commentText}))
       .then(() => {
         this.setState({isLoad: true});
         this.setState({showError: ``});
+        form.reset();
       })
       .catch((response) => {
         this.setState({isLoad: false});
@@ -51,7 +54,6 @@ const withAddReview = (Component) => {
       }
       return false;
     }
-    // -----------------------------------
 
     render() {
       return <Component
@@ -64,11 +66,12 @@ const withAddReview = (Component) => {
         changeText={(evt) => this._changeText(evt)}
         changeRating={(value) => this._changeRatingValue(value)}
         submitHandler={(evt) => this._onSubmit(evt)}
+        formRef={this.formRef}
       />;
     }
   }
   WithAddReview.propTypes = {
-    filmCard: PropTypes.object.isRequired,
+    filmCards: PropTypes.array.isRequired,
   };
   return WithAddReview;
 };

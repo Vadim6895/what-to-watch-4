@@ -26,5 +26,27 @@ exports[`Should GenreList render correctly 1`] = `
       Drama
     </a>
   </li>
+  <li
+    className="catalog__genres-item"
+    onClick={[Function]}
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      fantasy
+    </a>
+  </li>
+  <li
+    className="catalog__genres-item"
+    onClick={[Function]}
+  >
+    <a
+      className="catalog__genres-link"
+      href="#"
+    >
+      comedy
+    </a>
+  </li>
 </ul>
 `;

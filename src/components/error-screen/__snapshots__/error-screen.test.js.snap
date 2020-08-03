@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should ErrorScreen render correctly 1`] = `
+<div
+  style={
+    Object {
+      "background": "rgb(0, 0, 0)",
+      "height": "100vh",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "background": "rgb(0, 0, 0)",
+        "color": "white",
+        "fontSize": "30px",
+        "margin": "0 auto",
+        "paddingTop": "20px",
+        "width": "600px",
+      }
+    }
+  >
+    Произошла ошибка при загрузке страницы
+  </div>
+  <p
+    style={
+      Object {
+        "background": "rgb(0, 0, 0)",
+        "color": "white",
+        "margin": "0 auto",
+        "paddingTop": "50px",
+        "width": "500px",
+      }
+    }
+  >
+    Попробуйте позже...
+  </p>
+  <p
+    style={
+      Object {
+        "background": "rgb(0, 0, 0)",
+        "color": "white",
+        "margin": "0 auto",
+        "paddingTop": "50px",
+        "width": "500px",
+      }
+    }
+  >
+    [object Object]
+  </p>
+</div>
+`;

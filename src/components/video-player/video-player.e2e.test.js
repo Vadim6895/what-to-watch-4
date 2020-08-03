@@ -12,8 +12,20 @@ const filmCards = [{
   productionDate: `1984`,
   genre: `Drama`,
   moviePoster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  moviePreview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  previewSrc: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-  id: 0
+  id: 0,
+  director: `Anthony Mann`,
+  actors: [`Anthony Mann`],
+  rating: 9,
+  ratingsQuantity: 250,
+  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
+  length: 120,
+  backgroundColor: `#ffffff`,
+  backgroundImage: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
+  isFavorite: false,
+  reviews: [],
 }];
 
 jest.useFakeTimers();
@@ -23,8 +35,8 @@ it(`Should video player on onMouseEnter`, () => {
 
   const videoPlayer = shallow(
       <VideoPlayer
-        src={filmCards[0].src}
-        moviePoster={filmCards[0].moviePoster}
+        previewSrc={filmCards[0].previewSrc}
+        moviePreview={filmCards[0].moviePreview}
         onMouseEnter={mouseEnterFunc}
         onMouseLeave={onMouseLeaveFunc}
         isPlaying={false}

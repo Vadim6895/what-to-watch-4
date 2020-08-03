@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import Tabs from "./tabs.jsx";
+import {MoviePage} from "./movie-page.jsx";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -20,7 +20,8 @@ const filmCards = [{
   actors: [`Anthony Mann`],
   rating: 9,
   ratingsQuantity: 250,
-  description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
+  description: `Lorem ipsum dolor sit amet, consectetur adipiscing
+   elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
   length: 120,
   backgroundColor: `#ffffff`,
   backgroundImage: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
@@ -29,29 +30,32 @@ const filmCards = [{
 }];
 
 const reviews = [{
-  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
+  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
+   ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
   rating: 8,
   name: `Anthony Mann`,
   date: new Date(),
 }];
 
-it(`Click tabs it correctly`, () => {
-  // const mainNavLink = jest.fn();
+const AuthorizationStatus = {
+  AUTH: `AUTH`,
+  NO_AUTH: `NO_AUTH`,
+};
 
-  const tabs = shallow(
-      <Tabs
+it(`Should moviePage e2e be correctly`, () => {
+  const playerClick = jest.fn();
+
+  const moviePage = shallow(
+      <MoviePage
         activeCard={filmCards[0]}
-        activeItem={``}
-        onItemClick={() => {}}
+        relatedMovies={filmCards.slice(0, 4)}
+        onFilmClick={() => {}}
+        onPlayerClick={playerClick}
         reviews={reviews}
+        authorizationStatus={AuthorizationStatus.NO_AUTH}
       />
   );
-
-  const mainNavHandler = tabs.find(`.movie-nav__item`);
-
-  mainNavHandler.forEach((item) => item.simulate(`click`, {target: {textContent: `Review`}}));
-  // mainNavHandler.simulate(`click`);
-  // tabs.update();
-  // expect(mainNavLink.mock.calls.length).toBe(1);
-  // expect(mainNavHandler.mock.calls.length).toBe(1);
+  const playerButton = moviePage.find(`.btn--play`);
+  playerButton.props().onClick();
+  expect(playerClick.mock.calls.length).toBe(1);
 });

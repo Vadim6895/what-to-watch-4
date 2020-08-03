@@ -1,7 +1,7 @@
-import React from "react";
+import React, {createRef} from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import Tabs from "./tabs.jsx";
+import BigVideoPlayer from "./big-video-player.jsx";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -28,30 +28,36 @@ const filmCards = [{
   reviews: [],
 }];
 
-const reviews = [{
-  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
-  rating: 8,
-  name: `Anthony Mann`,
-  date: new Date(),
-}];
+const ref = createRef();
 
-it(`Click tabs it correctly`, () => {
-  // const mainNavLink = jest.fn();
+it(`Should BigVideoPlayer click it correctly`, () => {
+  const playClick = jest.fn();
+  const exitClick = jest.fn();
+  const fullscreenClick = jest.fn();
 
-  const tabs = shallow(
-      <Tabs
+  const bigVideoPlayer = shallow(
+      <BigVideoPlayer
+        onPlayerClick={exitClick}
         activeCard={filmCards[0]}
-        activeItem={``}
-        onItemClick={() => {}}
-        reviews={reviews}
+        play={false}
+        onPlayClick={playClick}
+        fullscreen={false}
+        onFullscreenClick={fullscreenClick}
+        progress={0}
+        currentTime={``}
+        videoRef={ref}
       />
   );
 
-  const mainNavHandler = tabs.find(`.movie-nav__item`);
+  const playButton = bigVideoPlayer.find(`.player__play`);
+  playButton.props().onClick();
+  expect(playClick.mock.calls.length).toBe(1);
 
-  mainNavHandler.forEach((item) => item.simulate(`click`, {target: {textContent: `Review`}}));
-  // mainNavHandler.simulate(`click`);
-  // tabs.update();
-  // expect(mainNavLink.mock.calls.length).toBe(1);
-  // expect(mainNavHandler.mock.calls.length).toBe(1);
+  const exitButton = bigVideoPlayer.find(`.player__exit`);
+  exitButton.props().onClick();
+  expect(exitClick.mock.calls.length).toBe(1);
+
+  const fullscreenButton = bigVideoPlayer.find(`.player__full-screen`);
+  fullscreenButton.props().onClick();
+  expect(fullscreenClick.mock.calls.length).toBe(1);
 });

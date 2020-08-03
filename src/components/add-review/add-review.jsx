@@ -50,17 +50,15 @@ class AddReview extends PureComponent {
   }*/
 
   render() {
-    const {filmCard} = this.props;
-    // const {isLoad, showError} = this.state;
-    const {isLoad, showError} = this.props; // hock
-    // const formValid = this._isFormValid(this.state.rating, this.state.commentText);
-    const {formValid, changeText, changeRating, submitHandler} = this.props;// hock
+    const {filmCards} = this.props;
+    const {isLoad, showError} = this.props;
+    const {formValid, changeText, changeRating, submitHandler, formRef} = this.props;
 
     return (
-      <section className="movie-card movie-card--full" style={{background: filmCard.backgroundColor}}>
+      <section className="movie-card movie-card--full" style={{background: filmCards[0].backgroundColor}}>
         <div className="movie-card__header">
           <div className="movie-card__bg">
-            <img src={filmCard.backgroundImage} alt={filmCard.movieName} />
+            <img src={filmCards[0].backgroundImage} alt={filmCards[0].movieName} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -77,7 +75,7 @@ class AddReview extends PureComponent {
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a href="movie-page.html" className="breadcrumbs__link">{filmCard.movieName}</a>
+                  <a href="movie-page.html" className="breadcrumbs__link">{filmCards[0].movieName}</a>
                 </li>
                 <li className="breadcrumbs__item">
                   <a className="breadcrumbs__link">Add review</a>
@@ -93,12 +91,12 @@ class AddReview extends PureComponent {
           </header>
 
           <div className="movie-card__poster movie-card__poster--small">
-            <img src={filmCard.moviePoster} alt={filmCard.movieName} width="218" height="327" />
+            <img src={filmCards[0].moviePoster} alt={filmCards[0].movieName} width="218" height="327" />
           </div>
         </div>
 
         <div className="add-review">
-          <form action="#" className="add-review__form" onSubmit={(evt) => submitHandler(evt)} disabled={isLoad}>
+          <form action="#" className="add-review__form" onSubmit={(evt) => submitHandler(evt)} disabled={isLoad} ref={formRef}>
             <div className="rating">
               <div className="rating__stars">
                 <input className="rating__input" id="star-0" type="radio" name="rating" value="0" defaultChecked="true" style={{display: `hidden`}}/>
@@ -136,7 +134,7 @@ class AddReview extends PureComponent {
 }
 
 AddReview.propTypes = {
-  filmCard: PropTypes.object.isRequired,
+  filmCards: PropTypes.array.isRequired,
 
   isLoad: PropTypes.bool.isRequired,
   showError: PropTypes.string.isRequired,
@@ -144,6 +142,7 @@ AddReview.propTypes = {
   changeText: PropTypes.func.isRequired,
   changeRating: PropTypes.func.isRequired,
   submitHandler: PropTypes.func.isRequired,
+  formRef: PropTypes.object.isRequired,
 };
 
 export default AddReview;
