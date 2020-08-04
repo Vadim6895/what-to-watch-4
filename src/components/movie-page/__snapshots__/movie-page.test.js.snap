@@ -34,7 +34,8 @@ Array [
         >
           <a
             className="logo__link"
-            href="main.html"
+            href="/"
+            onClick={[Function]}
           >
             <span
               className="logo__letter logo__letter--1"
@@ -57,14 +58,15 @@ Array [
           className="user-block"
         >
           <div
-            className="user-block__avatar"
+            className="user-block__link"
           >
-            <img
-              alt="User avatar"
-              height="63"
-              src="img/avatar.jpg"
-              width="63"
-            />
+            <a
+              className="user-block__link"
+              href="/Login"
+              onClick={[Function]}
+            >
+              Sign in
+            </a>
           </div>
         </div>
       </header>
@@ -96,8 +98,9 @@ Array [
           <div
             className="movie-card__buttons"
           >
-            <button
+            <a
               className="btn btn--play movie-card__button"
+              href="/bigPlayer/0"
               onClick={[Function]}
               type="button"
             >
@@ -113,9 +116,10 @@ Array [
               <span>
                 Play
               </span>
-            </button>
+            </a>
             <button
               className="btn btn--list movie-card__button"
+              onClick={[Function]}
               type="button"
             >
               <svg
@@ -133,7 +137,8 @@ Array [
             </button>
             <a
               className="btn movie-card__button"
-              href="add-review.html"
+              href="/Login"
+              onClick={[Function]}
             >
               Add review
             </a>
@@ -266,8 +271,9 @@ Array [
       <div
         className="catalog__movies-list"
       >
-        <article
+        <a
           className="small-movie-card catalog__movies-card"
+          href="/films/0"
           onClick={[Function]}
         >
           <video
@@ -282,14 +288,19 @@ Array [
           <h3
             className="small-movie-card__title"
           >
-            <a
+            <span
               className="small-movie-card__link"
               href="#"
+              style={
+                Object {
+                  "color": "#dfcf77",
+                }
+              }
             >
               The Grand Budapest Hotel
-            </a>
+            </span>
           </h3>
-        </article>
+        </a>
       </div>
     </section>
     <footer

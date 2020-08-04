@@ -1,6 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-
+import {connect} from "react-redux";
 import FilmList from "../film-list/film-list.jsx";
 import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
@@ -8,36 +8,23 @@ import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
 import GenresList from "../genres-list/genres-list.jsx";
-import {AuthorizationStatus} from "../../const.js";
+import {AuthorizationStatus, AppRout} from "../../const.js";
 import {Link} from "react-router-dom";
 
-import {Operation as UserOperation} from "../../reducer/user/user.js";
-import {Operation as DataOperation, ActionCreator} from "../../reducer/data/data.js";
-
-import store from "../../reducer/store.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import {getActiveGenre, getCardsOnGenre} from "../../reducer/step/selectors.js";
+import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";
+import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
 class MainPage extends PureComponent {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
-    store.dispatch(DataOperation.loadPromoMovie());
-  }
-
-  _handleAddList() {
-    const {promoMovie} = this.props;
-    store.dispatch(UserOperation.uploadFavorite(promoMovie))
-    .then(() => {
-      // store.dispatch(DataOperation.loadPromoMovie());
-      store.dispatch(ActionCreator.changeFavoriteFilm(!promoMovie.isFavorite));
-    });
-  }
-
   render() {
-    const {onPlayerClick, onGenreClick, activeGenreCards, activeGenre,
+    const {onGenreClick, activeGenreCards, activeGenre,
       authorizationStatus, filmCards, onFilmClick, promoMovie} = this.props;
-
+    const {handleAddList} = this.props;
     return (
       <React.Fragment>
         <section className="movie-card">
@@ -49,7 +36,7 @@ class MainPage extends PureComponent {
           <header className={authorizationStatus === AuthorizationStatus.AUTH ?
             `page-header movie-card__head` : `page-header`}>
             <div className="logo">
-              <Link to="/" className="logo__link">
+              <Link to={AppRout.MAIN_PAGE} className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -60,11 +47,11 @@ class MainPage extends PureComponent {
               <div className={authorizationStatus === AuthorizationStatus.AUTH ?
                 `user-block__avatar` : `user-block__link`}>
                 {authorizationStatus === AuthorizationStatus.AUTH ?
-                  <Link to="/Mylist">
+                  <Link to={AppRout.MY_LIST}>
                     <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
                   </Link>
                   :
-                  <Link to="/Login" className="user-block__link">Sign in</Link>
+                  <Link to={AppRout.LOGIN} className="user-block__link">Sign in</Link>
                 }
               </div>
             </div>
@@ -83,25 +70,26 @@ class MainPage extends PureComponent {
                   <span className="movie-card__year">{promoMovie.productionDate}</span>
                 </p>
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button"
-                    onClick={() => {
-                      onPlayerClick(true);
-                    }}>
+                  <Link to={`/bigPlayer/${promoMovie.id}`} className="btn btn--play movie-card__button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
+                  </Link>
                   {promoMovie.isFavorite ?
                     <button className="btn btn--list movie-card__button" type="button"
-                      onClick={this._handleAddList.bind(this)}>
+                      onClick={() => {
+                        handleAddList(promoMovie);
+                      }}>
                       <svg viewBox="0 0 18 14" width="18" height="14">
                         <use xlinkHref="#in-list"></use>
                       </svg>
                       <span>My list</span>
                     </button> :
                     <button className="btn btn--list movie-card__button" type="button"
-                      onClick={this._handleAddList.bind(this)}>
+                      onClick={() => {
+                        handleAddList(promoMovie);
+                      }}>
                       <svg viewBox="0 0 19 20" width="19" height="20">
                         <use xlinkHref="#add"></use>
                       </svg>
@@ -132,7 +120,7 @@ class MainPage extends PureComponent {
 
           <footer className="page-footer">
             <div className="logo">
-              <Link to="/" className="logo__link logo__link--light">
+              <Link to={AppRout.MAIN_PAGE} className="logo__link logo__link--light">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -148,16 +136,41 @@ class MainPage extends PureComponent {
     );
   }
 }
-
+// <button className="btn btn--play movie-card__button" type="button">
 MainPage.propTypes = {
   filmCards: PropTypes.array.isRequired,
   promoMovie: PropTypes.object.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  onPlayerClick: PropTypes.func.isRequired,
+  // onPlayerClick: PropTypes.func.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   activeGenreCards: PropTypes.array.isRequired,
   activeGenre: PropTypes.string.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+
+  handleAddList: PropTypes.func.isRequired,
+  // loadPromoMovie: PropTypes.func.isRequired,
 };
 
-export default MainPage;
+const mapStateToProps = (state) => {
+  const filmCards = getFilmCards(state);
+  const activeGenreCards = getCardsOnGenre(state);
+  return {
+    filmCards,
+    activeGenreCards,
+    activeGenre: getActiveGenre(state),
+    promoMovie: getPromoMovie(state),
+    authorizationStatus: getAuthorizationStatus(state),
+  };
+};
+
+const mapDispatchToPtops = (dispatch) => ({
+  handleAddList(promoMovie) {
+    dispatch(DataOperation.uploadFavorite(promoMovie));
+  },
+  /* loadPromoMovie() {
+    dispatch(DataOperation.loadPromoMovie());
+  }*/
+});
+
+export {MainPage};
+export default connect(mapStateToProps, mapDispatchToPtops)(MainPage);

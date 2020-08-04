@@ -1,6 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import FilmList from "./film-list.jsx";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -26,14 +28,17 @@ const CARDS_COUNT = 8;
 
 it(`Should FilmList render correctly`, () => {
   const tree = renderer
-  .create(<FilmList
-    onFilmClick={() => {}}
-    renderPlayer={() => {}}
-    actualCardsCount={CARDS_COUNT}
-    actualCards={filmCards.slice(0, 8)}
-    newCards={filmCards.slice(0, 8)}
-    onClick={() => {}}
-  />)
+  .create(
+      <Router history={history}>
+        <FilmList
+          onFilmClick={() => {}}
+          renderPlayer={() => {}}
+          actualCardsCount={CARDS_COUNT}
+          actualCards={filmCards.slice(0, 8)}
+          newCards={filmCards.slice(0, 8)}
+          onClick={() => {}}
+        />
+      </Router>)
   .toJSON();
 
   expect(tree).toMatchSnapshot();

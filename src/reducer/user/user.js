@@ -24,7 +24,7 @@ const ActionCreator = {
       type: ActionType.LOAD_FAVORITES,
       favorites,
     };
-  }
+  },
 };
 
 const reducer = (state = initialState, action) => {
@@ -70,15 +70,6 @@ const Operation = {
       return response;
     });
   },
-  uploadFavorite: (movie) => (dispatch, getState, api) => {
-    const numberStatus = movie.isFavorite ? 0 : 1;
-    return api.post(`/favorite/${movie.id}/${numberStatus}`, {
-      isFavorite: movie.isFavorite
-    })
-    .then((response) => {
-      return response;
-    });
-  }
 };
 
 export {reducer, ActionType, ActionCreator, Operation};

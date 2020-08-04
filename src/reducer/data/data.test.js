@@ -55,18 +55,18 @@ it(`Should correctly api call to data`, () => {
   const apiMock = new MockAdapter(api);
   const dispatch = jest.fn();
   const filmCardsLoader = Operation.loadFilmCards();
-  apiMock.restore();
-  apiMock.reset();
+  // apiMock.restore();
+  // apiMock.reset();
   apiMock
   .onGet(`/films`)
-  .reply(200, [{fake: true}]);
+  .reply(200, filmCards); // [{fake: true}]
 
   return filmCardsLoader(dispatch, () => {}, api)
   .then(() => {
     expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith(1, {
       type: ActionType.LOAD_FILM_CARDS,
-      filmCards: [{fake: true}],
+      filmCards,
     });
   });
 });

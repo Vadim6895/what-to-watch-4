@@ -43,19 +43,19 @@ const AuthorizationStatus = {
 };
 
 it(`Should moviePage e2e be correctly`, () => {
-  const playerClick = jest.fn();
+  const addListHandler = jest.fn();
 
   const moviePage = shallow(
       <MoviePage
         activeCard={filmCards[0]}
         relatedMovies={filmCards.slice(0, 4)}
         onFilmClick={() => {}}
-        onPlayerClick={playerClick}
+        handleAddList={addListHandler}
         reviews={reviews}
         authorizationStatus={AuthorizationStatus.NO_AUTH}
       />
   );
-  const playerButton = moviePage.find(`.btn--play`);
-  playerButton.props().onClick();
-  expect(playerClick.mock.calls.length).toBe(1);
+  const addListButton = moviePage.find(`.btn--list`);
+  addListButton.props().onClick();
+  expect(addListHandler.mock.calls.length).toBe(1);
 });

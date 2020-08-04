@@ -1,5 +1,7 @@
 import React, {createRef} from "react";
 import renderer from "react-test-renderer";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 import AddReview from "./add-review.jsx";
 
@@ -29,16 +31,18 @@ const ref = createRef();
 it(`Should Add review In render correctly`, () => {
   const tree = renderer
   .create(
-      <AddReview
-        filmCards={filmCards}
-        isLoad={false}
-        showError={``}
-        formValid={false}
-        changeText={() => {}}
-        changeRating={() => {}}
-        submitHandler={() => {}}
-        formRef={ref}
-      />)
+      <Router history={history}>
+        <AddReview
+          activeCard={filmCards[0]}
+          isLoad={false}
+          showError={``}
+          formValid={false}
+          changeText={() => {}}
+          changeRating={() => {}}
+          submitHandler={() => {}}
+          formRef={ref}
+        />
+      </Router>)
   .toJSON();
 
   expect(tree).toMatchSnapshot();

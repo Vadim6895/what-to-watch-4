@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import history from "../../history.js";
 
 class BigVideoPlayer extends PureComponent {
   constructor(props) {
@@ -32,17 +33,18 @@ class BigVideoPlayer extends PureComponent {
     );
   }
   render() {
-    const {onPlayerClick, activeCard} = this.props;
+    const {activeCard} = this.props;
     const {onPlayClick, play} = this.props;
     const {onFullscreenClick, progress, videoRef, currentTime} = this.props;
 
     return (
       <div className="player">
         <video src={activeCard.src} className="player__video"
-          poster="img/player-poster.jpg" ref={videoRef}></video>
+          poster="/img/player-poster.jpg" ref={videoRef}></video>
 
         <button type="button" className="player__exit" onClick={() => {
-          onPlayerClick(false);
+          // onPlayerClick(false); // не забыть удалить.
+          history.goBack();
         }}>Exit</button>
 
         <div className="player__controls">
@@ -74,7 +76,7 @@ class BigVideoPlayer extends PureComponent {
 }
 
 BigVideoPlayer.propTypes = {
-  onPlayerClick: PropTypes.func.isRequired,
+  // onPlayerClick: PropTypes.func.isRequired,
   activeCard: PropTypes.object.isRequired,
   play: PropTypes.bool.isRequired,
   onPlayClick: PropTypes.func.isRequired,

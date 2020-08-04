@@ -1,7 +1,7 @@
 import React from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import MainPage from "./main-page.jsx";
+import {MainPage} from "./main-page.jsx";
 
 // import {Router} from "react-router-dom";
 // import history from "../../history.js";
@@ -40,24 +40,23 @@ const AuthorizationStatus = {
 };
 
 it(`Should MainPage e2e be correctly`, () => {
-  const playerClick = jest.fn();
-  // const myListClick = jest.fn();
+  const handleAddList = jest.fn();
 
   const mainPage = shallow(
       <MainPage
         filmCards={filmCards}
         promoMovie={filmCards[0]}
         onFilmClick={() => {}}
-        onPlayerClick={playerClick}
+        handleAddList={handleAddList}
         onGenreClick={() => {}}
         activeGenreCards={filmCards}
         activeGenre={filmCards[0].genre}
         authorizationStatus={AuthorizationStatus.NO_AUTH}
       />
   );
-  const playerButton = mainPage.find(`.btn--play`);
-  playerButton.props().onClick();
-  expect(playerClick.mock.calls.length).toBe(1);
+  const addListButton = mainPage.find(`.btn--list`);
+  addListButton.props().onClick();
+  expect(handleAddList.mock.calls.length).toBe(1);
 
   /* const myListButton = mainPage.find(`.btn--list`);
   myListButton.props().onClick();

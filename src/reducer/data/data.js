@@ -14,6 +14,7 @@ const ActionType = {
   LOAD_REVIEWS: `LOAD_REVIEWS`,
   UPLOAD_REVIEWS: `UPLOAD_REVIEWS`,
   CHANGE_FAVORITE_FILM: `CHANGE_FAVORITE_FILM`,
+  CHANGE_FAVORITE_FILM_AS_CARDS: `CHANGE_FAVORITE_FILM_AS_CARDS`,
 };
 
 const ActionCreator = {
@@ -41,10 +42,16 @@ const ActionCreator = {
       review,
     };
   },
-  changeFavoriteFilm: (isFavorite) => {
+  changeFavoriteFilm: (favorite) => {
     return {
       type: ActionType.CHANGE_FAVORITE_FILM,
-      isFavorite,
+      favorite,
+    };
+  },
+  changeFavoriteFilmAsCards: (favorite) => {
+    return {
+      type: ActionType.CHANGE_FAVORITE_FILM_AS_CARDS,
+      favorite,
     };
   }
 };
@@ -86,6 +93,30 @@ const Operation = {
       return parseReviews(response.data);
     });
   },
+  uploadFavorite: (movie) => (dispatch, getState, api) => {
+    const numberStatus = movie.isFavorite ? 0 : 1;
+    return api.post(`/favorite/${movie.id}/${numberStatus}`, {
+      isFavorite: movie.isFavorite
+    })
+    .then((response) => {
+      return parseFilmCard(response.data);
+    })
+    .then((response) => {
+      dispatch(ActionCreator.changeFavoriteFilm(response));
+    });
+  },
+  uploadFavoriteAsCards: (movie) => (dispatch, getState, api) => {
+    const numberStatus = movie.isFavorite ? 0 : 1;
+    return api.post(`/favorite/${movie.id}/${numberStatus}`, {
+      isFavorite: movie.isFavorite
+    })
+    .then((response) => {
+      return parseFilmCard(response.data);
+    })
+    .then((response) => {
+      dispatch(ActionCreator.changeFavoriteFilmAsCards(response));
+    });
+  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -103,12 +134,22 @@ const reducer = (state = initialState, action) => {
         reviews: action.reviews,
       });
     case ActionType.CHANGE_FAVORITE_FILM:
-      const newPromoMovie = state.promoMovie;
-      newPromoMovie.isFavorite = action.isFavorite;
       return extend(state, {
-        promoMovie: newPromoMovie,
+        promoMovie: action.favorite,
       });
-
+    case ActionType.CHANGE_FAVORITE_FILM_AS_CARDS:
+      const newCards = [...state.filmCards];
+      let actualIndex;
+      state.filmCards.forEach((item, index) => {
+        if (item.id === action.favorite.id) {
+          actualIndex = index;
+        }
+        return undefined;
+      });
+      newCards[actualIndex] = action.favorite;
+      return extend(state, {
+        filmCards: newCards,
+      });
   }
   return state;
 };

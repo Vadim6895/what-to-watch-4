@@ -2,7 +2,6 @@ import {extend} from "../../utils.js";
 
 const initialState = {
   selectedFilmId: -1,
-  bigPlayerValue: false,
   activeGenre: ``,
 };
 
@@ -25,12 +24,6 @@ const ActionCreator = {
       activeGenre: genre,
     };
   },
-  player: (value) => {
-    return {
-      type: ActionType.PLAYER_VALUE,
-      bigPlayerValue: value,
-    };
-  }
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,10 +35,6 @@ const reducer = (state = initialState, action) => {
     case ActionType.ACTIVE_GENRE:
       return extend(state, {
         activeGenre: action.activeGenre,
-      });
-    case ActionType.PLAYER_VALUE:
-      return extend(state, {
-        bigPlayerValue: action.bigPlayerValue
       });
   }
   return state;

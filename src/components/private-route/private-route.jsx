@@ -1,10 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// import {Link} from "react-router-dom";
 import {Route, Redirect} from "react-router-dom";
-
-import {AuthorizationStatus} from "../../const.js";
+import {AuthorizationStatus, AppRout} from "../../const.js";
 
 const PrivateRoute = (props) => {
   const {authorizationStatus, render, path} = props;
@@ -13,7 +11,7 @@ const PrivateRoute = (props) => {
     <Route exact path={path}
       render={() => {
         return (
-          authorizationStatus === AuthorizationStatus.AUTH ? render() : <Redirect to="/login" />
+          authorizationStatus === AuthorizationStatus.AUTH ? render() : <Redirect to={AppRout.LOGIN} />
         );
       }}
     />

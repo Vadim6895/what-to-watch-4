@@ -1,42 +1,12 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import {AppRout} from "../../const.js";
 
 class SignIn extends PureComponent {
   constructor(props) {
     super(props);
-
-    /* this._emailRef = createRef();
-    this._passwordRef = createRef();
-    this._submitHandler = this._submitHandler.bind(this);
-
-    this.state = {
-      favoriteCards: [],
-      emailError: false,
-    };*/
   }
-
-  /* _isEmailValid(email) {
-    const regex = /^.+@.+\..+$/igm;
-    if (regex.test(email)) {
-      return true;
-    }
-    return false;
-  }*/
-
-  /* _submitHandler(evt) {
-    const {onSubmit} = this.props;
-    evt.preventDefault();
-    if (this._isEmailValid(this._emailRef.current.value)) {
-      onSubmit({
-        login: this._emailRef.current.value,
-        password: this._passwordRef.current.value,
-      });
-      this.setState({emailError: false});
-    } else {
-      this.setState({emailError: true});
-    }
-  }*/
 
   render() {
     const {submitHandler, emailError, emailRef, passwordRef} = this.props;
@@ -44,7 +14,7 @@ class SignIn extends PureComponent {
       <div className="user-page">
         <header className="page-header user-page__head">
           <div className="logo">
-            <Link to="/" className="logo__link">
+            <Link to={AppRout.MAIN_PAGE} className="logo__link">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>
@@ -80,7 +50,7 @@ class SignIn extends PureComponent {
 
         <footer className="page-footer">
           <div className="logo">
-            <Link to="/" className="logo__link logo__link--light">
+            <Link to={AppRout.MAIN_PAGE} className="logo__link logo__link--light">
               <span className="logo__letter logo__letter--1">W</span>
               <span className="logo__letter logo__letter--2">T</span>
               <span className="logo__letter logo__letter--3">W</span>

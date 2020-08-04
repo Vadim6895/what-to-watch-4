@@ -45,7 +45,7 @@ it(`Should MoviePage render correctly`, () => {
           activeCard={filmCards[0]}
           relatedMovies={filmCards.slice(0, 4)}
           onFilmClick={() => {}}
-          onPlayerClick={() => {}}
+          handleAddList={() => {}}
           reviews={reviews}
           authorizationStatus={AuthorizationStatus.NO_AUTH}
         />

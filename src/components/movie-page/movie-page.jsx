@@ -17,6 +17,7 @@ import {getReviews} from "../../reducer/data/selectors.js";
 import store from "../../reducer/store.js";
 
 import {Link} from "react-router-dom";
+import {AuthorizationStatus, AppRout} from "../../const.js";
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -25,7 +26,6 @@ class MoviePage extends PureComponent {
 
   componentDidMount() {
     const {activeCard} = this.props;
-
     store.dispatch(DataOperation.loadReviews(activeCard));
   }
 
@@ -40,7 +40,7 @@ class MoviePage extends PureComponent {
   render() {
     const {activeCard, reviews, authorizationStatus} = this.props;
     const {relatedMovies, onFilmClick} = this.props;
-    const {onPlayerClick} = this.props;
+    const {handleAddList} = this.props;
 
     return (
       <React.Fragment>
@@ -54,16 +54,23 @@ class MoviePage extends PureComponent {
 
             <header className="page-header movie-card__head">
               <div className="logo">
-                <a href="main.html" className="logo__link">
+                <Link to={AppRout.MAIN_PAGE} href="main.html" className="logo__link">
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
-                </a>
+                </Link>
               </div>
 
               <div className="user-block">
-                <div className="user-block__avatar">
-                  <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <div className={authorizationStatus === AuthorizationStatus.AUTH ?
+                  `user-block__avatar` : `user-block__link`}>
+                  {authorizationStatus === AuthorizationStatus.AUTH ?
+                    <Link to={AppRout.MY_LIST}>
+                      <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                    </Link>
+                    :
+                    <Link to={AppRout.LOGIN} className="user-block__link">Sign in</Link>
+                  }
                 </div>
               </div>
             </header>
@@ -77,28 +84,36 @@ class MoviePage extends PureComponent {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button" onClick={() => {
-                    onPlayerClick(true);
-                  }}>
+                  <Link to={`/bigPlayer/${activeCard.id}`} className="btn btn--play movie-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
+                  </Link>
                   {activeCard.isFavorite ?
-                    <button className="btn btn--list movie-card__button" type="button">
+                    <button className="btn btn--list movie-card__button" type="button"
+                      onClick={() => {
+                        handleAddList(activeCard);
+                      }}>
                       <svg viewBox="0 0 18 14" width="18" height="14">
                         <use xlinkHref="#in-list"></use>
                       </svg>
                       <span>My list</span>
                     </button> :
-                    <button className="btn btn--list movie-card__button" type="button">
+                    <button className="btn btn--list movie-card__button" type="button"
+                      onClick={() => {
+                        handleAddList(activeCard);
+                      }}>
                       <svg viewBox="0 0 19 20" width="19" height="20">
                         <use xlinkHref="#add"></use>
                       </svg>
                       <span>My list</span>
                     </button>}
-                  {authorizationStatus ? <a href="add-review.html" className="btn movie-card__button">Add review</a> : null}
+                  {authorizationStatus === AuthorizationStatus.AUTH ?
+                    <Link to={`/Review/${activeCard.id}`} className="btn movie-card__button">Add review</Link>
+                    :
+                    <Link to={AppRout.LOGIN} className="btn movie-card__button">Add review</Link>
+                  }
                 </div>
               </div>
             </div>
@@ -125,7 +140,7 @@ class MoviePage extends PureComponent {
 
           <footer className="page-footer">
             <div className="logo">
-              <Link to="/" className="logo__link logo__link--light">
+              <Link to={AppRout.MAIN_PAGE} className="logo__link logo__link--light">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
@@ -146,14 +161,22 @@ MoviePage.propTypes = {
   activeCard: PropTypes.object.isRequired,
   relatedMovies: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  onPlayerClick: PropTypes.func.isRequired,
+  // onPlayerClick: PropTypes.func.isRequired,
   reviews: PropTypes.array.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+
+  handleAddList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   reviews: getReviews(state),
 });
 
+const mapDispatchToPtops = (dispatch) => ({
+  handleAddList(activeCard) {
+    dispatch(DataOperation.uploadFavoriteAsCards(activeCard));
+  },
+});
+
 export {MoviePage};
-export default connect(mapStateToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToPtops)(MoviePage);

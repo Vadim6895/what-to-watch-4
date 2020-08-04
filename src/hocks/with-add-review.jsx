@@ -5,6 +5,7 @@ import {MIN_TEXT_LENGTH, MAX_TEXT_LENGTH} from "../const.js";
 
 import {Operation as DataOperation} from "../reducer/data/data.js";
 import store from "../reducer/store.js";
+import history from "../history.js";
 
 const withAddReview = (Component) => {
   class WithAddReview extends PureComponent {
@@ -33,14 +34,15 @@ const withAddReview = (Component) => {
 
     _onSubmit(evt) {
       evt.preventDefault();
-      const {filmCards} = this.props;
+      const {activeCard} = this.props;
       const form = this.formRef.current;
 
-      store.dispatch(DataOperation.uploadReview(filmCards[0], {rating: this.state.rating, text: this.state.commentText}))
+      store.dispatch(DataOperation.uploadReview(activeCard, {rating: this.state.rating, text: this.state.commentText}))
       .then(() => {
         this.setState({isLoad: true});
         this.setState({showError: ``});
         form.reset();
+        history.push(`/movies/${activeCard.id}`);
       })
       .catch((response) => {
         this.setState({isLoad: false});
@@ -71,7 +73,7 @@ const withAddReview = (Component) => {
     }
   }
   WithAddReview.propTypes = {
-    filmCards: PropTypes.array.isRequired,
+    activeCard: PropTypes.object.isRequired,
   };
   return WithAddReview;
 };

@@ -1,6 +1,8 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import FilmCard from "./film-card.jsx";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -22,23 +24,20 @@ const filmCards = [{
   isFavorite: false,
   reviews: [],
 }];
-/* const reviews = [{
-  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
-  rating: 8,
-  name: `Anthony Mann`,
-  date: new Date(),
-}];*/
 
 it(`Should FilmCard render correctly`, () => {
   const tree = renderer
-  .create(<FilmCard
-    name={filmCards[0].movieName}
-    id={filmCards[0].id}
-    moviePreview={filmCards[0].moviePreview}
-    onFilmClick={() => {}}
-    previewSrc={filmCards[0].previewSrc}
-    renderPlayer={() => {}}
-  />)
+  .create(
+      <Router history={history}>
+        <FilmCard
+          name={filmCards[0].movieName}
+          id={filmCards[0].id}
+          moviePreview={filmCards[0].moviePreview}
+          onFilmClick={() => {}}
+          previewSrc={filmCards[0].previewSrc}
+          renderPlayer={() => {}}
+        />
+      </Router>)
   .toJSON();
 
   expect(tree).toMatchSnapshot();

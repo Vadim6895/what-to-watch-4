@@ -6,7 +6,7 @@ exports[`Should Big video player render correctly 1`] = `
 >
   <video
     className="player__video"
-    poster="img/player-poster.jpg"
+    poster="/img/player-poster.jpg"
     src="https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4"
   />
   <button

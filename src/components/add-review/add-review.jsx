@@ -1,81 +1,40 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-// import {MIN_TEXT_LENGTH, MAX_TEXT_LENGTH} from "../../const.js";
-
-// import {Operation as DataOperation} from "../../reducer/data/data.js";
-// import store from "../../reducer/store.js";
+import {Link} from "react-router-dom";
+import {AppRout} from "../../const.js";
 
 class AddReview extends PureComponent {
   constructor(props) {
     super(props);
-
-    /* this.state = {
-      rating: 0,
-      commentText: ``,
-      isLoad: false,
-      showError: ``,
-    };*/
   }
-
-  /* _changeRatingValue(value) {
-    this.setState({
-      rating: value,
-    });
-  }
-
-  _changeText(evt) {
-    this.setState({commentText: evt.target.value});
-  }
-
-  _onSubmit(evt) {
-    evt.preventDefault();
-    const {filmCard} = this.props;
-
-    store.dispatch(DataOperation.uploadReview(filmCard, {rating: this.state.rating, text: this.state.commentText}))
-    .then(() => {
-      this.setState({isLoad: true});
-      this.setState({showError: ``});
-    })
-    .catch((response) => {
-      this.setState({isLoad: false});
-      this.setState({showError: response.toString()});
-    });
-  }
-
-  _isFormValid(rating, commentText) {
-    if (rating > 0 && commentText.length >= MIN_TEXT_LENGTH && commentText.length <= MAX_TEXT_LENGTH) {
-      return true;
-    }
-    return false;
-  }*/
 
   render() {
-    const {filmCards} = this.props;
+    const {activeCard} = this.props;
     const {isLoad, showError} = this.props;
     const {formValid, changeText, changeRating, submitHandler, formRef} = this.props;
 
     return (
-      <section className="movie-card movie-card--full" style={{background: filmCards[0].backgroundColor}}>
+      <section className="movie-card movie-card--full" style={{background: activeCard.backgroundColor}}>
         <div className="movie-card__header">
           <div className="movie-card__bg">
-            <img src={filmCards[0].backgroundImage} alt={filmCards[0].movieName} />
+            <img src={activeCard.backgroundImage} alt={activeCard.movieName} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header">
             <div className="logo">
-              <a href="main.html" className="logo__link">
+              <Link to={AppRout.MAIN_PAGE} className="logo__link">
                 <span className="logo__letter logo__letter--1">W</span>
                 <span className="logo__letter logo__letter--2">T</span>
                 <span className="logo__letter logo__letter--3">W</span>
-              </a>
+              </Link>
             </div>
 
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a href="movie-page.html" className="breadcrumbs__link">{filmCards[0].movieName}</a>
+                  <a href="movie-page.html" className="breadcrumbs__link">{activeCard.movieName}</a>
                 </li>
                 <li className="breadcrumbs__item">
                   <a className="breadcrumbs__link">Add review</a>
@@ -85,13 +44,15 @@ class AddReview extends PureComponent {
 
             <div className="user-block">
               <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                <Link to={AppRout.MY_LIST}>
+                  <img src="/img/avatar.jpg" alt="User avatar" width="63" height="63" />
+                </Link>
               </div>
             </div>
           </header>
 
           <div className="movie-card__poster movie-card__poster--small">
-            <img src={filmCards[0].moviePoster} alt={filmCards[0].movieName} width="218" height="327" />
+            <img src={activeCard.moviePoster} alt={activeCard.movieName} width="218" height="327" />
           </div>
         </div>
 
@@ -134,7 +95,7 @@ class AddReview extends PureComponent {
 }
 
 AddReview.propTypes = {
-  filmCards: PropTypes.array.isRequired,
+  activeCard: PropTypes.object.isRequired,
 
   isLoad: PropTypes.bool.isRequired,
   showError: PropTypes.string.isRequired,

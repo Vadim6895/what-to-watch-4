@@ -32,12 +32,10 @@ const ref = createRef();
 
 it(`Should BigVideoPlayer click it correctly`, () => {
   const playClick = jest.fn();
-  const exitClick = jest.fn();
   const fullscreenClick = jest.fn();
 
   const bigVideoPlayer = shallow(
       <BigVideoPlayer
-        onPlayerClick={exitClick}
         activeCard={filmCards[0]}
         play={false}
         onPlayClick={playClick}
@@ -52,10 +50,6 @@ it(`Should BigVideoPlayer click it correctly`, () => {
   const playButton = bigVideoPlayer.find(`.player__play`);
   playButton.props().onClick();
   expect(playClick.mock.calls.length).toBe(1);
-
-  const exitButton = bigVideoPlayer.find(`.player__exit`);
-  exitButton.props().onClick();
-  expect(exitClick.mock.calls.length).toBe(1);
 
   const fullscreenButton = bigVideoPlayer.find(`.player__full-screen`);
   fullscreenButton.props().onClick();
