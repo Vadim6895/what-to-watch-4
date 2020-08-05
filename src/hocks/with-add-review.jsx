@@ -28,11 +28,11 @@ const withAddReview = (Component) => {
       });
     }
 
-    _changeText(evt) {
+    _changeTextHandler(evt) {
       this.setState({commentText: evt.target.value});
     }
 
-    _onSubmit(evt) {
+    _submitHandler(evt) {
       evt.preventDefault();
       const {activeCard} = this.props;
       const form = this.formRef.current;
@@ -65,9 +65,9 @@ const withAddReview = (Component) => {
         isLoad={this.state.isLoad}
         showError={this.state.showError}
         formValid={this._isFormValid(this.state.rating, this.state.commentText)}
-        changeText={(evt) => this._changeText(evt)}
-        changeRating={(value) => this._changeRatingValue(value)}
-        submitHandler={(evt) => this._onSubmit(evt)}
+        changeTextHandler={(evt) => this._changeTextHandler(evt)}
+        changeRatingHandler={(value) => this._changeRatingValue(value)}
+        submitHandler={(evt) => this._submitHandler(evt)}
         formRef={this.formRef}
       />;
     }

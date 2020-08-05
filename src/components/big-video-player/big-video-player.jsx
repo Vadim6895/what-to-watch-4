@@ -1,18 +1,19 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import history from "../../history.js";
+import {Link} from "react-router-dom";
+import {AppRout} from "../../const.js";
 
 class BigVideoPlayer extends PureComponent {
   constructor(props) {
     super(props);
   }
 
-  _renderButtonPlayer(play, onPlayClick) {
+  _renderButtonPlayer(play, playClickHandler) {
     if (!play) {
       return (
         <button type="button" className="player__play"
           onClick={() => {
-            onPlayClick();
+            playClickHandler();
           }}>
           <svg viewBox="0 0 19 19" width="19" height="19">
             <use xlinkHref="#play-s"></use>
@@ -23,7 +24,7 @@ class BigVideoPlayer extends PureComponent {
     }
     return (
       <button type="button" className="player__play" onClick={() => {
-        onPlayClick();
+        playClickHandler();
       }}>
         <svg viewBox="0 0 14 21" width="14" height="21">
           <use xlinkHref="#pause"></use>
@@ -34,18 +35,15 @@ class BigVideoPlayer extends PureComponent {
   }
   render() {
     const {activeCard} = this.props;
-    const {onPlayClick, play} = this.props;
-    const {onFullscreenClick, progress, videoRef, currentTime} = this.props;
+    const {onFullscreenClick, progress, videoRef,
+      currentTime, play, playClickHandler} = this.props;
 
     return (
       <div className="player">
         <video src={activeCard.src} className="player__video"
           poster="/img/player-poster.jpg" ref={videoRef}></video>
 
-        <button type="button" className="player__exit" onClick={() => {
-          // onPlayerClick(false); // не забыть удалить.
-          history.goBack();
-        }}>Exit</button>
+        <Link to={AppRout.FILMS + activeCard.id} type="button" className="player__exit">Exit</Link>
 
         <div className="player__controls">
           <div className="player__controls-row">
@@ -57,7 +55,7 @@ class BigVideoPlayer extends PureComponent {
           </div>
 
           <div className="player__controls-row">
-            {this._renderButtonPlayer(play, onPlayClick)}
+            {this._renderButtonPlayer(play, playClickHandler)}
             <div className="player__name">Transpotting</div>
 
             <button type="button" className="player__full-screen" onClick={() => {
@@ -76,10 +74,9 @@ class BigVideoPlayer extends PureComponent {
 }
 
 BigVideoPlayer.propTypes = {
-  // onPlayerClick: PropTypes.func.isRequired,
   activeCard: PropTypes.object.isRequired,
   play: PropTypes.bool.isRequired,
-  onPlayClick: PropTypes.func.isRequired,
+  playClickHandler: PropTypes.func.isRequired,
   fullscreen: PropTypes.bool.isRequired,
   onFullscreenClick: PropTypes.func.isRequired,
   progress: PropTypes.number.isRequired,

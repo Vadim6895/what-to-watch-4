@@ -28,9 +28,8 @@ class FilmList extends PureComponent {
   }
 
   render() {
-    const {onFilmClick} = this.props;
-    const {renderPlayer} = this.props;
-    const {actualCardsCount, actualCards, newCards, onClick} = this.props;
+    const {actualCardsCount, actualCards, newCards,
+      onClick, onFilmClick, renderPlayer} = this.props;
 
     if (actualCardsCount < actualCards.length) {
       return (

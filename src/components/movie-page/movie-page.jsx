@@ -54,7 +54,7 @@ class MoviePage extends PureComponent {
 
             <header className="page-header movie-card__head">
               <div className="logo">
-                <Link to={AppRout.MAIN_PAGE} href="main.html" className="logo__link">
+                <Link to={AppRout.MAIN_PAGE} className="logo__link">
                   <span className="logo__letter logo__letter--1">W</span>
                   <span className="logo__letter logo__letter--2">T</span>
                   <span className="logo__letter logo__letter--3">W</span>
@@ -84,7 +84,7 @@ class MoviePage extends PureComponent {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <Link to={`/bigPlayer/${activeCard.id}`} className="btn btn--play movie-card__button" type="button">
+                  <Link to={AppRout.PLAYER + activeCard.id} className="btn btn--play movie-card__button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -110,7 +110,7 @@ class MoviePage extends PureComponent {
                       <span>My list</span>
                     </button>}
                   {authorizationStatus === AuthorizationStatus.AUTH ?
-                    <Link to={`/Review/${activeCard.id}`} className="btn movie-card__button">Add review</Link>
+                    <Link to={AppRout.REVIEW + activeCard.id} className="btn movie-card__button">Add review</Link>
                     :
                     <Link to={AppRout.LOGIN} className="btn movie-card__button">Add review</Link>
                   }
@@ -161,7 +161,6 @@ MoviePage.propTypes = {
   activeCard: PropTypes.object.isRequired,
   relatedMovies: PropTypes.array.isRequired,
   onFilmClick: PropTypes.func.isRequired,
-  // onPlayerClick: PropTypes.func.isRequired,
   reviews: PropTypes.array.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 

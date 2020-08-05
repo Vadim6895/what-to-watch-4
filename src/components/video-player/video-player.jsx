@@ -9,25 +9,6 @@ export default class VideoPlayer extends PureComponent {
     this.timerId = null;
   }
 
-  render() {
-    const {moviePreview, onMouseEnter, onMouseLeave} = this.props;
-
-    return (
-      <video width="280" height="175" className="small-movie-player"
-        poster={moviePreview}
-        onMouseEnter={() => {
-          this.timerId = setTimeout(onMouseEnter, 1000);
-        }}
-        onMouseLeave={() => {
-          clearTimeout(this.timerId);
-          onMouseLeave();
-        }}
-        muted
-        ref={this._videoRef}>
-      </video>
-    );
-  }
-
   componentWillUnmount() {
     const video = this._videoRef.current;
 
@@ -49,6 +30,25 @@ export default class VideoPlayer extends PureComponent {
       video.autoplay = false;
       video.src = ``;
     }
+  }
+
+  render() {
+    const {moviePreview, onMouseEnter, onMouseLeave} = this.props;
+
+    return (
+      <video width="280" height="175" className="small-movie-player"
+        poster={moviePreview}
+        onMouseEnter={() => {
+          this.timerId = setTimeout(onMouseEnter, 1000);
+        }}
+        onMouseLeave={() => {
+          clearTimeout(this.timerId);
+          onMouseLeave();
+        }}
+        muted
+        ref={this._videoRef}>
+      </video>
+    );
   }
 }
 

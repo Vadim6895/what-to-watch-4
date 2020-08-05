@@ -70,7 +70,7 @@ class MainPage extends PureComponent {
                   <span className="movie-card__year">{promoMovie.productionDate}</span>
                 </p>
                 <div className="movie-card__buttons">
-                  <Link to={`/bigPlayer/${promoMovie.id}`} className="btn btn--play movie-card__button">
+                  <Link to={AppRout.PLAYER + promoMovie.id} className="btn btn--play movie-card__button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>

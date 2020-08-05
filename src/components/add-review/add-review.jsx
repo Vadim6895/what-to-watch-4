@@ -1,7 +1,7 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {AppRout} from "../../const.js";
+import {AppRout, OPACITY_MAP_FOR_BTN} from "../../const.js";
 
 class AddReview extends PureComponent {
   constructor(props) {
@@ -10,8 +10,8 @@ class AddReview extends PureComponent {
 
   render() {
     const {activeCard} = this.props;
-    const {isLoad, showError} = this.props;
-    const {formValid, changeText, changeRating, submitHandler, formRef} = this.props;
+    const {formValid, changeTextHandler, changeRatingHandler, submitHandler,
+      formRef, isLoad, showError} = this.props;
 
     return (
       <section className="movie-card movie-card--full" style={{background: activeCard.backgroundColor}}>
@@ -34,7 +34,7 @@ class AddReview extends PureComponent {
             <nav className="breadcrumbs">
               <ul className="breadcrumbs__list">
                 <li className="breadcrumbs__item">
-                  <a href="movie-page.html" className="breadcrumbs__link">{activeCard.movieName}</a>
+                  <Link to={AppRout.FILMS + activeCard.id} href="movie-page.html" className="breadcrumbs__link">{activeCard.movieName}</Link>
                 </li>
                 <li className="breadcrumbs__item">
                   <a className="breadcrumbs__link">Add review</a>
@@ -62,27 +62,30 @@ class AddReview extends PureComponent {
               <div className="rating__stars">
                 <input className="rating__input" id="star-0" type="radio" name="rating" value="0" defaultChecked="true" style={{display: `hidden`}}/>
 
-                <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onClick={() => changeRating(1)}/>
+                <input className="rating__input" id="star-1" type="radio" name="rating" value="1" onClick={() => changeRatingHandler(1)}/>
                 <label className="rating__label" htmlFor="star-1">Rating 1</label>
 
-                <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onClick={() => changeRating(2)}/>
+                <input className="rating__input" id="star-2" type="radio" name="rating" value="2" onClick={() => changeRatingHandler(2)}/>
                 <label className="rating__label" htmlFor="star-2">Rating 2</label>
 
-                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" onClick={() => changeRating(3)}/>
+                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" onClick={() => changeRatingHandler(3)}/>
                 <label className="rating__label" htmlFor="star-3">Rating 3</label>
 
-                <input className="rating__input" id="star-4" type="radio" name="rating" value="4" onClick={() => changeRating(4)}/>
+                <input className="rating__input" id="star-4" type="radio" name="rating" value="4" onClick={() => changeRatingHandler(4)}/>
                 <label className="rating__label" htmlFor="star-4">Rating 4</label>
 
-                <input className="rating__input" id="star-5" type="radio" name="rating" value="5" onClick={() => changeRating(5)}/>
+                <input className="rating__input" id="star-5" type="radio" name="rating" value="5" onClick={() => changeRatingHandler(5)}/>
                 <label className="rating__label" htmlFor="star-5">Rating 5</label>
               </div>
             </div>
 
             <div className="add-review__text">
-              <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" onChange={(evt) => changeText(evt)}></textarea>
+              <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"
+                onChange={(evt) => changeTextHandler(evt)}>
+              </textarea>
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit" disabled = {!formValid} style={{opacity: !formValid ? `0.4` : `1`}}>Post</button>
+                <button className="add-review__btn" type="submit" disabled = {!formValid}
+                  style={{opacity: !formValid ? OPACITY_MAP_FOR_BTN.DISABLED : OPACITY_MAP_FOR_BTN.ENABLED}}>Post</button>
               </div>
 
             </div>
@@ -100,8 +103,8 @@ AddReview.propTypes = {
   isLoad: PropTypes.bool.isRequired,
   showError: PropTypes.string.isRequired,
   formValid: PropTypes.bool.isRequired,
-  changeText: PropTypes.func.isRequired,
-  changeRating: PropTypes.func.isRequired,
+  changeTextHandler: PropTypes.func.isRequired,
+  changeRatingHandler: PropTypes.func.isRequired,
   submitHandler: PropTypes.func.isRequired,
   formRef: PropTypes.object.isRequired,
 };

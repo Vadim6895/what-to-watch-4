@@ -63,7 +63,7 @@ const withBigPlayer = (Component) => {
         {...this.props}
         play={this.state.play}
         fullscreen={this.state.fullscreen}
-        onPlayClick={() => {
+        playClickHandler={() => {
           this.setState({play: !this.state.play});
         }}
         onFullscreenClick={() => {

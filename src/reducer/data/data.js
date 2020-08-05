@@ -1,4 +1,5 @@
 import {extend} from "../../utils.js";
+import {URL} from "../../const.js";
 import {parseFilmCards, parseFilmCard} from "../../adapters/filmCards.js";
 import {parseReviews} from "../../adapters/reviews.js";
 
@@ -58,7 +59,7 @@ const ActionCreator = {
 
 const Operation = {
   loadFilmCards: () => (dispatch, getState, api) => {
-    return api.get(`/films`)
+    return api.get(URL.FILMS)
     .then((response) => {
       return parseFilmCards(response.data);
     })
@@ -67,7 +68,7 @@ const Operation = {
     });
   },
   loadPromoMovie: () => (dispatch, getState, api) => {
-    return api.get(`/films/promo`)
+    return api.get(URL.PROMO)
     .then((response) => {
       return parseFilmCard(response.data);
     })
@@ -76,7 +77,7 @@ const Operation = {
     });
   },
   loadReviews: (movie) => (dispatch, getState, api) => {
-    return api.get(`/comments/${movie.id}`)
+    return api.get(URL.COMMENTS + movie.id)
     .then((response) => {
       return parseReviews(response.data);
     })
@@ -85,7 +86,7 @@ const Operation = {
     });
   },
   uploadReview: (movie, review) => (dispatch, getState, api) => {
-    return api.post(`/comments/${movie.id}`, {
+    return api.post(URL.COMMENTS + movie.id, {
       rating: review.rating,
       comment: review.text,
     })
@@ -95,7 +96,7 @@ const Operation = {
   },
   uploadFavorite: (movie) => (dispatch, getState, api) => {
     const numberStatus = movie.isFavorite ? 0 : 1;
-    return api.post(`/favorite/${movie.id}/${numberStatus}`, {
+    return api.post(URL.FAVORITE + movie.id + `/${numberStatus}`, {
       isFavorite: movie.isFavorite
     })
     .then((response) => {
@@ -107,7 +108,7 @@ const Operation = {
   },
   uploadFavoriteAsCards: (movie) => (dispatch, getState, api) => {
     const numberStatus = movie.isFavorite ? 0 : 1;
-    return api.post(`/favorite/${movie.id}/${numberStatus}`, {
+    return api.post(URL.FAVORITE + movie.id + `/${numberStatus}`, {
       isFavorite: movie.isFavorite
     })
     .then((response) => {
@@ -144,7 +145,6 @@ const reducer = (state = initialState, action) => {
         if (item.id === action.favorite.id) {
           actualIndex = index;
         }
-        return undefined;
       });
       newCards[actualIndex] = action.favorite;
       return extend(state, {

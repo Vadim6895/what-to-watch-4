@@ -34,26 +34,26 @@ class App extends PureComponent {
     super(props);
   }
 
-  _renderMainScreen() {
-    const {onFilmClick, onGenreClick, promoMovie} = this.props;
+  // _renderMainScreen() {
+  //  const {onFilmClick, onGenreClick, promoMovie} = this.props;
 
 
-    // if (selectedFilmId === -1 && !bigPlayerValue) {
-    return (
-      <MainPage // filmCards={filmCards}
-        promoMovie={promoMovie}
-        onFilmClick={(id) => {
-          onFilmClick(id);
-        }}
-        onGenreClick={(genre) => {
-          onGenreClick(genre);
-        }}
-        // activeGenreCards={activeGenreCards}
-        // activeGenre={activeGenre}
-        // authorizationStatus={authorizationStatus}
-      />
-    );
-  }
+  // if (selectedFilmId === -1 && !bigPlayerValue) {
+  // return (
+  //  <MainPage // filmCards={filmCards}
+  //    promoMovie={promoMovie}
+  //    onFilmClick={(id) => {
+  //      onFilmClick(id);
+  //    }}
+  //    onGenreClick={(genre) => {
+  //      onGenreClick(genre);
+  //    }}
+  // activeGenreCards={activeGenreCards}
+  // activeGenre={activeGenre}
+  // authorizationStatus={authorizationStatus}
+  //  />
+  // );
+  // }
   // if (selectedFilmId !== -1 && !bigPlayerValue) {
   // const {relatedMovies} = this.props;
   // return (
@@ -90,7 +90,7 @@ class App extends PureComponent {
 
   render() {
     const {onFilmClick, login, authorizationStatus, promoMovie} = this.props;
-    const {activeCard, relatedMovies, selectedFilmId} = this.props;
+    const {activeCard, relatedMovies, selectedFilmId, onGenreClick} = this.props;
     let activeCardForPlayer;
     if (selectedFilmId === -1) {
       activeCardForPlayer = promoMovie; // кусочек старой логики
@@ -103,10 +103,18 @@ class App extends PureComponent {
         <Switch>
 
           <Route exact path={AppRout.MAIN_PAGE}>
-            {this._renderMainScreen(this.props)}
+            <MainPage
+              promoMovie={promoMovie}
+              onFilmClick={(id) => {
+                onFilmClick(id);
+              }}
+              onGenreClick={(genre) => {
+                onGenreClick(genre);
+              }}
+            />
           </Route>
 
-          <Route exact path={`/Review/${selectedFilmId}`}>
+          <Route exact path={AppRout.REVIEW + selectedFilmId}>
             <AddReviewWrapped
               activeCard={activeCard}
             />
@@ -116,7 +124,7 @@ class App extends PureComponent {
             <SignInWrapped onSubmit={login}/>;
           </Route>
 
-          <Route exact path={`/films/${selectedFilmId}`}>
+          <Route exact path={AppRout.FILMS + selectedFilmId}>
             <MoviePage
               activeCard={activeCard}
               onFilmClick={(id) => {
@@ -127,7 +135,7 @@ class App extends PureComponent {
             />;
           </Route>
 
-          <Route exact path={`/bigPlayer/${activeCardForPlayer.id}`}>
+          <Route exact path={AppRout.PLAYER + activeCardForPlayer.id}>
             <BigVideoPlayerWrapped
               activeCard={activeCardForPlayer}
             />

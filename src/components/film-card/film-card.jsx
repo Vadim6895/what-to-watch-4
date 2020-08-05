@@ -1,20 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-// import {AppRout} from "../../const.js";
+import {AppRout} from "../../const.js";
 
 const FilmCard = (props) => {
-  const {name, moviePreview, id, onFilmClick} = props;
-  const {renderPlayer, previewSrc} = props;
+  const {name, moviePreview, id, onFilmClick,
+    previewSrc, renderPlayer} = props;
+
   const _updateActiveCard = () => {
     onFilmClick(id);
   };
 
   return (
-    <Link to={`/films/${id}`} className="small-movie-card catalog__movies-card" onClick={() => _updateActiveCard()}>
+    <Link to={AppRout.FILMS + id} className="small-movie-card catalog__movies-card" onClick={() => _updateActiveCard()}>
       {renderPlayer(id, previewSrc, moviePreview)}
       <h3 className="small-movie-card__title">
-        <span className="small-movie-card__link" href="#" style={{color: `#dfcf77`}}>{name}</span>
+        <span className="small-movie-card__link" href="#">{name}</span>
       </h3>
     </Link>
   );

@@ -14,6 +14,7 @@ export const MovieRatingValueMap = {
 };
 export const VALUE_HOUR = 60;
 export const ALL_GENRES = `All genres`;
+
 export const TabsMap = {
   OVERVIEW: `Overview`,
   DETAILS: `Details`,
@@ -48,10 +49,30 @@ export const AuthorizationStatus = {
 export const MIN_TEXT_LENGTH = 50;
 export const MAX_TEXT_LENGTH = 400;
 
+export const OPACITY_MAP_FOR_BTN = {
+  DISABLED: `0.4`,
+  ENABLED: `1.0`
+};
+
+export const URL = {
+  BASE: `https://4.react.pages.academy/wtw`,
+  FILMS: `/films`,
+  PROMO: `/films/promo`,
+  COMMENTS: `/comments/`,
+  FAVORITE: `/favorite/`,
+  LOGIN: `/login`,
+};
+
+export const Error = {
+  UNAUTHORIZED: 401
+};
+
 export const AppRout = {
   MAIN_PAGE: `/`,
-  LOGIN: `/Login`,
-  REVIEW: `/Review`,
-  MY_LIST: `/Mylist`,
-  MOVIES: `/films/`,
+  LOGIN: `/login`,
+  SIGN_IN: `/sign In`,
+  REVIEW: `/films/review/:`,
+  MY_LIST: `/mylist`,
+  FILMS: `/films/:`,
+  PLAYER: `/player/:`,
 };

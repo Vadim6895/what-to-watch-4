@@ -121,8 +121,7 @@ class Tabs extends PureComponent {
   }
 
   render() {
-    const {activeCard, reviews} = this.props;
-    const {activeItem, onItemClick} = this.props;
+    const {activeCard, reviews, activeItem, onItemClick} = this.props;
 
     return (
       <React.Fragment>

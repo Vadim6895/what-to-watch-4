@@ -12,7 +12,6 @@ const FilmListWrapped = withActivePlayer(FilmList);
 import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
-// import store from "../../reducer/store.js";
 import {AppRout} from "../..//const.js";
 
 class MyList extends PureComponent {
