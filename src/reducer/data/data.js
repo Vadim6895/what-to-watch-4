@@ -1,6 +1,6 @@
 import {extend} from "../../utils.js";
 import {URL} from "../../const.js";
-import {parseFilmCards, parseFilmCard} from "../../adapters/filmCards.js";
+import {parseFilmCard, parseFilmCards} from "../../adapters/filmCards.js";
 import {parseReviews} from "../../adapters/reviews.js";
 
 const initialState = {

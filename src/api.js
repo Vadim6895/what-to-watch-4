@@ -1,6 +1,6 @@
 import axios from "axios";
-// import history from "./history.js";
-import {URL, Error} from "./const.js";
+import history from "./history.js";
+import {URL, Error, AppRout} from "./const.js";
 
 export const createAPI = (onUnauthorized) => {
   const api = axios.create({
@@ -18,7 +18,9 @@ export const createAPI = (onUnauthorized) => {
 
     if (response.status === Error.UNAUTHORIZED) {
       onUnauthorized();
-      // history.push(`/Login`);
+      if (response.config.url !== AppRout.LOGIN) {
+        history.push(AppRout.LOGIN);
+      }
       throw err;
     }
 

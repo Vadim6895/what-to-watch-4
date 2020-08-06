@@ -3,11 +3,6 @@ import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import {MainPage} from "./main-page.jsx";
 
-// import {Router} from "react-router-dom";
-// import history from "../../history.js";
-// import {Provider} from "react-redux";
-// import store from "../../reducer/store.js";
-
 Enzyme.configure({
   adapter: new Adapter(),
 });
@@ -57,8 +52,4 @@ it(`Should MainPage e2e be correctly`, () => {
   const addListButton = mainPage.find(`.btn--list`);
   addListButton.props().onClick();
   expect(handleAddList.mock.calls.length).toBe(1);
-
-  /* const myListButton = mainPage.find(`.btn--list`);
-  myListButton.props().onClick();
-  expect(myListClick.mock.calls.length).toBe(1);*/
 });

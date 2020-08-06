@@ -62,7 +62,7 @@ Array [
           >
             <a
               className="user-block__link"
-              href="/Login"
+              href="/login"
               onClick={[Function]}
             >
               Sign in
@@ -100,9 +100,8 @@ Array [
           >
             <a
               className="btn btn--play movie-card__button"
-              href="/bigPlayer/0"
+              href="/player/:id0"
               onClick={[Function]}
-              type="button"
             >
               <svg
                 height="19"
@@ -137,7 +136,7 @@ Array [
             </button>
             <a
               className="btn movie-card__button"
-              href="/Login"
+              href="/login"
               onClick={[Function]}
             >
               Add review
@@ -291,11 +290,6 @@ Array [
             <span
               className="small-movie-card__link"
               href="#"
-              style={
-                Object {
-                  "color": "#dfcf77",
-                }
-              }
             >
               The Grand Budapest Hotel
             </span>

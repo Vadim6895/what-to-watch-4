@@ -71,8 +71,15 @@ export const AppRout = {
   MAIN_PAGE: `/`,
   LOGIN: `/login`,
   SIGN_IN: `/sign In`,
-  REVIEW: `/films/review/:`,
+  REVIEW: `/films/:id/review`,
   MY_LIST: `/mylist`,
-  FILMS: `/films/:`,
-  PLAYER: `/player/:`,
+  FILMS: `/films/:id`,
+  PLAYER: `/player/:id`,
+};
+
+export const LinkRout = {
+  FILMS: `/films/`,
+  PLAYER: `/player/`,
+  REVIEW: `/review/`,
+
 };

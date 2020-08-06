@@ -12,11 +12,6 @@ exports[`Should FilmCard render correctly 1`] = `
     <span
       className="small-movie-card__link"
       href="#"
-      style={
-        Object {
-          "color": "#dfcf77",
-        }
-      }
     >
       The Grand Budapest Hotel
     </span>

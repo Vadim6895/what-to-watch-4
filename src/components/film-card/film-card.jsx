@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
-import {AppRout} from "../../const.js";
+import {LinkRout} from "../../const.js";
 
 const FilmCard = (props) => {
   const {name, moviePreview, id, onFilmClick,
@@ -12,7 +12,7 @@ const FilmCard = (props) => {
   };
 
   return (
-    <Link to={AppRout.FILMS + id} className="small-movie-card catalog__movies-card" onClick={() => _updateActiveCard()}>
+    <Link to={LinkRout.FILMS + `${id}`} className="small-movie-card catalog__movies-card" onClick={() => _updateActiveCard()}>
       {renderPlayer(id, previewSrc, moviePreview)}
       <h3 className="small-movie-card__title">
         <span className="small-movie-card__link" href="#">{name}</span>

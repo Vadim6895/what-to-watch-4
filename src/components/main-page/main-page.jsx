@@ -8,7 +8,7 @@ import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
 
 import GenresList from "../genres-list/genres-list.jsx";
-import {AuthorizationStatus, AppRout} from "../../const.js";
+import {AuthorizationStatus, AppRout, LinkRout} from "../../const.js";
 import {Link} from "react-router-dom";
 
 import {Operation as DataOperation} from "../../reducer/data/data.js";
@@ -25,6 +25,7 @@ class MainPage extends PureComponent {
     const {onGenreClick, activeGenreCards, activeGenre,
       authorizationStatus, filmCards, onFilmClick, promoMovie} = this.props;
     const {handleAddList} = this.props;
+
     return (
       <React.Fragment>
         <section className="movie-card">
@@ -60,7 +61,7 @@ class MainPage extends PureComponent {
           <div className="movie-card__wrap">
             <div className="movie-card__info">
               <div className="movie-card__poster">
-                <img src={promoMovie.moviePoster} alt={promoMovie.name} width="218" height="327"/>
+                <img src={promoMovie.moviePoster} alt={promoMovie.movieName} width="218" height="327"/>
               </div>
 
               <div className="movie-card__desc">
@@ -70,7 +71,7 @@ class MainPage extends PureComponent {
                   <span className="movie-card__year">{promoMovie.productionDate}</span>
                 </p>
                 <div className="movie-card__buttons">
-                  <Link to={AppRout.PLAYER + promoMovie.id} className="btn btn--play movie-card__button">
+                  <Link to={LinkRout.PLAYER + `${promoMovie.id}`} className="btn btn--play movie-card__button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -136,19 +137,76 @@ class MainPage extends PureComponent {
     );
   }
 }
-// <button className="btn btn--play movie-card__button" type="button">
+
 MainPage.propTypes = {
-  filmCards: PropTypes.array.isRequired,
-  promoMovie: PropTypes.object.isRequired,
+  filmCards: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  })).isRequired,
+
+  promoMovie: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  }).isRequired,
+
   onFilmClick: PropTypes.func.isRequired,
-  // onPlayerClick: PropTypes.func.isRequired,
   onGenreClick: PropTypes.func.isRequired,
-  activeGenreCards: PropTypes.array.isRequired,
+  activeGenreCards: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  })).isRequired,
+
   activeGenre: PropTypes.string.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
-
   handleAddList: PropTypes.func.isRequired,
-  // loadPromoMovie: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -167,9 +225,6 @@ const mapDispatchToPtops = (dispatch) => ({
   handleAddList(promoMovie) {
     dispatch(DataOperation.uploadFavorite(promoMovie));
   },
-  /* loadPromoMovie() {
-    dispatch(DataOperation.loadPromoMovie());
-  }*/
 });
 
 export {MainPage};

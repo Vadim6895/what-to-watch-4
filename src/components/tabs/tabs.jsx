@@ -157,10 +157,40 @@ class Tabs extends PureComponent {
 }
 
 Tabs.propTypes = {
-  activeCard: PropTypes.object.isRequired,
+  activeCard: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  }).isRequired,
+
   activeItem: PropTypes.string.isRequired,
   onItemClick: PropTypes.func.isRequired,
-  reviews: PropTypes.array.isRequired,
+
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    date: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+    name: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  })).isRequired,
 };
 
 export default Tabs;

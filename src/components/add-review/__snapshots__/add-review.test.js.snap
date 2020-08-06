@@ -64,7 +64,8 @@ exports[`Should Add review In render correctly 1`] = `
           >
             <a
               className="breadcrumbs__link"
-              href="movie-page.html"
+              href="/films/:id0"
+              onClick={[Function]}
             >
               The Grand Budapest Hotel
             </a>
@@ -87,7 +88,7 @@ exports[`Should Add review In render correctly 1`] = `
           className="user-block__avatar"
         >
           <a
-            href="/Mylist"
+            href="/mylist"
             onClick={[Function]}
           >
             <img

@@ -1,7 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
-import {Link} from "react-router-dom";
-import {AppRout} from "../../const.js";
+import history from "../../history.js";
 
 class BigVideoPlayer extends PureComponent {
   constructor(props) {
@@ -43,7 +42,9 @@ class BigVideoPlayer extends PureComponent {
         <video src={activeCard.src} className="player__video"
           poster="/img/player-poster.jpg" ref={videoRef}></video>
 
-        <Link to={AppRout.FILMS + activeCard.id} type="button" className="player__exit">Exit</Link>
+        <button type="button" className="player__exit" onClick={() => {
+          history.goBack();
+        }}>Exit</button>
 
         <div className="player__controls">
           <div className="player__controls-row">
@@ -74,7 +75,26 @@ class BigVideoPlayer extends PureComponent {
 }
 
 BigVideoPlayer.propTypes = {
-  activeCard: PropTypes.object.isRequired,
+  activeCard: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  }).isRequired,
   play: PropTypes.bool.isRequired,
   playClickHandler: PropTypes.func.isRequired,
   fullscreen: PropTypes.bool.isRequired,

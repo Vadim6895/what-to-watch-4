@@ -38,7 +38,7 @@ it(`Should BigVideoPlayer click it correctly`, () => {
       <BigVideoPlayer
         activeCard={filmCards[0]}
         play={false}
-        onPlayClick={playClick}
+        playClickHandler={playClick}
         fullscreen={false}
         onFullscreenClick={fullscreenClick}
         progress={0}

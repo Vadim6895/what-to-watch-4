@@ -17,7 +17,7 @@ import {getReviews} from "../../reducer/data/selectors.js";
 import store from "../../reducer/store.js";
 
 import {Link} from "react-router-dom";
-import {AuthorizationStatus, AppRout} from "../../const.js";
+import {AuthorizationStatus, AppRout, LinkRout} from "../../const.js";
 
 class MoviePage extends PureComponent {
   constructor(props) {
@@ -84,7 +84,7 @@ class MoviePage extends PureComponent {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <Link to={AppRout.PLAYER + activeCard.id} className="btn btn--play movie-card__button">
+                  <Link to={AppRout.PLAYER + `${activeCard.id}`} className="btn btn--play movie-card__button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -110,7 +110,7 @@ class MoviePage extends PureComponent {
                       <span>My list</span>
                     </button>}
                   {authorizationStatus === AuthorizationStatus.AUTH ?
-                    <Link to={AppRout.REVIEW + activeCard.id} className="btn movie-card__button">Add review</Link>
+                    <Link to={LinkRout.FILMS + `${activeCard.id}` + LinkRout.REVIEW} className="btn movie-card__button">Add review</Link>
                     :
                     <Link to={AppRout.LOGIN} className="btn movie-card__button">Add review</Link>
                   }
@@ -158,12 +158,61 @@ class MoviePage extends PureComponent {
 }
 
 MoviePage.propTypes = {
-  activeCard: PropTypes.object.isRequired,
-  relatedMovies: PropTypes.array.isRequired,
-  onFilmClick: PropTypes.func.isRequired,
-  reviews: PropTypes.array.isRequired,
-  authorizationStatus: PropTypes.string.isRequired,
+  activeCard: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  }).isRequired,
 
+  relatedMovies: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    movieName: PropTypes.string.isRequired,
+    productionDate: PropTypes.number.isRequired,
+    genre: PropTypes.string.isRequired,
+    moviePoster: PropTypes.string.isRequired,
+    moviePreview: PropTypes.string.isRequired,
+    previewSrc: PropTypes.string.isRequired,
+    src: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    actors: PropTypes.array.isRequired,
+    rating: PropTypes.number.isRequired,
+    ratingsQuantity: PropTypes.number.isRequired,
+    description: PropTypes.string.isRequired,
+    length: PropTypes.number.isRequired,
+    backgroundColor: PropTypes.string.isRequired,
+    backgroundImage: PropTypes.string.isRequired,
+    isFavorite: PropTypes.bool.isRequired,
+    reviews: PropTypes.array.isRequired,
+  })).isRequired,
+
+  reviews: PropTypes.arrayOf(PropTypes.shape({
+    text: PropTypes.string.isRequired,
+    date: PropTypes.object.isRequired,
+    id: PropTypes.number.isRequired,
+    rating: PropTypes.number.isRequired,
+    name: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  })).isRequired,
+
+  onFilmClick: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
   handleAddList: PropTypes.func.isRequired,
 };
 

@@ -5,7 +5,7 @@ import App from "./components/app/app.jsx";
 import {Provider} from "react-redux";
 
 import {Operation as DataOperation} from "./reducer/data/data.js";
-// import {Operation as UserOperation} from "./reducer/user/user.js";
+import {Operation as UserOperation} from "./reducer/user/user.js";
 // import {AuthorizationStatus} from "./const.js";
 
 import store from "./reducer/store.js";
@@ -13,7 +13,7 @@ import store from "./reducer/store.js";
 import LoadingScreen from "./components/loading-screen/loading-screen.jsx";
 import ErrorScreen from "./components/error-screen/error-screen.jsx";
 
-// store.dispatch(UserOperation.checkAuth());
+store.dispatch(UserOperation.checkAuth());
 const baseLoadOperations = [
   store.dispatch(DataOperation.loadFilmCards()),
   store.dispatch(DataOperation.loadPromoMovie()),

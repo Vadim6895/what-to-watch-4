@@ -37,8 +37,8 @@ it(`Should Add review In render correctly`, () => {
           isLoad={false}
           showError={``}
           formValid={false}
-          changeText={() => {}}
-          changeRating={() => {}}
+          changeTextHandler={() => {}}
+          changeRatingHandler={() => {}}
           submitHandler={() => {}}
           formRef={ref}
         />

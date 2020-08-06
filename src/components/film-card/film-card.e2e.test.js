@@ -30,8 +30,6 @@ const filmCards = [{
 
 
 it(`Should FilmCard component click it correctly`, () => {
-  // const btnClickHandler = jest.fn();
-  // const onEnter = jest.fn();
   const filmClick = jest.fn();
 
   const filmCard = shallow(
@@ -45,17 +43,7 @@ it(`Should FilmCard component click it correctly`, () => {
       />
   );
 
-  // const btnHandler = filmCard.find(`.small-movie-card__link`);
-
-  // btnHandler.forEach((item) => item.props().onClick());
-  // btnHandler.props().onClick();
-  // expect(btnClickHandler.mock.calls.length).toBe(1);
-
-
   const smallCard = filmCard.find(`.small-movie-card`);
-  // smallCard.props().onMouseEnter();
-  // expect(onEnter.mock.calls.length).toBe(1);
-  // expect(onEnter).toHaveBeenCalledWith(filmCards[0].id);
 
   smallCard.props().onClick();
   expect(filmClick).toHaveBeenCalledWith(filmCards[0].id);
