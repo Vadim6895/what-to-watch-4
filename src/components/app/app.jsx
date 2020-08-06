@@ -29,6 +29,7 @@ import SignIn from "../sign-in/sign-in.jsx";
 import withSignIn from "../../hocks/with-sign-in.jsx";
 const SignInWrapped = withSignIn(SignIn);
 
+
 class App extends PureComponent {
   constructor(props) {
     super(props);
@@ -70,16 +71,20 @@ class App extends PureComponent {
             <SignInWrapped onSubmit={login}/>;
           </Route>
 
-          <Route exact path={AppRout.FILMS}>
-            <MoviePage
-              activeCard={activeCard}
-              onFilmClick={(id) => {
-                onFilmClick(id);
-              }}
-              relatedMovies={relatedMovies}
-              authorizationStatus={authorizationStatus}
-            />;
-          </Route>
+          <Route exact path={AppRout.FILMS}
+            render={props => (
+              <MoviePage
+                {...this.props}
+                match={props.match}
+                activeCard={activeCard}
+                onFilmClick={(id) => {
+                  onFilmClick(id);
+                }}
+                relatedMovies={relatedMovies}
+                authorizationStatus={authorizationStatus}
+              />
+            )}
+          />
 
           <Route exact path={AppRout.PLAYER}>
             <BigVideoPlayerWrapped

@@ -16,9 +16,10 @@ import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getReviews} from "../../reducer/data/selectors.js";
 import store from "../../reducer/store.js";
 
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {AuthorizationStatus, AppRout, LinkRout} from "../../const.js";
 
+import {getActiveCard2} from "../../reducer/step/selectors.js";
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
@@ -216,9 +217,15 @@ MoviePage.propTypes = {
   handleAddList: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  reviews: getReviews(state),
-});
+const mapStateToProps = (state, ownProps) => {
+  const id = ownProps.match.params.id;
+  // console.log(id);
+  const activeCard2 = getActiveCard2(state, id);
+  // console.log(activeCard2);
+  return {
+    reviews: getReviews(state),
+  };
+};
 
 const mapDispatchToPtops = (dispatch) => ({
   handleAddList(activeCard) {
@@ -227,4 +234,5 @@ const mapDispatchToPtops = (dispatch) => ({
 });
 
 export {MoviePage};
-export default connect(mapStateToProps, mapDispatchToPtops)(MoviePage);
+const WrappedMovie = withRouter(MoviePage);
+export default connect(mapStateToProps, mapDispatchToPtops)(WrappedMovie);

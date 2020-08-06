@@ -28,6 +28,15 @@ export const getActiveCard = createSelector(
     }
 );
 
+export const getActiveCard2 = createSelector(
+    getFilmCards,
+    id,
+    (filmCards, id) => {
+      let activeCard = filmCards.find((filmCard) => filmCard.id === id);
+      return activeCard;
+    }
+);
+
 export const getGenresOfCards = createSelector(
     getFilmCards,
     (filmCards) => {
