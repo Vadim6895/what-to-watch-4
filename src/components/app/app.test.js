@@ -3,16 +3,18 @@ import renderer from "react-test-renderer";
 import {App} from "./app.jsx";
 import {Provider} from "react-redux";
 import store from "../../reducer/store.js";
+import {Router} from "react-router-dom";
+import history from "../../history.js";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
-  productionDate: `1984`,
+  productionDate: 1984,
   genre: `Drama`,
   moviePoster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   moviePreview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   previewSrc: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
   src: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
-  id: 0,
+  id: 1,
   director: `Anthony Mann`,
   actors: [`Anthony Mann`],
   rating: 9,
@@ -34,22 +36,18 @@ it(`Render App`, () => {
   const tree = renderer
   .create(
       <Provider store={store}>
-        <App
-          filmCards={filmCards}
-          promoMovie={filmCards[0]}
-          onFilmClick={() => {}}
-          selectedFilmId={-1}
-          bigPlayerValue={false}
-          onPlayerClick={() => {}}
-          onGenreClick={() => {}}
-          activeGenre={filmCards[0].genre}
-
-          authorizationStatus={AuthorizationStatus.NO_AUTH}
-          login={() => {}}
-          activeCard={filmCards[0]}
-          activeGenreCards={filmCards}
-          relatedMovies={filmCards}
-        />
+        <Router history={history}>
+          <App
+            promoMovie={filmCards[0]}
+            onFilmClick={() => {}}
+            selectedFilmId={-1}
+            onGenreClick={() => {}}
+            authorizationStatus={AuthorizationStatus.NO_AUTH}
+            login={() => {}}
+            activeCard={filmCards[0]}
+            relatedMovies={filmCards}
+          />
+        </Router>
       </Provider>)
   .toJSON();
 

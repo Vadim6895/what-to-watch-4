@@ -6,7 +6,7 @@ import history from "../../history.js";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
-  productionDate: `1984`,
+  productionDate: 1984,
   genre: `Drama`,
   moviePoster: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
   moviePreview: `img/fantastic-beasts-the-crimes-of-grindelwald.jpg`,
@@ -26,10 +26,15 @@ const filmCards = [{
 }];
 
 const reviews = [{
-  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
-  rating: 8,
-  name: `Anthony Mann`,
+  text: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem
+   ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum .`,
   date: new Date(),
+  id: 1,
+  rating: 8,
+  name: {
+    id: 1,
+    name: `Anthony Mann`,
+  }
 }];
 
 const AuthorizationStatus = {

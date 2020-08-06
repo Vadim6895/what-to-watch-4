@@ -13,7 +13,7 @@ import {Link} from "react-router-dom";
 
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getActiveGenre, getCardsOnGenre} from "../../reducer/step/selectors.js";
-import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";
+import {getFilmCards} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 
 class MainPage extends PureComponent {
@@ -216,7 +216,7 @@ const mapStateToProps = (state) => {
     filmCards,
     activeGenreCards,
     activeGenre: getActiveGenre(state),
-    promoMovie: getPromoMovie(state),
+    // promoMovie: getPromoMovie(state),
     authorizationStatus: getAuthorizationStatus(state),
   };
 };
