@@ -21,6 +21,7 @@ export const createAPI = (onUnauthorized) => {
       if (response.config.url !== AppRout.LOGIN) {
         history.push(AppRout.LOGIN);
       }
+      err.isAuthError = true;
       throw err;
     }
 

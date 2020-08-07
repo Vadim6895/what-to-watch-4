@@ -2,9 +2,10 @@ import React from "react";
 import renderer from "react-test-renderer";
 import {App} from "./app.jsx";
 import {Provider} from "react-redux";
-import store from "../../reducer/store.js";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
+import reducer from '../../reducer/reducer.js';
+import {createStore} from 'redux';
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -27,6 +28,10 @@ const filmCards = [{
   reviews: [],
 }];
 
+const mockStore = createStore(reducer, {
+  DATA: {filmCards: [], promoMovie: filmCards[0], reviews: []}
+});
+
 const AuthorizationStatus = {
   AUTH: `AUTH`,
   NO_AUTH: `NO_AUTH`,
@@ -35,7 +40,7 @@ const AuthorizationStatus = {
 it(`Render App`, () => {
   const tree = renderer
   .create(
-      <Provider store={store}>
+      <Provider store={mockStore}>
         <Router history={history}>
           <App
             promoMovie={filmCards[0]}

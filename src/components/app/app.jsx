@@ -15,7 +15,6 @@ import {AppRout} from "../../const.js";
 
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
-// import {getbigPlayerValue} from "../../reducer/step/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {getPromoMovie} from "../../reducer/data/selectors.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
@@ -35,13 +34,7 @@ class App extends PureComponent {
   }
 
   render() {
-    const {login, authorizationStatus, promoMovie, onGenreClick} = this.props;
-    let activeCardForPlayer;
-    if (history.location.pathname === AppRout.MAIN_PAGE) {
-      activeCardForPlayer = promoMovie;
-    } else {
-      activeCardForPlayer = null;
-    }
+    const {login, authorizationStatus, onGenreClick} = this.props;
 
     return (
       <Router history={history}>
@@ -49,7 +42,6 @@ class App extends PureComponent {
 
           <Route exact path={AppRout.MAIN_PAGE}>
             <MainPage
-              promoMovie={promoMovie}
               onGenreClick={(genre) => {
                 onGenreClick(genre);
               }}
@@ -82,7 +74,6 @@ class App extends PureComponent {
             render={(props) => (
               <BigVideoPlayerWrapped
                 match={props.match}
-                activeCardForPlayer={activeCardForPlayer}
               />
             )}
           />

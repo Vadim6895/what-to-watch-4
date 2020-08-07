@@ -35,12 +35,10 @@ class BigVideoPlayer extends PureComponent {
     );
   }
   render() {
-    let {activeCard, activeCardForPlayer} = this.props;
+    let {activeCard} = this.props;
     const {onFullscreenClick, progress, videoRef,
       currentTime, play, playClickHandler} = this.props;
-    if (activeCardForPlayer) {
-      activeCard = activeCardForPlayer;
-    }
+
     return (
       <div className="player">
         <video src={activeCard.src} className="player__video"
@@ -79,7 +77,6 @@ class BigVideoPlayer extends PureComponent {
 }
 
 BigVideoPlayer.propTypes = {
-  activeCardForPlayer: FilmPropTypes || null .isRequired,
   play: PropTypes.bool.isRequired,
   playClickHandler: PropTypes.func.isRequired,
   fullscreen: PropTypes.bool.isRequired,

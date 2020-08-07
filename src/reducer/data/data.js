@@ -104,6 +104,11 @@ const Operation = {
     })
     .then((response) => {
       dispatch(ActionCreator.changeFavoriteFilm(response));
+    })
+    .catch((err) => {
+      if (!err.isAuthError) {
+        throw err;
+      }
     });
   },
   uploadFavoriteAsCards: (movie) => (dispatch, getState, api) => {
@@ -116,6 +121,11 @@ const Operation = {
     })
     .then((response) => {
       dispatch(ActionCreator.changeFavoriteFilmAsCards(response));
+    })
+    .catch((err) => {
+      if (!err.isAuthError) {
+        throw err;
+      }
     });
   }
 };

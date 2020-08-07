@@ -15,6 +15,27 @@ const withBigPlayer = (Component) => {
       };
       this.ref = createRef();
       this.currentTime = `0`;
+      this._changeFullScreen = this._changeFullScreen.bind(this);
+      this._changePlay = this._changePlay.bind(this);
+      this._changeFullTime = this._changeFullTime.bind(this);
+    }
+
+    _changeFullScreen() {
+      const video = this.ref.current;
+      if (!document.fullscreenElement) {
+        this.setState({fullscreen: !this.state.fullscreen});
+        video.controls = false;
+      }
+    }
+
+    _changePlay() {
+      const video = this.ref.current;
+      this.setState({fullTime: video.duration});
+    }
+
+    _changeFullTime() {
+      const video = this.ref.current;
+      this.setState({fullTime: video.duration});
     }
 
     componentDidMount() {
@@ -24,20 +45,9 @@ const withBigPlayer = (Component) => {
         this.setState({progress: Math.floor(video.currentTime) * HUNDRED_FOR_PERCENT / this.state.fullTime});
       };
 
-      document.addEventListener(`fullscreenchange`, () => {
-        if (!document.fullscreenElement) {
-          this.setState({fullscreen: !this.state.fullscreen});
-          video.controls = false;
-        }
-      });
-
-      video.addEventListener(`play`, () => {
-        this.setState({play: true});
-      });
-
-      video.addEventListener(`loadedmetadata`, () => {
-        this.setState({fullTime: video.duration});
-      });
+      document.addEventListener(`fullscreenchange`, this._changeFullScreen);
+      video.addEventListener(`play`, this._changePlay);
+      video.addEventListener(`loadedmetadata`, this._changeFullTime);
     }
 
     componentDidUpdate() {
@@ -56,6 +66,15 @@ const withBigPlayer = (Component) => {
           video.requestFullscreen();
         }
       }
+    }
+
+    componentWillUnmount() {
+      const video = this.ref.current;
+      video.ontimeupdate = null;
+      document.removeEventListener(`fullscreenchange`, this._changeFullScreen);
+      video.removeEventListener(`play`, this._changePlay);
+      video.addEventListener(`loadedmetadata`, this._changeFullTime);
+
     }
 
     render() {
