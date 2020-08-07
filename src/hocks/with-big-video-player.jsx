@@ -18,6 +18,7 @@ const withBigPlayer = (Component) => {
       this._changeFullScreen = this._changeFullScreen.bind(this);
       this._changePlay = this._changePlay.bind(this);
       this._changeFullTime = this._changeFullTime.bind(this);
+      this._changeTimeUpdate = this._changeTimeUpdate.bind(this);
     }
 
     _changeFullScreen() {
@@ -38,13 +39,15 @@ const withBigPlayer = (Component) => {
       this.setState({fullTime: video.duration});
     }
 
+    _changeTimeUpdate() {
+      const video = this.ref.current;
+      this.setState({progress: Math.floor(video.currentTime) * HUNDRED_FOR_PERCENT / this.state.fullTime});
+    }
+
     componentDidMount() {
       const video = this.ref.current;
 
-      video.ontimeupdate = () => {
-        this.setState({progress: Math.floor(video.currentTime) * HUNDRED_FOR_PERCENT / this.state.fullTime});
-      };
-
+      video.addEventListener(`timeupdate`, this._changeTimeUpdate);
       document.addEventListener(`fullscreenchange`, this._changeFullScreen);
       video.addEventListener(`play`, this._changePlay);
       video.addEventListener(`loadedmetadata`, this._changeFullTime);
@@ -70,10 +73,10 @@ const withBigPlayer = (Component) => {
 
     componentWillUnmount() {
       const video = this.ref.current;
-      video.ontimeupdate = null;
+      video.removeEventListener(`timeupdate`, this._changeTimeUpdate);
       document.removeEventListener(`fullscreenchange`, this._changeFullScreen);
       video.removeEventListener(`play`, this._changePlay);
-      video.addEventListener(`loadedmetadata`, this._changeFullTime);
+      video.removeEventListener(`loadedmetadata`, this._changeFullTime);
 
     }
 

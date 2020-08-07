@@ -32,7 +32,6 @@ it(`Should Big video player render correctly`, () => {
   .create(
       <Router history={history}>
         <BigVideoPlayer
-          activeCardForPlayer={filmCards[0]}
           play={false}
           playClickHandler={() => {}}
           fullscreen={false}
