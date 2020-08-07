@@ -39,13 +39,9 @@ it(`Render App`, () => {
         <Router history={history}>
           <App
             promoMovie={filmCards[0]}
-            onFilmClick={() => {}}
-            selectedFilmId={-1}
             onGenreClick={() => {}}
             authorizationStatus={AuthorizationStatus.NO_AUTH}
             login={() => {}}
-            activeCard={filmCards[0]}
-            relatedMovies={filmCards}
           />
         </Router>
       </Provider>)

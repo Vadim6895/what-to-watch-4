@@ -10,7 +10,6 @@ it(`Should MyList render correctly`, () => {
       <Router history={history}>
         <MyList
           favorites={[]}
-          onFilmClick={() => {}}
           loadFavorites={() => {}}
         />
       </Router>)

@@ -13,8 +13,9 @@ import {Link} from "react-router-dom";
 
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getActiveGenre, getCardsOnGenre} from "../../reducer/step/selectors.js";
-import {getFilmCards} from "../../reducer/data/selectors.js";
+import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
+import {FilmPropTypes} from "../../prop-types.js";
 
 class MainPage extends PureComponent {
   constructor(props) {
@@ -23,7 +24,7 @@ class MainPage extends PureComponent {
 
   render() {
     const {onGenreClick, activeGenreCards, activeGenre,
-      authorizationStatus, filmCards, onFilmClick, promoMovie} = this.props;
+      authorizationStatus, filmCards, promoMovie} = this.props;
     const {handleAddList} = this.props;
 
     return (
@@ -111,7 +112,6 @@ class MainPage extends PureComponent {
             <div className="catalog__movies-list">
               <FilmListSecondWrapped
                 filmCards={filmCards}
-                onFilmClick={onFilmClick}
                 activeGenreCards={activeGenreCards}/>
             </div>
 
@@ -139,71 +139,10 @@ class MainPage extends PureComponent {
 }
 
 MainPage.propTypes = {
-  filmCards: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  })).isRequired,
-
-  promoMovie: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  }).isRequired,
-
-  onFilmClick: PropTypes.func.isRequired,
+  filmCards: PropTypes.arrayOf(FilmPropTypes),
+  promoMovie: FilmPropTypes,
   onGenreClick: PropTypes.func.isRequired,
-  activeGenreCards: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  })).isRequired,
-
+  activeGenreCards: PropTypes.arrayOf(FilmPropTypes),
   activeGenre: PropTypes.string.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   handleAddList: PropTypes.func.isRequired,
@@ -212,11 +151,12 @@ MainPage.propTypes = {
 const mapStateToProps = (state) => {
   const filmCards = getFilmCards(state);
   const activeGenreCards = getCardsOnGenre(state);
+  const promoMovie = getPromoMovie(state);
   return {
     filmCards,
     activeGenreCards,
     activeGenre: getActiveGenre(state),
-    // promoMovie: getPromoMovie(state),
+    promoMovie,
     authorizationStatus: getAuthorizationStatus(state),
   };
 };

@@ -33,7 +33,6 @@ it(`Should FilmCard render correctly`, () => {
           name={filmCards[0].movieName}
           id={filmCards[0].id}
           moviePreview={filmCards[0].moviePreview}
-          onFilmClick={() => {}}
           previewSrc={filmCards[0].previewSrc}
           renderPlayer={() => {}}
         />

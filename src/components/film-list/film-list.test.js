@@ -31,7 +31,6 @@ it(`Should FilmList render correctly`, () => {
   .create(
       <Router history={history}>
         <FilmList
-          onFilmClick={() => {}}
           renderPlayer={() => {}}
           actualCardsCount={CARDS_COUNT}
           actualCards={filmCards.slice(0, 8)}

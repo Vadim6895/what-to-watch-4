@@ -1,17 +1,45 @@
-import React, {PureComponent} from "react";
+import React, {PureComponent, createRef} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import {connect} from "react-redux";
 import {AppRout, OPACITY_MAP_FOR_BTN} from "../../const.js";
+import {getActiveCard} from "../../reducer/step/selectors.js";
+import {LinkRout} from "../../const.js";
+import {Operation as DataOperation} from "../../reducer/data/data.js";
+import store from "../../reducer/store.js";
+import history from "../../history.js";
+import {FilmPropTypes} from "../../prop-types.js";
 
 class AddReview extends PureComponent {
   constructor(props) {
     super(props);
+
+    this.formRef = createRef();
+  }
+
+  _submitHandler(evt) {
+    evt.preventDefault();
+    const {activeCard, rating, commentText, changeLoadValue, changeShowErrorValue} = this.props;
+    const form = this.formRef.current;
+
+    store.dispatch(DataOperation.uploadReview(activeCard, {rating, commentText}))
+        .then(() => {
+          changeLoadValue(true);
+          changeShowErrorValue(``);
+          form.reset();
+          history.push(LinkRout.FILMS + activeCard.id);
+        })
+        .catch((response) => {
+          changeLoadValue(false);
+
+          changeShowErrorValue(response.toString());
+        });
   }
 
   render() {
     const {activeCard} = this.props;
-    const {formValid, changeTextHandler, changeRatingHandler, submitHandler,
-      formRef, isLoad, showError} = this.props;
+    const {formValid, changeTextHandler, changeRatingHandler,
+      isLoad, showError} = this.props;
 
     return (
       <section className="movie-card movie-card--full" style={{background: activeCard.backgroundColor}}>
@@ -57,7 +85,7 @@ class AddReview extends PureComponent {
         </div>
 
         <div className="add-review">
-          <form action="#" className="add-review__form" onSubmit={(evt) => submitHandler(evt)} disabled={isLoad} ref={formRef}>
+          <form action="#" className="add-review__form" onSubmit={(evt) => this._submitHandler(evt)} disabled={isLoad} ref={this.formRef}>
             <div className="rating">
               <div className="rating__stars">
                 <input className="rating__input" id="star-0" type="radio" name="rating" value="0" defaultChecked="true" style={{display: `hidden`}}/>
@@ -98,34 +126,25 @@ class AddReview extends PureComponent {
 }
 
 AddReview.propTypes = {
-  activeCard: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  }).isRequired,
-
+  rating: PropTypes.number.isRequired,
+  commentText: PropTypes.string.isRequired,
   isLoad: PropTypes.bool.isRequired,
   showError: PropTypes.string.isRequired,
   formValid: PropTypes.bool.isRequired,
   changeTextHandler: PropTypes.func.isRequired,
   changeRatingHandler: PropTypes.func.isRequired,
-  submitHandler: PropTypes.func.isRequired,
-  formRef: PropTypes.object.isRequired,
+  changeLoadValue: PropTypes.func.isRequired,
+  changeShowErrorValue: PropTypes.func.isRequired,
+  activeCard: FilmPropTypes
 };
 
-export default AddReview;
+const mapStateToProps = (state, ownProps) => {
+  const activeCard = getActiveCard(state, ownProps);
+
+  return {
+    activeCard,
+  };
+};
+
+export {AddReview};
+export default connect(mapStateToProps)(AddReview);

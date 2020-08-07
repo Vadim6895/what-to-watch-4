@@ -100,7 +100,7 @@ Array [
           >
             <a
               className="btn btn--play movie-card__button"
-              href="/player/:id0"
+              href="/player/0"
               onClick={[Function]}
             >
               <svg

@@ -1,7 +1,7 @@
 import React, {createRef} from "react";
 import Enzyme, {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import BigVideoPlayer from "./big-video-player.jsx";
+import {BigVideoPlayer} from "./big-video-player.jsx";
 
 Enzyme.configure({
   adapter: new Adapter(),
@@ -36,6 +36,7 @@ it(`Should BigVideoPlayer click it correctly`, () => {
 
   const bigVideoPlayer = shallow(
       <BigVideoPlayer
+        activeCardForPlayer={filmCards[0]}
         activeCard={filmCards[0]}
         play={false}
         playClickHandler={playClick}

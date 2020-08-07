@@ -18,19 +18,7 @@ export const getActiveGenre = (state) => {
 
 export const getActiveCard = createSelector(
     getFilmCards,
-    (state) => state[NameSpace.STEP].selectedFilmId,
-    (filmCards, selectedFilmId) => {
-      if (selectedFilmId !== -1) {
-        let activeCard = filmCards.find((filmCard) => filmCard.id === selectedFilmId);
-        return activeCard;
-      }
-      return {};
-    }
-);
-
-export const getActiveCard2 = createSelector(
-    getFilmCards,
-    id,
+    (state, ownProps) => Number(ownProps.match.params.id),
     (filmCards, id) => {
       let activeCard = filmCards.find((filmCard) => filmCard.id === id);
       return activeCard;

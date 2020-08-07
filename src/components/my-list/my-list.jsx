@@ -2,17 +2,15 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {connect} from "react-redux";
-
 import {Operation as UserOperation} from "../../reducer/user/user.js";
 import {getFavorites} from "../../reducer/user/selectors.js";
-
 import FilmList from "../film-list/film-list.jsx";
 import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
 import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
-
 import {AppRout} from "../..//const.js";
+import {FilmPropTypes} from "../../prop-types.js";
 
 class MyList extends PureComponent {
   constructor(props) {
@@ -25,7 +23,7 @@ class MyList extends PureComponent {
   }
 
   render() {
-    const {favorites, onFilmClick} = this.props;
+    const {favorites} = this.props;
 
     return (
       <div className="user-page">
@@ -51,7 +49,7 @@ class MyList extends PureComponent {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <div className="catalog__movies-list">
-            <FilmListSecondWrapped filmCards={favorites} onFilmClick={onFilmClick} activeGenreCards={[]}/>
+            <FilmListSecondWrapped filmCards={favorites} activeGenreCards={[]}/>
           </div>
 
         </section>
@@ -75,28 +73,7 @@ class MyList extends PureComponent {
 }
 
 MyList.propTypes = {
-  favorites: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  })).isRequired,
-
-  onFilmClick: PropTypes.func.isRequired,
+  favorites: PropTypes.arrayOf(FilmPropTypes),
   loadFavorites: PropTypes.func.isRequired,
 };
 

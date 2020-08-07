@@ -41,7 +41,6 @@ it(`Should MainPage render correctly`, () => {
           <MainPage
             filmCards={filmCards}
             promoMovie={filmCards[0]}
-            onFilmClick={() => {}}
             handleAddList={() => {}}
             onGenreClick={() => {}}
             activeGenreCards={filmCards}

@@ -1,11 +1,6 @@
-import React, {PureComponent, createRef} from "react";
-import PropTypes from "prop-types";
-
+import React, {PureComponent} from "react";
 import {MIN_TEXT_LENGTH, MAX_TEXT_LENGTH} from "../const.js";
 
-import {Operation as DataOperation} from "../reducer/data/data.js";
-import store from "../reducer/store.js";
-import history from "../history.js";
 
 const withAddReview = (Component) => {
   class WithAddReview extends PureComponent {
@@ -18,9 +13,7 @@ const withAddReview = (Component) => {
         isLoad: false,
         showError: ``,
       };
-      this.formRef = createRef();
     }
-
 
     _changeRatingValue(value) {
       this.setState({
@@ -30,24 +23,6 @@ const withAddReview = (Component) => {
 
     _changeTextHandler(evt) {
       this.setState({commentText: evt.target.value});
-    }
-
-    _submitHandler(evt) {
-      evt.preventDefault();
-      const {activeCard} = this.props;
-      const form = this.formRef.current;
-
-      store.dispatch(DataOperation.uploadReview(activeCard, {rating: this.state.rating, text: this.state.commentText}))
-      .then(() => {
-        this.setState({isLoad: true});
-        this.setState({showError: ``});
-        form.reset();
-        history.push(`/movies/${activeCard.id}`);
-      })
-      .catch((response) => {
-        this.setState({isLoad: false});
-        this.setState({showError: response.toString()});
-      });
     }
 
     _isFormValid(rating, commentText) {
@@ -60,21 +35,18 @@ const withAddReview = (Component) => {
     render() {
       return <Component
         {...this.props}
-        rating={this.state.activeItem}
+        rating={this.state.rating}
         commentText={this.state.commentText}
         isLoad={this.state.isLoad}
         showError={this.state.showError}
         formValid={this._isFormValid(this.state.rating, this.state.commentText)}
         changeTextHandler={(evt) => this._changeTextHandler(evt)}
         changeRatingHandler={(value) => this._changeRatingValue(value)}
-        submitHandler={(evt) => this._submitHandler(evt)}
-        formRef={this.formRef}
+        changeLoadValue={(value) => this.setState({isLoad: value})}
+        changeShowErrorValue={(value) => this.setState({showError: value})}
       />;
     }
   }
-  WithAddReview.propTypes = {
-    activeCard: PropTypes.object.isRequired,
-  };
   return WithAddReview;
 };
 

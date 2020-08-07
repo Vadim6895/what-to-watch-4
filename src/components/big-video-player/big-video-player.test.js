@@ -2,7 +2,7 @@ import React, {createRef} from "react";
 import renderer from "react-test-renderer";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
-import BigVideoPlayer from "./big-video-player.jsx";
+import {BigVideoPlayer} from "./big-video-player.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -32,7 +32,7 @@ it(`Should Big video player render correctly`, () => {
   .create(
       <Router history={history}>
         <BigVideoPlayer
-          activeCard={filmCards[0]}
+          activeCardForPlayer={filmCards[0]}
           play={false}
           playClickHandler={() => {}}
           fullscreen={false}
@@ -40,6 +40,7 @@ it(`Should Big video player render correctly`, () => {
           progress={0}
           currentTime={``}
           videoRef={ref}
+          activeCard={filmCards[0]}
         />
       </Router>)
   .toJSON();

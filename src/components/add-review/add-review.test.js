@@ -1,9 +1,9 @@
-import React, {createRef} from "react";
+import React from "react";
 import renderer from "react-test-renderer";
 import {Router} from "react-router-dom";
 import history from "../../history.js";
 
-import AddReview from "./add-review.jsx";
+import {AddReview} from "./add-review.jsx";
 
 const filmCards = [{
   movieName: `The Grand Budapest Hotel`,
@@ -26,8 +26,6 @@ const filmCards = [{
   reviews: [],
 }];
 
-const ref = createRef();
-
 it(`Should Add review In render correctly`, () => {
   const tree = renderer
   .create(
@@ -39,8 +37,10 @@ it(`Should Add review In render correctly`, () => {
           formValid={false}
           changeTextHandler={() => {}}
           changeRatingHandler={() => {}}
-          submitHandler={() => {}}
-          formRef={ref}
+          changeLoadValue={() => {}}
+          changeShowErrorValue={() => {}}
+          rating={0}
+          commentText={``}
         />
       </Router>)
   .toJSON();

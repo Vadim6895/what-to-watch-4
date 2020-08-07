@@ -15,8 +15,7 @@ import {AppRout} from "../../const.js";
 
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
-import {getSelectedFilmId, getbigPlayerValue,
-  getActiveCard, getRelatedMovies} from "../../reducer/step/selectors.js";
+// import {getbigPlayerValue} from "../../reducer/step/selectors.js";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {getPromoMovie} from "../../reducer/data/selectors.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
@@ -28,7 +27,7 @@ const BigVideoPlayerWrapped = withBigPlayer(BigVideoPlayer);
 import SignIn from "../sign-in/sign-in.jsx";
 import withSignIn from "../../hocks/with-sign-in.jsx";
 const SignInWrapped = withSignIn(SignIn);
-
+import {FilmPropTypes} from "../../prop-types.js";
 
 class App extends PureComponent {
   constructor(props) {
@@ -36,13 +35,12 @@ class App extends PureComponent {
   }
 
   render() {
-    const {onFilmClick, login, authorizationStatus, promoMovie} = this.props;
-    const {activeCard, relatedMovies, selectedFilmId, onGenreClick} = this.props;
+    const {login, authorizationStatus, promoMovie, onGenreClick} = this.props;
     let activeCardForPlayer;
-    if (selectedFilmId === -1) {
+    if (history.location.pathname === AppRout.MAIN_PAGE) {
       activeCardForPlayer = promoMovie;
     } else {
-      activeCardForPlayer = activeCard;
+      activeCardForPlayer = null;
     }
 
     return (
@@ -52,45 +50,42 @@ class App extends PureComponent {
           <Route exact path={AppRout.MAIN_PAGE}>
             <MainPage
               promoMovie={promoMovie}
-              onFilmClick={(id) => {
-                onFilmClick(id);
-              }}
               onGenreClick={(genre) => {
                 onGenreClick(genre);
               }}
             />
           </Route>
 
-          <Route exact path={AppRout.REVIEW}>
-            <AddReviewWrapped
-              activeCard={activeCard}
-            />
-          </Route>
+          <Route exact path={AppRout.REVIEW}
+            render={(props) => (
+              <AddReviewWrapped
+                match={props.match}
+              />
+            )}
+          />
 
           <Route exact path={AppRout.LOGIN}>
             <SignInWrapped onSubmit={login}/>;
           </Route>
 
           <Route exact path={AppRout.FILMS}
-            render={props => (
+            render={(props) => (
               <MoviePage
                 {...this.props}
                 match={props.match}
-                activeCard={activeCard}
-                onFilmClick={(id) => {
-                  onFilmClick(id);
-                }}
-                relatedMovies={relatedMovies}
                 authorizationStatus={authorizationStatus}
               />
             )}
           />
 
-          <Route exact path={AppRout.PLAYER}>
-            <BigVideoPlayerWrapped
-              activeCard={activeCardForPlayer}
-            />
-          </Route>
+          <Route exact path={AppRout.PLAYER}
+            render={(props) => (
+              <BigVideoPlayerWrapped
+                match={props.match}
+                activeCardForPlayer={activeCardForPlayer}
+              />
+            )}
+          />
 
           <PrivateRoute
             exact
@@ -98,7 +93,7 @@ class App extends PureComponent {
             authorizationStatus={authorizationStatus}
             render={() => {
               return (
-                <Mylist onFilmClick={onFilmClick}/>
+                <Mylist />
               );
             }}
           />
@@ -110,75 +105,20 @@ class App extends PureComponent {
 }
 
 App.propTypes = {
-  promoMovie: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  }).isRequired,
-
-  onFilmClick: PropTypes.func.isRequired,
-  selectedFilmId: PropTypes.number.isRequired,
   onGenreClick: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   login: PropTypes.func.isRequired,
-
-  activeCard: PropTypes.object.isRequired,
-
-  relatedMovies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  })).isRequired,
+  promoMovie: FilmPropTypes
 };
 
 const mapStateToProps = (state) => {
-  const selectedFilmId = getSelectedFilmId(state);
-  const activeCard = getActiveCard(state);
-  const relatedMovies = getRelatedMovies(state);
   return {
-    selectedFilmId,
-    bigPlayerValue: getbigPlayerValue(state),
     promoMovie: getPromoMovie(state),
     authorizationStatus: getAuthorizationStatus(state),
-    activeCard,
-    relatedMovies,
   };
 };
 
 const mapDispatchToPtops = (dispatch) => ({
-  onFilmClick(id) {
-    dispatch(ActionCreator.selectedFilmId(id));
-  },
   onGenreClick(genre) {
     dispatch(ActionCreator.activeGenre(genre));
   },

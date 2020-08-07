@@ -1,7 +1,9 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import history from "../../history.js";
-
+import {connect} from "react-redux";
+import {getActiveCard} from "../../reducer/step/selectors.js";
+import {FilmPropTypes} from "../../prop-types.js";
 class BigVideoPlayer extends PureComponent {
   constructor(props) {
     super(props);
@@ -33,10 +35,12 @@ class BigVideoPlayer extends PureComponent {
     );
   }
   render() {
-    const {activeCard} = this.props;
+    let {activeCard, activeCardForPlayer} = this.props;
     const {onFullscreenClick, progress, videoRef,
       currentTime, play, playClickHandler} = this.props;
-
+    if (activeCardForPlayer) {
+      activeCard = activeCardForPlayer;
+    }
     return (
       <div className="player">
         <video src={activeCard.src} className="player__video"
@@ -75,26 +79,7 @@ class BigVideoPlayer extends PureComponent {
 }
 
 BigVideoPlayer.propTypes = {
-  activeCard: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  }).isRequired,
+  activeCardForPlayer: FilmPropTypes || null .isRequired,
   play: PropTypes.bool.isRequired,
   playClickHandler: PropTypes.func.isRequired,
   fullscreen: PropTypes.bool.isRequired,
@@ -102,6 +87,16 @@ BigVideoPlayer.propTypes = {
   progress: PropTypes.number.isRequired,
   currentTime: PropTypes.string.isRequired,
   videoRef: PropTypes.object.isRequired,
+  activeCard: FilmPropTypes
 };
 
-export default BigVideoPlayer;
+const mapStateToProps = (state, ownProps) => {
+  const activeCard = getActiveCard(state, ownProps);
+
+  return {
+    activeCard,
+  };
+};
+
+export {BigVideoPlayer};
+export default connect(mapStateToProps)(BigVideoPlayer);

@@ -7,19 +7,17 @@ import withActivePlayer from "../../hocks/with-video-player.jsx";
 const FilmListWrapped = withActivePlayer(FilmList);
 import withFilmList from "../../hocks/with-film-list.jsx";
 const FilmListSecondWrapped = withFilmList(FilmListWrapped);
-
 import withActiveItem from "../../hocks/with-active-item.jsx";
 const TabsWrapped = withActiveItem(Tabs);
-
 import {connect} from "react-redux";
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getReviews} from "../../reducer/data/selectors.js";
 import store from "../../reducer/store.js";
-
-import {Link, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {AuthorizationStatus, AppRout, LinkRout} from "../../const.js";
+import {getActiveCard, getRelatedMovies} from "../../reducer/step/selectors.js";
+import {FilmPropTypes} from "../../prop-types.js";
 
-import {getActiveCard2} from "../../reducer/step/selectors.js";
 class MoviePage extends PureComponent {
   constructor(props) {
     super(props);
@@ -40,7 +38,7 @@ class MoviePage extends PureComponent {
 
   render() {
     const {activeCard, reviews, authorizationStatus} = this.props;
-    const {relatedMovies, onFilmClick} = this.props;
+    const {relatedMovies} = this.props;
     const {handleAddList} = this.props;
 
     return (
@@ -85,7 +83,7 @@ class MoviePage extends PureComponent {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <Link to={AppRout.PLAYER + `${activeCard.id}`} className="btn btn--play movie-card__button">
+                  <Link to={LinkRout.PLAYER + `${activeCard.id}`} className="btn btn--play movie-card__button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
@@ -135,7 +133,7 @@ class MoviePage extends PureComponent {
             <h2 className="catalog__title">More like this</h2>
 
             <div className="catalog__movies-list">
-              <FilmListSecondWrapped filmCards={relatedMovies} onFilmClick={onFilmClick} activeGenreCards={[]}/>
+              <FilmListSecondWrapped filmCards={relatedMovies} activeGenreCards={[]}/>
             </div>
           </section>
 
@@ -159,47 +157,8 @@ class MoviePage extends PureComponent {
 }
 
 MoviePage.propTypes = {
-  activeCard: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  }).isRequired,
-
-  relatedMovies: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    movieName: PropTypes.string.isRequired,
-    productionDate: PropTypes.number.isRequired,
-    genre: PropTypes.string.isRequired,
-    moviePoster: PropTypes.string.isRequired,
-    moviePreview: PropTypes.string.isRequired,
-    previewSrc: PropTypes.string.isRequired,
-    src: PropTypes.string.isRequired,
-    director: PropTypes.string.isRequired,
-    actors: PropTypes.array.isRequired,
-    rating: PropTypes.number.isRequired,
-    ratingsQuantity: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    length: PropTypes.number.isRequired,
-    backgroundColor: PropTypes.string.isRequired,
-    backgroundImage: PropTypes.string.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
-    reviews: PropTypes.array.isRequired,
-  })).isRequired,
+  activeCard: FilmPropTypes,
+  relatedMovies: PropTypes.arrayOf(FilmPropTypes),
 
   reviews: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
@@ -212,17 +171,16 @@ MoviePage.propTypes = {
     })
   })).isRequired,
 
-  onFilmClick: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   handleAddList: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const id = ownProps.match.params.id;
-  // console.log(id);
-  const activeCard2 = getActiveCard2(state, id);
-  // console.log(activeCard2);
+  const activeCard = getActiveCard(state, ownProps);
+  const relatedMovies = getRelatedMovies(state, ownProps);
   return {
+    activeCard,
+    relatedMovies,
     reviews: getReviews(state),
   };
 };
@@ -234,5 +192,4 @@ const mapDispatchToPtops = (dispatch) => ({
 });
 
 export {MoviePage};
-const WrappedMovie = withRouter(MoviePage);
-export default connect(mapStateToProps, mapDispatchToPtops)(WrappedMovie);
+export default connect(mapStateToProps, mapDispatchToPtops)(MoviePage);

@@ -10,7 +10,6 @@ Array [
     >
       <img
         alt="The Grand Budapest Hotel"
-        src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
       />
     </div>
     <h1
@@ -72,9 +71,7 @@ Array [
           className="movie-card__poster"
         >
           <img
-            alt="The Grand Budapest Hotel"
             height="327"
-            src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
             width="218"
           />
         </div>
@@ -83,29 +80,23 @@ Array [
         >
           <h2
             className="movie-card__title"
-          >
-            The Grand Budapest Hotel
-          </h2>
+          />
           <p
             className="movie-card__meta"
           >
             <span
               className="movie-card__genre"
-            >
-              Drama
-            </span>
+            />
             <span
               className="movie-card__year"
-            >
-              1984
-            </span>
+            />
           </p>
           <div
             className="movie-card__buttons"
           >
             <a
               className="btn btn--play movie-card__button"
-              href="/player/1"
+              href="/player/undefined"
               onClick={[Function]}
             >
               <svg
