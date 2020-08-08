@@ -104,6 +104,7 @@ const Operation = {
     })
     .then((response) => {
       dispatch(ActionCreator.changeFavoriteFilm(response));
+      dispatch(ActionCreator.changeFavoriteFilmAsCards(response));
     })
     .catch((err) => {
       if (!err.isAuthError) {
@@ -121,6 +122,7 @@ const Operation = {
     })
     .then((response) => {
       dispatch(ActionCreator.changeFavoriteFilmAsCards(response));
+      dispatch(ActionCreator.changeFavoriteFilm(response));
     })
     .catch((err) => {
       if (!err.isAuthError) {

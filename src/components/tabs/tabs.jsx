@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
+import withActiveItem from "../../hocks/with-active-item.jsx";
 import {getRangMovie, formatTimeLengthMovie, formatDate} from "../../utils.js";
 import {TabsMap, TabsLinkMap} from "../../const.js";
 
@@ -193,4 +194,6 @@ Tabs.propTypes = {
   })).isRequired,
 };
 
-export default Tabs;
+const TabsWrapped = withActiveItem(Tabs);
+export {Tabs};
+export default TabsWrapped;

@@ -4,11 +4,8 @@ import {Link} from "react-router-dom";
 import {connect} from "react-redux";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
 import {getFavorites} from "../../reducer/user/selectors.js";
-import FilmList from "../film-list/film-list.jsx";
-import withActivePlayer from "../../hocks/with-video-player.jsx";
-const FilmListWrapped = withActivePlayer(FilmList);
-import withFilmList from "../../hocks/with-film-list.jsx";
-const FilmListSecondWrapped = withFilmList(FilmListWrapped);
+import FilmListSecondWrapped from "../film-list/film-list.jsx";
+
 import {AppRout} from "../..//const.js";
 import {FilmPropTypes} from "../../prop-types.js";
 

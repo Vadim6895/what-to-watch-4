@@ -1,16 +1,10 @@
 import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import FilmList from "../film-list/film-list.jsx";
-import withActivePlayer from "../../hocks/with-video-player.jsx";
-const FilmListWrapped = withActivePlayer(FilmList);
-import withFilmList from "../../hocks/with-film-list.jsx";
-const FilmListSecondWrapped = withFilmList(FilmListWrapped);
-
+import FilmListSecondWrapped from "../film-list/film-list.jsx";
 import GenresList from "../genres-list/genres-list.jsx";
 import {AuthorizationStatus, AppRout, LinkRout} from "../../const.js";
 import {Link} from "react-router-dom";
-
 import {Operation as DataOperation} from "../../reducer/data/data.js";
 import {getActiveGenre, getCardsOnGenre} from "../../reducer/step/selectors.js";
 import {getFilmCards, getPromoMovie} from "../../reducer/data/selectors.js";

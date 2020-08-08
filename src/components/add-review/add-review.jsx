@@ -9,6 +9,7 @@ import {Operation as DataOperation} from "../../reducer/data/data.js";
 import store from "../../reducer/store.js";
 import history from "../../history.js";
 import {FilmPropTypes} from "../../prop-types.js";
+import withAddReview from "../../hocks/with-add-review.jsx";
 
 class AddReview extends PureComponent {
   constructor(props) {
@@ -21,24 +22,31 @@ class AddReview extends PureComponent {
     evt.preventDefault();
     const {activeCard, rating, commentText, changeLoadValue, changeShowErrorValue} = this.props;
     const form = this.formRef.current;
-
+    changeLoadValue(true);
     store.dispatch(DataOperation.uploadReview(activeCard, {rating, commentText}))
         .then(() => {
-          changeLoadValue(true);
+          changeLoadValue(false);
           changeShowErrorValue(``);
           form.reset();
           history.push(LinkRout.FILMS + activeCard.id);
         })
         .catch((response) => {
           changeLoadValue(false);
-
           changeShowErrorValue(response.toString());
         });
   }
 
+  _getStateBtn() {
+    const {isLoad, formValid} = this.props;
+    if (!isLoad && formValid) {
+      return false;
+    }
+    return true;
+  }
+
   render() {
     const {activeCard} = this.props;
-    const {formValid, changeTextHandler, changeRatingHandler,
+    const {changeTextHandler, changeRatingHandler,
       isLoad, showError} = this.props;
 
     return (
@@ -112,8 +120,8 @@ class AddReview extends PureComponent {
                 onChange={(evt) => changeTextHandler(evt)}>
               </textarea>
               <div className="add-review__submit">
-                <button className="add-review__btn" type="submit" disabled = {!formValid}
-                  style={{opacity: !formValid ? OPACITY_MAP_FOR_BTN.DISABLED : OPACITY_MAP_FOR_BTN.ENABLED}}>Post</button>
+                <button className="add-review__btn" type="submit" disabled = {this._getStateBtn()}
+                  style={{opacity: this._getStateBtn() ? OPACITY_MAP_FOR_BTN.DISABLED : OPACITY_MAP_FOR_BTN.ENABLED}}>Post</button>
               </div>
 
             </div>
@@ -146,5 +154,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const AddReviewWrapped = withAddReview(AddReview);
+
 export {AddReview};
-export default connect(mapStateToProps)(AddReview);
+export default connect(mapStateToProps)(AddReviewWrapped);

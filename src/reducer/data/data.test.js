@@ -200,7 +200,7 @@ it(`Should correctly api call to data loadReviews`, () => {
 it(`Should correctly api call to data uploadFavorite`, () => {
   const apiMock = new MockAdapter(api);
   const dispatch = jest.fn();
-  const filmCardsLoader = Operation.uploadFavorite(filmCards[0]);
+  const filmCardLoader = Operation.uploadFavorite(filmCards[0]);
 
   const parsedCards = parseFilmCard(filmCardsRAW);
 
@@ -208,9 +208,9 @@ it(`Should correctly api call to data uploadFavorite`, () => {
   .onPost(URL.FAVORITE + 1 + `/1`)
   .reply(200, filmCardsRAW);
 
-  return filmCardsLoader(dispatch, () => {}, api)
+  return filmCardLoader(dispatch, () => {}, api)
   .then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenCalledWith({
       type: ActionType.CHANGE_FAVORITE_FILM,
       favorite: parsedCards,
@@ -231,7 +231,7 @@ it(`Should correctly api call to data uploadFavorites As other cards`, () => {
 
   return filmCardsLoader(dispatch, () => {}, api)
   .then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledTimes(2);
     expect(dispatch).toHaveBeenCalledWith({
       type: ActionType.CHANGE_FAVORITE_FILM_AS_CARDS,
       favorite: parsedCards,

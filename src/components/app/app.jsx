@@ -2,30 +2,19 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Switch, Route, Router} from "react-router-dom";
 import history from "../../history.js";
-
 import MainPage from "../main-page/main-page.jsx";
 import MoviePage from "../movie-page/movie-page.jsx";
-import AddReview from "../add-review/add-review.jsx";
-import withAddReview from "../../hocks/with-add-review.jsx";
-const AddReviewWrapped = withAddReview(AddReview);
-
+import AddReviewWrapped from "../add-review/add-review.jsx";
 import Mylist from "../my-list/my-list.jsx";
 import PrivateRoute from "../private-route/private-route.jsx";
 import {AppRout} from "../../const.js";
-
 import {ActionCreator} from "../../reducer/step/step.js";
 import {connect} from "react-redux";
 import {getAuthorizationStatus} from "../../reducer/user/selectors.js";
 import {getPromoMovie} from "../../reducer/data/selectors.js";
 import {Operation as UserOperation} from "../../reducer/user/user.js";
-
-import BigVideoPlayer from "../big-video-player/big-video-player.jsx";
-import withBigPlayer from "../../hocks/with-big-video-player.jsx";
-const BigVideoPlayerWrapped = withBigPlayer(BigVideoPlayer);
-
-import SignIn from "../sign-in/sign-in.jsx";
-import withSignIn from "../../hocks/with-sign-in.jsx";
-const SignInWrapped = withSignIn(SignIn);
+import BigVideoPlayerWrapped from "../big-video-player/big-video-player.jsx";
+import SignInWrapped from "../sign-in/sign-in.jsx";
 import {FilmPropTypes} from "../../prop-types.js";
 
 class App extends PureComponent {

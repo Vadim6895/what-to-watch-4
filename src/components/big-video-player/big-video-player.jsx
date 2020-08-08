@@ -4,6 +4,8 @@ import history from "../../history.js";
 import {connect} from "react-redux";
 import {getActiveCard} from "../../reducer/step/selectors.js";
 import {FilmPropTypes} from "../../prop-types.js";
+import withBigPlayer from "../../hocks/with-big-video-player.jsx";
+
 class BigVideoPlayer extends PureComponent {
   constructor(props) {
     super(props);
@@ -94,6 +96,7 @@ const mapStateToProps = (state, ownProps) => {
     activeCard,
   };
 };
+const BigVideoPlayerWrapped = withBigPlayer(BigVideoPlayer);
 
 export {BigVideoPlayer};
-export default connect(mapStateToProps)(BigVideoPlayer);
+export default connect(mapStateToProps)(BigVideoPlayerWrapped);

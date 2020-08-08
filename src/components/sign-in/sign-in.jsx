@@ -2,6 +2,7 @@ import React, {PureComponent} from "react";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
 import {AppRout} from "../../const.js";
+import withSignIn from "../../hocks/with-sign-in.jsx";
 
 class SignIn extends PureComponent {
   constructor(props) {
@@ -73,4 +74,7 @@ SignIn.propTypes = {
   passwordRef: PropTypes.object.isRequired,
 };
 
-export default SignIn;
+const SignInWrapped = withSignIn(SignIn);
+
+export {SignIn};
+export default SignInWrapped;

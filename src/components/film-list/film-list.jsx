@@ -3,6 +3,9 @@ import FilmCard from "../film-card/film-card.jsx";
 import PropTypes from "prop-types";
 import ShowMore from "../show-more/show-more.jsx";
 import {FilmPropTypes} from "../../prop-types.js";
+import withActivePlayer from "../../hocks/with-video-player.jsx";
+import withFilmList from "../../hocks/with-film-list.jsx";
+
 class FilmList extends PureComponent {
   constructor(props) {
     super(props);
@@ -55,4 +58,9 @@ FilmList.propTypes = {
   newCards: PropTypes.arrayOf(FilmPropTypes),
   onClick: PropTypes.func.isRequired,
 };
-export default FilmList;
+
+const FilmListWrapped = withActivePlayer(FilmList);
+const FilmListSecondWrapped = withFilmList(FilmListWrapped);
+
+export {FilmList};
+export default FilmListSecondWrapped;
