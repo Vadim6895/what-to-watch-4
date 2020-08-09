@@ -231,7 +231,7 @@ it(`Should correctly api call to data uploadFavorites As other cards`, () => {
 
   return filmCardsLoader(dispatch, () => {}, api)
   .then(() => {
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(1);
     expect(dispatch).toHaveBeenCalledWith({
       type: ActionType.CHANGE_FAVORITE_FILM_AS_CARDS,
       favorite: parsedCards,

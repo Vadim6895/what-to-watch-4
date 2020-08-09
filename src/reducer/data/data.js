@@ -122,7 +122,6 @@ const Operation = {
     })
     .then((response) => {
       dispatch(ActionCreator.changeFavoriteFilmAsCards(response));
-      dispatch(ActionCreator.changeFavoriteFilm(response));
     })
     .catch((err) => {
       if (!err.isAuthError) {
@@ -151,17 +150,30 @@ const reducer = (state = initialState, action) => {
         promoMovie: action.favorite,
       });
     case ActionType.CHANGE_FAVORITE_FILM_AS_CARDS:
+      const promo = state.promoMovie;
       const newCards = [...state.filmCards];
+      let newPromo = null;
       let actualIndex;
       state.filmCards.forEach((item, index) => {
         if (item.id === action.favorite.id) {
           actualIndex = index;
         }
+        if (action.favorite.id === promo.id) {
+          newPromo = action.favorite;
+        }
       });
       newCards[actualIndex] = action.favorite;
-      return extend(state, {
+      let newCardsWithNewKey = extend(state, {
         filmCards: newCards,
       });
+      if (newPromo !== null) {
+        let newPromoWithKey = extend(newCardsWithNewKey, {
+          promoMovie: newPromo,
+        });
+        return newPromoWithKey;
+      } else {
+        return newCardsWithNewKey;
+      }
   }
   return state;
 };
