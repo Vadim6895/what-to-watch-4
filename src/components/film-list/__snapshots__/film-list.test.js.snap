@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should FilmList render correctly 1`] = `
+<a
+  className="small-movie-card catalog__movies-card"
+  href="/films/0"
+  onClick={[Function]}
+>
+  <h3
+    className="small-movie-card__title"
+  >
+    <span
+      className="small-movie-card__link"
+      href="#"
+    >
+      The Grand Budapest Hotel
+    </span>
+  </h3>
+</a>
+`;
