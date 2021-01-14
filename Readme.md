@@ -10,3 +10,22 @@
 
 [travis-image]: https://travis-ci.com/htmlacademy-react/1093679-what-to-watch-4.svg?branch=master
 [travis-url]: https://travis-ci.com/htmlacademy-react/1093679-what-to-watch-4
+
+## Установка
+
+Для локальной установки и использования проекта вам потребуется Node.js v10 +.
+
+```sh
+npm i
+```
+
+## Использование
+
+```sh
+npm run start
+```
+
+## Запуск тестов 
+
+```sh
+npm test
